@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-<!-- Basic -->
+
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ID-edge">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
   <!-- Mobile Metas -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,7 +36,7 @@
 </head>
 
 <body>
-
+<meta charset="UTF-8">
 <!-- Start Main Top -->
 <div class="main-top">
   <div class="container-fluid">
@@ -60,9 +60,7 @@
       </div>
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <div class="custom-select-box">
-          <select id="basic" class="selectpicker show-tick form-control" data-placeholder="₫ Ind">
-            <option>₹ Ind</option>
-            <option>đ VND</option>
+          <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
             <option>$ USD</option>
           </select>
         </div>

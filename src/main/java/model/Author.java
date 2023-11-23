@@ -3,6 +3,7 @@ package model;
 import jakarta.persistence.*;
 
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class Author {
@@ -10,7 +11,7 @@ public class Author {
     private String authorID;
     private String authorName;
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private Collection<Book> book;
+    private List<Book> book;
 
     //Getter and setter
     public String getAuthorID() {
@@ -27,10 +28,10 @@ public class Author {
         this.authorName = authorName;
     }
 
-    public Collection<Book> getBook() {
+    public List<Book> getBook() {
         return book;
     }
-    public void setBook(Collection<Book> book) {
+    public void setBook(List<Book> book) {
         this.book = book;
     }
 }

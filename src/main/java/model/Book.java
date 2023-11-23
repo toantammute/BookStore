@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Book {
@@ -21,7 +22,7 @@ public class Book {
     @ManyToOne(optional = true)
     private Category category;
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "book", fetch = FetchType.EAGER)
-    private Collection<Author> author;
+    private List<Author> author;
 
     //Getter and setter
     public String getBookID() {
@@ -87,10 +88,10 @@ public class Book {
         this.category = category;
     }
 
-    public Collection<Author> getAuthor() {
+    public List<Author> getAuthor() {
         return author;
     }
-    public void setAuthor(Collection<Author> author) {
+    public void setAuthor(List<Author> author) {
         this.author = author;
     }
 }
