@@ -4,7 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
 
 @Entity
@@ -21,7 +22,7 @@ public class Customer {
     private Boolean isAdmin;
     private String cardNum;
     @OneToMany(mappedBy = "customer")
-    private Collection<Invoice> invoice;
+    private List<Invoice> invoice = new ArrayList<>();
 
 
     public String getCustomerID() {
@@ -104,11 +105,11 @@ public class Customer {
         this.cardNum = cardNum;
     }
 
-    public Collection<Invoice> getInvoice() {
+    public List<Invoice> getInvoice() {
         return invoice;
     }
 
-    public void setInvoice(Collection<Invoice> invoice) {
+    public void setInvoice(List<Invoice> invoice) {
         this.invoice = invoice;
     }
 }

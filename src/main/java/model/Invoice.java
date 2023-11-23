@@ -2,7 +2,8 @@ package model;
 
 import jakarta.persistence.*;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
 
 @Entity
@@ -21,7 +22,7 @@ public class Invoice {
     @OneToOne(optional = false)
     private Discount discount;
     @OneToMany
-    private Collection<LineItem> lineItem;
+    private List<LineItem> lineItem = new ArrayList<>();
 
     //Getter and setter
     public String getInvoiceID() {
@@ -89,10 +90,10 @@ public class Invoice {
 
 
 
-    public Collection<LineItem> getLineItem() {
+    public List<LineItem> getLineItem() {
         return lineItem;
     }
-    public void setLineItem(Collection<LineItem> lineItem) {
+    public void setLineItem(List<LineItem> lineItem) {
         this.lineItem = lineItem;
     }
 

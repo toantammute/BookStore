@@ -2,6 +2,7 @@ package model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class Author {
     private String authorID;
     private String authorName;
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private List<Book> book;
+    private List<Book> book = new ArrayList<>();
 
     //Getter and setter
     public String getAuthorID() {

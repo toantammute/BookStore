@@ -3,7 +3,7 @@ package model;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class Publisher {
@@ -11,7 +11,7 @@ public class Publisher {
     private String publisherID;
     private String publisherName;
     @OneToMany(mappedBy = "publisher", cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE}, fetch = FetchType.EAGER)
-    private Collection<Book> books = new ArrayList<>();
+    private List<Book> books = new ArrayList<>();
 
     //Getter and setter
     public String getPublisherID() {
@@ -27,10 +27,10 @@ public class Publisher {
     public void setPublisherName(String publisherName) {
         this.publisherName = publisherName;
     }
-    public Collection<Book> getBooks() {
+    public List<Book> getBooks() {
         return books;
     }
-    public void setBooks(Collection<Book> books) {
+    public void setBooks(List<Book> books) {
         this.books = books;
     }
 }

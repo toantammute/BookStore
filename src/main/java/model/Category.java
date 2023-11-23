@@ -3,7 +3,7 @@ package model;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class Category {
@@ -11,7 +11,7 @@ public class Category {
     private String categoryID;
     private String categoryName;
     @OneToMany(mappedBy = "category", cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE}, fetch = FetchType.EAGER)
-    private Collection<Book> books = new ArrayList<>();
+    private List<Book> books = new ArrayList<>();
 
     //Getter and setter
     public String getCategoryID() {
@@ -28,10 +28,10 @@ public class Category {
         this.categoryName = categoryName;
     }
 
-    public Collection<Book> getBooks() {
+    public List<Book> getBooks() {
         return books;
     }
-    public void setBooks(Collection<Book> books) {
+    public void setBooks(List<Book> books) {
         this.books = books;
     }
 }

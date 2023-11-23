@@ -2,6 +2,7 @@ package model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +23,7 @@ public class Book {
     @ManyToOne(optional = true)
     private Category category;
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "book", fetch = FetchType.EAGER)
-    private List<Author> author;
+    private List<Author> author = new ArrayList<>();
 
     //Getter and setter
     public String getBookID() {

@@ -5,7 +5,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class Cart {
@@ -22,13 +24,13 @@ public class Cart {
     }
 
     @OneToMany
-    private Collection<Book> book;
+    private List<Book> book = new ArrayList<>();
 
-    public Collection<Book> getBook() {
+    public List<Book> getBook() {
         return book;
     }
 
-    public void setBook(Collection<Book> book) {
+    public void setBook(List<Book> book) {
         this.book = book;
     }
 }
