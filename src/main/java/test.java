@@ -1,3 +1,4 @@
+import data.DBUtil;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import model.*;
@@ -16,9 +17,9 @@ import static java.time.chrono.JapaneseEra.values;
 public class test {
     public static void main(String[] args) throws ParseException {
 
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        entityManager.getTransaction().begin();
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        trans.begin();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //
@@ -108,9 +109,9 @@ public class test {
         b.setCategory(c1);
         Collection<Author> auth = new ArrayList<>();
         auth.add(a);
-        entityManager.merge(b);
-        Author au = entityManager.find(Author.class,"AUTH1");
-        Book bk = entityManager.find(Book.class, "BOOK1");
+        em.merge(b);
+        Author au = em.find(Author.class,"AUTH1");
+        Book bk = em.find(Book.class, "BOOK1");
         bk.getAuthor().add(au);
         au.getBook().add(bk);
 
@@ -125,9 +126,9 @@ public class test {
         b1.setCategory(c1);
         Collection<Author> auth1 = new ArrayList<>();
         auth1.add(a);
-        entityManager.merge(b1);
-        Author au2 = entityManager.find(Author.class,"AUTH1");
-        Book bk2 = entityManager.find(Book.class, "BOOK2");
+        em.merge(b1);
+        Author au2 = em.find(Author.class,"AUTH1");
+        Book bk2 = em.find(Book.class, "BOOK2");
         bk2.getAuthor().add(au2);
         au2.getBook().add(bk2);
 
@@ -142,9 +143,9 @@ public class test {
         b2.setCategory(c2);
         Collection<Author> auth2 = new ArrayList<>();
         auth2.add(a3);
-        entityManager.merge(b2);
-        Author au3 = entityManager.find(Author.class,"AUTH4");
-        Book bk3 = entityManager.find(Book.class, "BOOK3");
+        em.merge(b2);
+        Author au3 = em.find(Author.class,"AUTH4");
+        Book bk3 = em.find(Book.class, "BOOK3");
         bk3.getAuthor().add(au3);
         au3.getBook().add(bk3);
 
@@ -160,10 +161,10 @@ public class test {
         Collection<Author> auth3 = new ArrayList<>();
         auth3.add(a4);
         auth3.add(a5);
-        entityManager.merge(b3);
-        Author au4 = entityManager.find(Author.class,"AUTH5");
-        Author au5 = entityManager.find(Author.class,"AUTH6");
-        Book bk4 = entityManager.find(Book.class, "BOOK4");
+        em.merge(b3);
+        Author au4 = em.find(Author.class,"AUTH5");
+        Author au5 = em.find(Author.class,"AUTH6");
+        Book bk4 = em.find(Book.class, "BOOK4");
         bk4.getAuthor().add(au4);
         bk4.getAuthor().add(au5);
         au4.getBook().add(bk4);
@@ -180,14 +181,14 @@ public class test {
         b4.setCategory(c2);
         Collection<Author> auth4 = new ArrayList<>();
         auth4.add(a1);
-        entityManager.merge(b4);
-        Author au6 = entityManager.find(Author.class,"AUTH2");
-        Book bk5 = entityManager.find(Book.class, "BOOK5");
+        em.merge(b4);
+        Author au6 = em.find(Author.class,"AUTH2");
+        Book bk5 = em.find(Book.class, "BOOK5");
         bk5.getAuthor().add(au6);
         au6.getBook().add(bk5);
 
-        entityManager.getTransaction().commit();
-        entityManager.close();
-        entityManagerFactory.close();
+        trans.commit();
+        em.close();
+        DBUtil.getEmFactory().close();
     }
 }
