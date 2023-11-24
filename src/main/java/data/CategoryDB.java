@@ -19,7 +19,7 @@ public class CategoryDB {
             if (lastId != null) {
                 int number = Integer.parseInt(lastId.substring(4));
                 number++; // Tăng giá trị số lên 1
-                String newId = String.format("cate%04d", number);
+                String newId = String.format("CATE%04d", number);
                 return newId;
             } else {
                 return "CATE0000";
