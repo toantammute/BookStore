@@ -1,5 +1,6 @@
 package data;
 import jakarta.persistence.*;
+import jakarta.transaction.Transaction;
 import model.Category;
 
 import java.util.List;
@@ -37,11 +38,13 @@ public class CategoryDB {
     }
 
     // INSERT CATEGORY
-    public static void insertCategory(Category category) {
+    public static void insertCategory(String categoryName) {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
         trans.begin();
         try {
+            Category category = new Category();
+            category.setCategoryName(categoryName);
             em.persist(category);
             trans.commit();
         } catch (Exception e) {
@@ -56,7 +59,7 @@ public class CategoryDB {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         try
         {
-            String queryString = "SELECT c FROM Category c";
+            String queryString = "SELECT c FROM Category c ORDER BY c.categoryID ASC";
             Query query = em.createQuery(queryString, Category.class);
             List<Category> rows = query.getResultList();
             return rows;
@@ -64,10 +67,79 @@ public class CategoryDB {
         catch (Exception e)
         {
             System.out.println(e);
-            throw new RuntimeException("CREATE NEW ID FAIL", e);
+            throw new RuntimeException("CANNOT GET CATEGORIES", e);
         }
         finally {
             em.close();
         }
     }
+
+    public static List<Category> searchCategory(String categoryName)
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        try
+        {
+            String queryString = "SELECT c FROM Category c WHERE LOWER(c.categoryName) LIKE LOWER(:name) OR UPPER(c.categoryName) LIKE UPPER(:name) ORDER BY c.categoryID ASC";
+            Query query = em.createQuery(queryString, Category.class);
+            query.setParameter("name", "%" + categoryName + "%");
+            List<Category> categories = query.getResultList();
+            return categories;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+            throw new RuntimeException("CANNOT GET FIND", e);
+        }
+        finally {
+            em.close();
+        }
+    }
+
+    public static void deleteCategory(String categoryID)
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        trans.begin();
+        try{
+            String queryString = "SELECT c FROM Category c where c.categoryID = :categoryID";
+            Query query = em.createQuery(queryString, Category.class);
+            query.setParameter("categoryID",categoryID);
+            Category category = (Category) query.getSingleResult();
+            em.remove(category);
+            trans.commit();
+        }catch (Exception e)
+        {
+            trans.rollback();
+            throw new RuntimeException(e);
+        }finally{
+            em.close();
+        }
+    }
+
+    public static void updateCategory(String categoryID, String categoryName)
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        trans.begin();
+        try{
+            String queryString = "SELECT c FROM Category c where c.categoryID = :categoryID";
+            Query query = em.createQuery(queryString, Category.class);
+            query.setParameter("categoryID",categoryID);
+            Category category = (Category) query.getSingleResult();
+            category.setCategoryName(categoryName);
+            em.merge(category);
+            trans.commit();
+        }catch (Exception e)
+        {
+            trans.rollback();
+            throw new RuntimeException(e);
+        }finally{
+            em.close();
+        }
+    }
+
+
+
+
+
 }
