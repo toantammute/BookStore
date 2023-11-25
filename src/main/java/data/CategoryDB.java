@@ -1,12 +1,13 @@
 package data;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
+import model.Category;
+
+import java.util.List;
 
 public class CategoryDB {
+
     // GENERATE ID FUNCTION
-    public String generateId() {
+    public static String generateId() {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
         trans.begin();
@@ -28,6 +29,41 @@ public class CategoryDB {
         {
             System.out.print(e);
             trans.rollback();
+            throw new RuntimeException("CREATE NEW ID FAIL", e);
+        }
+        finally {
+            em.close();
+        }
+    }
+
+    // INSERT CATEGORY
+    public static void insertCategory(Category category) {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        trans.begin();
+        try {
+            em.persist(category);
+            trans.commit();
+        } catch (Exception e) {
+            System.out.println(e);
+            trans.rollback();
+        } finally {
+            em.close();
+        }
+    }
+
+    public static List<Category> getCategoryList(){
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        try
+        {
+            String queryString = "SELECT c FROM Category c";
+            Query query = em.createQuery(queryString, Category.class);
+            List<Category> rows = query.getResultList();
+            return rows;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
             throw new RuntimeException("CREATE NEW ID FAIL", e);
         }
         finally {

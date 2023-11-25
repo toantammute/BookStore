@@ -16,7 +16,7 @@ import static java.time.chrono.JapaneseEra.values;
 
 public class test {
     public static void main(String[] args) throws ParseException {
-
+/*
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
         trans.begin();
@@ -190,5 +190,5 @@ public class test {
         trans.commit();
         em.close();
         DBUtil.getEmFactory().close();
-    }
+*/    }
 }
