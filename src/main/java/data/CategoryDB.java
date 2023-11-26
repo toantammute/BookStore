@@ -1,6 +1,7 @@
 package data;
 import jakarta.persistence.*;
 import jakarta.transaction.Transaction;
+import model.Author;
 import model.Category;
 import org.eclipse.persistence.jpa.jpql.parser.NullExpression;
 
@@ -142,36 +143,38 @@ public class CategoryDB {
         }
     }
 
-    public static void updateCategory(String categoryID, String categoryName, StringBuilder error)
-    {
+    public static void updateCategory(String categoryID, String categoryName, StringBuilder error) {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
-        trans.begin();
-        try{
-            String queryString = "SELECT c FROM Category c where c.categoryID = :categoryID";
-            Query query = em.createQuery(queryString, Category.class);
-            query.setParameter("categoryID",categoryID);
-            try
-            {
-                Category category = (Category) query.getSingleResult();
-                category.setCategoryName(categoryName);
-                em.merge(category);
-                trans.commit();
-            }catch(NoResultException e)
-            {
-                error.append("CATEGORY ID DOES NOT EXIST");
-            }
-        }catch (Exception e)
+        String queryString = "SELECT c FROM Category c WHERE LOWER(c.categoryName) = LOWER(:name) OR UPPER(c.categoryName) = UPPER(:name)";
+        Query query = em.createQuery(queryString, Author.class);
+        query.setParameter("name", categoryName );
+        List<Author> categories = query.getResultList();
+        if(categories.size() == 0)
         {
-            trans.rollback();
-            throw new RuntimeException(e);
-        }finally{
+            trans.begin();
+            try {
+                String queryString1 = "SELECT c FROM Category c where c.categoryID = :categoryID";
+                Query query1 = em.createQuery(queryString1, Category.class);
+                query1.setParameter("categoryID", categoryID);
+                try {
+                    Category category = (Category) query1.getSingleResult();
+                    category.setCategoryName(categoryName);
+                    em.merge(category);
+                    trans.commit();
+                } catch (NoResultException e) {
+                    error.append("CATEGORY ID DOES NOT EXIST");
+                }
+            } catch (Exception e) {
+                trans.rollback();
+                throw new RuntimeException(e);
+            } finally {
+                em.close();
+            }
+        }else
+        {
+            error.append("CATEGORY EXISTED");
             em.close();
         }
     }
-
-
-
-
-
 }
