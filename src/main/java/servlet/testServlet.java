@@ -26,13 +26,20 @@ public class testServlet extends HttpServlet {
         // perform action and set URL to appropriate page
 
         else if (action.equals("add_cate")) {
-
+            StringBuilder error = new StringBuilder();
+            String category_name = request.getParameter("category_name");
+            CategoryDB.insertCategory(category_name,error);
+            if(error != null)
+            {
+                request.setAttribute("message",error);
+            }
         }
         getServletContext()
                 .getRequestDispatcher(url)
                 .forward(request, response);
     }
 
+    @Override
     protected void doGet(HttpServletRequest request,
                           HttpServletResponse response)
             throws ServletException, IOException {

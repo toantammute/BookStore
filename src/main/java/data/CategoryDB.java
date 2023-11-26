@@ -41,20 +41,31 @@ public class CategoryDB {
     }
 
     // INSERT CATEGORY
-    public static void insertCategory(String categoryName) {
+    public static void insertCategory(String categoryName, StringBuilder error) {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
-        trans.begin();
-        try {
-            Category category = new Category();
-            category.setCategoryID(generateId());
-            category.setCategoryName(categoryName);
-            em.persist(category);
-            trans.commit();
-        } catch (Exception e) {
-            System.out.println(e);
-            trans.rollback();
-        } finally {
+        String queryString = "SELECT c FROM Category c WHERE LOWER(c.categoryName) = LOWER(:name) OR UPPER(c.categoryName) = UPPER(:name)";
+        Query query = em.createQuery(queryString, Category.class);
+        query.setParameter("name", categoryName );
+        List<Category> categories = query.getResultList();
+        if(categories.size() == 0)
+        {
+            trans.begin();
+            try {
+                Category category = new Category();
+                category.setCategoryID(generateId());
+                category.setCategoryName(categoryName);
+                em.persist(category);
+                trans.commit();
+            } catch (Exception e) {
+                System.out.println(e);
+                trans.rollback();
+            } finally {
+                em.close();
+            }
+        }else
+        {
+            error.append("THIS CATEGORY NAME EXISTED");
             em.close();
         }
     }
