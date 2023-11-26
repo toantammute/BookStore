@@ -30,14 +30,16 @@ public class testServlet extends HttpServlet {
         else if (action.equals("add_cate")) {
             StringBuilder error = new StringBuilder();
             String author_name = request.getParameter("author_name");
-            String author_id = "AUTH0010";
             List<Author> authors = AuthorDB.searchAuthor(author_name,error);
             if(authors != null)
             {
                 request.setAttribute("authors",authors);
             }
+            else
+            {
+                AuthorDB.insertAuthor(author_name,error);
+            }
             request.setAttribute("message",error);
-            AuthorDB.updateAuthor("AUTH0010","changed",error);
         }
         getServletContext()
                 .getRequestDispatcher(url)

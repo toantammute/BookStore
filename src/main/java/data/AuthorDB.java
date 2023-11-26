@@ -51,7 +51,7 @@ public class AuthorDB {
                 author.setAuthorID(generateId());
                 author.setAuthorName(authorName);
                 em.persist(author);
-                error.append("INSERT SUCCESSFULLY");
+                error.append("INSERT SUCCESSFULLY ");
                 trans.commit();
             } catch (Exception e) {
                 System.out.println(e);
@@ -61,7 +61,7 @@ public class AuthorDB {
             }
         }else
         {
-            error.append("THIS AUTHOR NAME EXISTED");
+            error.append("THIS AUTHOR NAME EXISTED ");
             em.close();
         }
     }
@@ -96,7 +96,7 @@ public class AuthorDB {
             List<Author> authors = query.getResultList();
             if(authors.size() == 0 )
             {
-                error.append("AUTHOR DOES NOT EXIST");
+                error.append("AUTHOR DOES NOT EXIST ");
                 return null;
             }
             else return authors;
@@ -123,7 +123,7 @@ public class AuthorDB {
                 em.remove(author);
                 trans.commit();
             } catch (NoResultException e) {
-                error.append("AUTHOR ID DOES NOT EXIST");
+                error.append("AUTHOR ID DOES NOT EXIST ");
             }
         } catch (Exception e) {
             trans.rollback();
@@ -152,7 +152,7 @@ public class AuthorDB {
                     em.merge(author);
                     trans.commit();
                 } catch (NoResultException e) {
-                    error.append("AUTHOR ID DOES NOT EXIST");
+                    error.append("AUTHOR ID DOES NOT EXIST ");
                 }
             } catch (Exception e) {
                 trans.rollback();
@@ -162,7 +162,7 @@ public class AuthorDB {
             }
         }else
         {
-            error.append("AUTHOR EXISTED");
+            error.append("AUTHOR EXISTED ");
             em.close();
         }
     }
