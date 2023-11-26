@@ -26,17 +26,6 @@ public class testServlet extends HttpServlet {
         // perform action and set URL to appropriate page
 
         else if (action.equals("add_cate")) {
-            //CategoryDB.updateCategory("CATE0001","Soccer");
-            String categoryName = request.getParameter("category_name");
-            request.setAttribute("categoryName",categoryName);
-            List<Category> categories = CategoryDB.searchCategory(categoryName);
-            if(categories.size() == 0)
-            {
-                String message = "Does not exist";
-                request.setAttribute("message",message);
-            }
-            request.setAttribute("categories",categories);
-
 
         }
         getServletContext()

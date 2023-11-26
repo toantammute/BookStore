@@ -2,8 +2,10 @@ package data;
 import jakarta.persistence.*;
 import jakarta.transaction.Transaction;
 import model.Category;
+import org.eclipse.persistence.jpa.jpql.parser.NullExpression;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class CategoryDB {
 
@@ -11,25 +13,26 @@ public class CategoryDB {
     public static String generateId() {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
-        trans.begin();
         try
         {
-            TypedQuery<String> query = em.createQuery(
-                    "SELECT c.categoryID FROM Category c ORDER BY c.categoryID DESC", String.class);
-            query.setMaxResults(1);
-            String lastId = query.getSingleResult();
-            if (lastId != null) {
-                int number = Integer.parseInt(lastId.substring(4));
-                number++; // Tăng giá trị số lên 1
-                String newId = String.format("CATE%04d", number);
-                return newId;
-            } else {
+            String lastId;
+            try
+            {
+                TypedQuery<String> query = em.createQuery(
+                        "SELECT c.categoryID FROM Category c ORDER BY c.categoryID DESC", String.class);
+                query.setMaxResults(1);
+                lastId = query.getSingleResult();
+            }catch(NoResultException e)
+            {
                 return "CATE0000";
             }
+            int number = Integer.parseInt(lastId.substring(4));
+            number++; // Tăng giá trị số lên 1
+            String newId = String.format("CATE%04d", number);
+            return newId;
         }catch(Exception e)
         {
             System.out.print(e);
-            trans.rollback();
             throw new RuntimeException("CREATE NEW ID FAIL", e);
         }
         finally {
@@ -44,6 +47,7 @@ public class CategoryDB {
         trans.begin();
         try {
             Category category = new Category();
+            category.setCategoryID(generateId());
             category.setCategoryName(categoryName);
             em.persist(category);
             trans.commit();
@@ -74,7 +78,7 @@ public class CategoryDB {
         }
     }
 
-    public static List<Category> searchCategory(String categoryName)
+    public static List<Category> searchCategory(String categoryName, StringBuilder error)
     {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         try
@@ -83,11 +87,15 @@ public class CategoryDB {
             Query query = em.createQuery(queryString, Category.class);
             query.setParameter("name", "%" + categoryName + "%");
             List<Category> categories = query.getResultList();
-            return categories;
+            if(categories.size() == 0 )
+            {
+                error.append("CATEGORY NAME DOES NOT EXIST");
+                return null;
+            }
+            else return categories;
         }
         catch (Exception e)
         {
-            System.out.println(e);
             throw new RuntimeException("CANNOT GET FIND", e);
         }
         finally {
@@ -95,7 +103,7 @@ public class CategoryDB {
         }
     }
 
-    public static void deleteCategory(String categoryID)
+    public static void deleteCategory(String categoryID, StringBuilder error)
     {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
@@ -104,11 +112,18 @@ public class CategoryDB {
             String queryString = "SELECT c FROM Category c where c.categoryID = :categoryID";
             Query query = em.createQuery(queryString, Category.class);
             query.setParameter("categoryID",categoryID);
-            Category category = (Category) query.getSingleResult();
-            em.remove(category);
-            trans.commit();
+            try
+            {
+                Category category = (Category) query.getSingleResult();
+                em.remove(category);
+                trans.commit();
+            }catch(NoResultException e)
+            {
+                error.append("CATEGORY ID DOES NOT EXIST");
+            }
         }catch (Exception e)
         {
+            error.append(e);
             trans.rollback();
             throw new RuntimeException(e);
         }finally{
@@ -116,7 +131,7 @@ public class CategoryDB {
         }
     }
 
-    public static void updateCategory(String categoryID, String categoryName)
+    public static void updateCategory(String categoryID, String categoryName, StringBuilder error)
     {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
@@ -125,10 +140,16 @@ public class CategoryDB {
             String queryString = "SELECT c FROM Category c where c.categoryID = :categoryID";
             Query query = em.createQuery(queryString, Category.class);
             query.setParameter("categoryID",categoryID);
-            Category category = (Category) query.getSingleResult();
-            category.setCategoryName(categoryName);
-            em.merge(category);
-            trans.commit();
+            try
+            {
+                Category category = (Category) query.getSingleResult();
+                category.setCategoryName(categoryName);
+                em.merge(category);
+                trans.commit();
+            }catch(NoResultException e)
+            {
+                error.append("CATEGORY ID DOES NOT EXIST");
+            }
         }catch (Exception e)
         {
             trans.rollback();
