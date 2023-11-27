@@ -4,11 +4,13 @@ import java.util.List;
 
 import data.AuthorDB;
 import data.CategoryDB;
+import data.PublisherDB;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import model.Author;
 import model.Category;
+import model.Publisher;
 
 @WebServlet("/test")
 public class testServlet extends HttpServlet {
@@ -29,16 +31,8 @@ public class testServlet extends HttpServlet {
 
         else if (action.equals("add_cate")) {
             StringBuilder error = new StringBuilder();
-            String author_name = request.getParameter("author_name");
-            List<Author> authors = AuthorDB.searchAuthor(author_name,error);
-            if(authors != null)
-            {
-                request.setAttribute("authors",authors);
-            }
-            else
-            {
-                AuthorDB.insertAuthor(author_name,error);
-            }
+            String search = request.getParameter("test");
+            PublisherDB.updatePublisher("PUBL0001","HAHA",error);
             request.setAttribute("message",error);
         }
         getServletContext()

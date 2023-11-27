@@ -31,7 +31,7 @@
         <form action="test" method="post">
             <input type="hidden" name="action" value="add_cate">
             <div class="mt-3">
-                <input placeholder="Search Author" type="text" class="form-control" id="author_name" name="author_name">
+                <input placeholder="Search Author" type="text" class="form-control" id="author_name" name="test">
             </div>
             <c:if test="${not empty message}">
                 <p style="color: red"><span>*</span>${message}</p>
@@ -45,15 +45,15 @@
 <div class="container">
     <table>
         <tr>
-            <th>Author ID</th>
-            <th>Author Name</th>
+            <th>Publisher ID</th>
+            <th>Publisher Name</th>
         </tr>
 
-        <c:forEach var="a" items="${authors}">
+        <c:forEach var="p" items="${publishers}">
             <tr>
-                <c:if test="${not empty a.authorID and not empty a.authorName}">
-                    <td>${a.authorID}</td>
-                    <td>${a.authorName}</td>
+                <c:if test="${not empty p.publisherID and not empty p.publisherName}">
+                    <td>${p.publisherID}</td>
+                    <td>${p.publisherName}</td>
                 </c:if>
             </tr>
         </c:forEach>
