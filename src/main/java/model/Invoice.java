@@ -21,7 +21,7 @@ public class Invoice {
     private Integer totalPay;
     @OneToOne(optional = false)
     private Discount discount;
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.REMOVE}, fetch = FetchType.EAGER)
     private List<LineItem> lineItem = new ArrayList<>();
 
     //Getter and setter

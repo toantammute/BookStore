@@ -3,6 +3,7 @@ import jakarta.persistence.*;
 import jakarta.transaction.Transaction;
 import model.Author;
 import model.Category;
+import model.Publisher;
 import org.eclipse.persistence.jpa.jpql.parser.NullExpression;
 
 import java.util.List;
@@ -174,6 +175,34 @@ public class CategoryDB {
         }else
         {
             error.append("CATEGORY EXISTED");
+            em.close();
+        }
+    }
+
+    public static Category searchCategoryBook(String categoryName, StringBuilder error)
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        try
+        {
+            String queryString = "SELECT c FROM  Category c WHERE LOWER(c.categoryName) = LOWER(:name) OR UPPER(c.categoryName) = UPPER(:name)";
+            Query query = em.createQuery(queryString, Category.class);
+            query.setParameter("name", categoryName);
+            Category a = (Category) query.getSingleResult();
+            if(a != null)
+            {
+                return a;
+            }
+            else
+            {
+                error.append("CANNOT FIND");
+                return null;
+            }
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException("CANNOT GET FIND", e);
+        }
+        finally {
             em.close();
         }
     }

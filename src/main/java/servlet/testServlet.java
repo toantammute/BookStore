@@ -1,11 +1,16 @@
 package servlet;
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import data.AuthorDB;
+import data.BookDB;
 import data.CategoryDB;
 import data.PublisherDB;
 import jakarta.servlet.*;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import model.Author;
@@ -13,6 +18,7 @@ import model.Category;
 import model.Publisher;
 
 @WebServlet("/test")
+@MultipartConfig()
 public class testServlet extends HttpServlet {
 
     @Override
@@ -30,10 +36,56 @@ public class testServlet extends HttpServlet {
         // perform action and set URL to appropriate page
 
         else if (action.equals("add_cate")) {
+            /*
+                <input type="text" name="book_name">
+                <input type="number" name="price">
+                <input type="text" name="description">
+                <input type="text" name="language">
+                <input type="date" name="publishYear">
+                <input type="file" name="imageBook">
+                <input placeholder="Author" type="text" class="form-control" id="author_name" name="author_name">
+                <input placeholder="Publisher" type="text" class="form-control" id="publisher_name" name="publisher_name">
+                <input placeholder="Category" type="text" class="form-control" id="category_name" name="category_name">
+                <input type="number" name="quantity">
+             */
+            String book_name = request.getParameter("book_name");
+            String priceString = request.getParameter("price");
+            Integer price = 0;
+            if(priceString != null)
+            {
+                price = Integer.parseInt(priceString);
+            }
+            String description = request.getParameter("description");
+            String language = request.getParameter("language");
+            String dateString = request.getParameter("publishYear");
+            Date publishYear = null;
+            if (dateString != null && !dateString.isEmpty()) {
+                try {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    publishYear = dateFormat.parse(dateString);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+            Part imageBook = request.getPart("imageBook");
+            InputStream imageInputStream = imageBook.getInputStream();
+            byte[] imageData = imageInputStream.readAllBytes();
+            String author_name = request.getParameter("author_name");
+            String publisher_name = request.getParameter("publisher_name");
+            String category_name = request.getParameter("category_name");
+            String quantityString = request.getParameter("quantity");
+            Integer quantity = 0;
+            try
+            {
+                quantity = Integer.parseInt(quantityString);
+            }catch (Exception e)
+            {
+                System.out.println(e);
+            }
             StringBuilder error = new StringBuilder();
-            String search = request.getParameter("test");
-            PublisherDB.updatePublisher("PUBL0001","HAHA",error);
-            request.setAttribute("message",error);
+            BookDB.insertBook(book_name, price, description, language, publishYear, imageData, publisher_name, category_name, author_name, quantity,error);
+
+
         }
         getServletContext()
                 .getRequestDispatcher(url)

@@ -11,7 +11,7 @@ public class Author {
     @Id
     private String authorID;
     private String authorName;
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany(cascade = {CascadeType.MERGE})
     private List<Book> book = new ArrayList<>();
 
     //Getter and setter

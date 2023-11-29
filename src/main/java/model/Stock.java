@@ -1,8 +1,6 @@
 package model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
 @Entity
 public class Stock {
@@ -10,7 +8,7 @@ public class Stock {
     private String stockID;
     private Integer quantity;
     private Integer importPrice;
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, cascade = {CascadeType.REMOVE},fetch = FetchType.EAGER)
     private Book book;
 
     //Getter and setter

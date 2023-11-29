@@ -165,4 +165,28 @@ public class AuthorDB {
             em.close();
         }
     }
+
+    public static Author searchAuthorBook(String authorName, StringBuilder error)
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        try
+        {
+            String queryString = "SELECT a FROM Author a WHERE LOWER(a.authorName) = LOWER(:name) OR UPPER(a.authorName) = UPPER(:name)";
+            Query query = em.createQuery(queryString, Author.class);
+            query.setParameter("name", authorName);
+            Author author = (Author) query.getSingleResult();
+            if(author != null)
+            {
+                return author;
+            }
+            else return null;
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException("CANNOT GET FIND", e);
+        }
+        finally {
+            em.close();
+        }
+    }
 }

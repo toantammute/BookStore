@@ -1,4 +1,6 @@
+import data.AuthorDB;
 import data.DBUtil;
+import data.StockDB;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import model.*;
@@ -15,8 +17,11 @@ import java.util.Collection;
 import static java.time.chrono.JapaneseEra.values;
 
 public class test {
-    public static void main(String[] args) throws ParseException {
-/*
+    public static void main(String[] args) throws ParseException
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        /*
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
         trans.begin();
@@ -190,5 +195,8 @@ public class test {
         trans.commit();
         em.close();
         DBUtil.getEmFactory().close();
-*/    }
+
+*/      StringBuilder error = new StringBuilder();
+        StockDB.deleteBookQuantity("KAA",0,error);
+    }
 }

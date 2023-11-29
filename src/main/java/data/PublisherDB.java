@@ -91,7 +91,7 @@ public class PublisherDB {
         try
         {
             String queryString = "SELECT p FROM Publisher p WHERE LOWER(p.publisherName) LIKE LOWER(:name) OR UPPER(p.publisherName) LIKE UPPER(:name) ORDER BY p.publisherID ASC";
-            Query query = em.createQuery(queryString, Author.class);
+            Query query = em.createQuery(queryString, Publisher.class);
             query.setParameter("name", "%" + publisherName + "%");
             List<Publisher> publishers = query.getResultList();
             if(publishers.size() == 0 )
@@ -164,6 +164,35 @@ public class PublisherDB {
         }else
         {
             error.append("PUBLISHER EXISTED ");
+            em.close();
+        }
+    }
+
+
+    public static Publisher searchPublisherBook(String publisherName, StringBuilder error)
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        try
+        {
+            String queryString = "SELECT p FROM Publisher p WHERE LOWER(p.publisherName) = LOWER(:name) OR UPPER(p.publisherName) = UPPER(:name)";
+            Query query = em.createQuery(queryString, Publisher.class);
+            query.setParameter("name", publisherName);
+            Publisher a = (Publisher) query.getSingleResult();
+            if(a != null)
+            {
+                return a;
+            }
+            else
+            {
+                error.append("CANNOT FIND");
+                return null;
+            }
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException("CANNOT GET FIND", e);
+        }
+        finally {
             em.close();
         }
     }

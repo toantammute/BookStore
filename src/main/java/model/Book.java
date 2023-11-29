@@ -17,12 +17,12 @@ public class Book {
     private String language;
     @Temporal(TemporalType.DATE)
     private Date publisherYear;
-    private String image;
+    private byte[] imageBook;
     @ManyToOne(optional = true)
     private Publisher publisher;
     @ManyToOne(optional = true)
     private Category category;
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "book", fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.MERGE}, mappedBy = "book", fetch = FetchType.EAGER)
     private List<Author> author = new ArrayList<>();
 
     //Getter and setter
@@ -68,11 +68,11 @@ public class Book {
         this.publisherYear = publisherYear;
     }
 
-    public String getImage() {
-        return image;
+    public byte[] getImageBook() {
+        return imageBook;
     }
-    public void setImage(String image) {
-        this.image = image;
+    public void setImage(byte[] imageBook) {
+        this.imageBook = imageBook;
     }
 
     public Publisher getPublisher() {

@@ -28,10 +28,19 @@
 </head>
 <body>
     <div class="container"></div>
-        <form action="test" method="post">
+        <form action="test" method="post" enctype="multipart/form-data">
             <input type="hidden" name="action" value="add_cate">
             <div class="mt-3">
-                <input placeholder="Search Author" type="text" class="form-control" id="author_name" name="test">
+                <input type="text" name="book_name" placeholder="book_name">
+                <input type="number" name="price" placeholder="price">
+                <input type="text" name="description" placeholder="description">
+                <input type="text" name="language" placeholder="language">
+                <input type="date" name="publishYear" placeholder="publishYear">
+                <input type="file" name="imageBook" placeholder="image">
+                <input placeholder="Author" type="text" class="form-control" id="author_name" name="author_name">
+                <input placeholder="Publisher" type="text" class="form-control" id="publisher_name" name="publisher_name">
+                <input placeholder="Category" type="text" class="form-control" id="category_name" name="category_name">
+                <input type="number" name="quantity">
             </div>
             <c:if test="${not empty message}">
                 <p style="color: red"><span>*</span>${message}</p>
