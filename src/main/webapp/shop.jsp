@@ -77,8 +77,8 @@
         <!-- Amado Nav -->
         <nav class="amado-nav">
             <ul>
-                <c:if test="${not empty user}">
-                    <p>Hello, ${user.customerName} !</p>
+                <c:if test="${not empty customer}">
+                    <p>Hello, ${customer.customerName} !</p>
                     <li><a href="login?action=logout">LOG OUT</a></li>
                 </c:if>
                 <c:if test="${empty user}">
@@ -90,7 +90,7 @@
         <!-- Cart Menu -->
         <div class="cart-fav-search mb-100">
             <a href="cart.jsp" class="cart-nav"><img src="img/core-img/cart.png" alt=""> Cart <span>(0)</span></a>
-            <a href="#" class="fav-nav"><img src="img/core-img/favorites.png" alt=""> Favourite</a>
+            <a href="cart.jsp" class="fav-nav"><img src="img/core-img/favorites.png" alt=""> Favourite</a>
             <a href="#" class="search-nav"><img src="img/core-img/search.png" alt=""> Search</a>
         </div>
         <!-- Social Button -->
@@ -210,7 +210,7 @@
                                 <div class="product-meta-data">
                                     <div class="line"></div>
                                     <p class="product-price">${book.priceFormat}</p>
-                                    <a href="product-details.jsp">
+                                    <a href="product-details.jsp?bookid=${book.bookID}">
                                         <h6>${book.bookName}</h6>
                                     </a>
                                 </div>
@@ -226,8 +226,8 @@
                                     <br>
                                     <div class="cart">
 
-                                        <a href="cart.jsp" data-toggle="tooltip" data-placement="left" title="Add to Cart"><i class="fa-solid fa-cart-shopping"></i></a>
-                                        <a href="cart.jsp" data-toggle="tooltip" data-placement="left" title="Add to Favorite"><i class="fa-regular fa-heart" size="100"></i></a>
+                                        <a href="shop?action=checkUser&amp;aim=addtocart" data-toggle="tooltip" data-placement="left" title="Add to Cart"><i class="fa-solid fa-cart-shopping"></i></a>
+                                        <a href="shop?action=checkUser&amp;aim=addtofavorite&amp;bookID=${book.bookID}" data-toggle="tooltip" data-placement="left" title="Add to Favorite"><i class="fa-regular fa-heart" size="100"></i></a>
                                     </div>
                                 </div>
                             </div>

@@ -37,7 +37,7 @@ public class loginsignupServlet extends HttpServlet {
                 if(customer.getPassword().equals(password))
                 {
                     HttpSession session = request.getSession();
-                    session.setAttribute("user",customer);
+                    session.setAttribute("customer",customer);
                     url = "/shop.jsp";
                 }
                 else

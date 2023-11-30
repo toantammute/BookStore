@@ -6,11 +6,16 @@ import java.util.Date;
 import java.util.List;
 
 import data.BookDB;
+import data.CartDB;
 import data.CustomerDB;
+import data.DBUtil;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import model.Book;
+import model.Cart;
 import model.Customer;
 
 @WebServlet("/shop")
@@ -20,7 +25,8 @@ public class shopservlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response)
             throws ServletException, IOException {
-
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
         String url = "/shop.jsp";
         ServletContext sc = getServletContext();
         String action = request.getParameter("action");
@@ -35,6 +41,44 @@ public class shopservlet extends HttpServlet {
             List<Book> books = BookDB.searchBook(search);
             request.setAttribute("books",books);
             url = "/shop.jsp";
+        }
+        else if(action.equals("checkUser"))
+        {
+            HttpSession session = request.getSession();
+            Customer customer = (Customer) session.getAttribute("customer");
+            if(customer == null)
+            {
+                url = "/login.jsp";
+            }
+            else
+            {
+                String aim = request.getParameter("aim");
+                if(aim.equals("addtofavorite"))
+                {
+                    trans.begin();
+                    String bookID = request.getParameter("bookID");
+                    Cart cart = em.find(Cart.class, customer.getCustomerID());
+                    if(cart == null)
+                    {
+
+                        cart = new Cart();
+                        cart.setCustomer(customer);
+                        CartDB.addNewCart(cart);
+                    }
+                    int flag = CartDB.checkListBook(cart,em.find(Book.class, bookID));
+                    if(flag == 1) // chua co trong list cart
+                    {
+                        cart.getBook().add(em.find(Book.class, bookID));
+                        trans.commit();
+                        url = "/shop.jsp";
+                    }
+                    else
+                    {
+                        trans.rollback();
+                        url = "/shop.jsp";
+                    }
+                }
+            }
         }
         sc.getRequestDispatcher(url)
                 .forward(request, response);

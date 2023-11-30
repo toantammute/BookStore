@@ -1,9 +1,6 @@
 package data;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
 import model.Book;
 import model.Cart;
 import model.Customer;
@@ -12,7 +9,7 @@ import model.Publisher;
 import java.util.List;
 
 public class CartDB {
-    public static void addToCart(Customer customer, Book book)
+    public static void addToCart(Customer customer)
     {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
 
@@ -22,10 +19,46 @@ public class CartDB {
         try
         {
             Cart cart = (Cart) query.getSingleResult();
-            cart.getBook().add(book);
         }catch(Exception e)
         {
             System.out.println(e);
         }
     }
+
+    public static Cart addNewCart(Cart cart)
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        trans.begin();
+        try
+        {
+            em.persist(cart);
+            trans.commit();
+            return cart;
+        }catch(Exception e)
+        {
+            trans.rollback();
+            System.out.println(e);
+            return null;
+        }finally
+        {
+            em.close();
+        }
+    }
+
+    public static int checkListBook(Cart cart, Book book)
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        for (var book1: cart.getBook()) {
+            if (book1.getBookID() == book.getBookID())
+            {
+                return 0;
+            }
+        }
+        return 1;
+    }
+
+
+
 }
