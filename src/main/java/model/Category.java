@@ -10,7 +10,7 @@ public class Category {
     @Id
     private String categoryID;
     private String categoryName;
-    @OneToMany(mappedBy = "category", cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE}, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "category",  fetch = FetchType.EAGER)
     private List<Book> books = new ArrayList<>();
 
     //Getter and setter

@@ -1,8 +1,10 @@
 package model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.criteria.CriteriaBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,14 +16,14 @@ public class Customer {
     private String customerID;
     private String customerName;
     private Date birthday;
-    private Boolean gender;
+    private Integer gender;
     private String password;
     private String address;
     private String email;
     private String phoneNum;
-    private Boolean isAdmin;
+    private Integer isAdmin;
     private String cardNum;
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(cascade = {CascadeType.REMOVE},mappedBy = "customer")
     private List<Invoice> invoice = new ArrayList<>();
 
 
@@ -49,11 +51,11 @@ public class Customer {
         this.birthday = birthday;
     }
 
-    public Boolean getGender() {
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(Boolean gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 
@@ -89,11 +91,11 @@ public class Customer {
         this.phoneNum = phoneNum;
     }
 
-    public Boolean getAdmin() {
+    public Integer getAdmin() {
         return isAdmin;
     }
 
-    public void setAdmin(Boolean admin) {
+    public void setAdmin(Integer admin) {
         isAdmin = admin;
     }
 

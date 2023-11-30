@@ -1,6 +1,4 @@
-import data.AuthorDB;
-import data.DBUtil;
-import data.StockDB;
+import data.*;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import model.*;
@@ -13,6 +11,7 @@ import java.time.Clock;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import static java.time.chrono.JapaneseEra.values;
 
@@ -196,7 +195,15 @@ public class test {
         em.close();
         DBUtil.getEmFactory().close();
 
-*/      StringBuilder error = new StringBuilder();
-        StockDB.deleteBookQuantity("KAA",0,error);
+*/      /*try
+        {
+        Book a = new Book();
+        a.setBookID(BookDB.generateId());
+        LineItemDB.insertLineItem(a, 50);
+        }catch(Exception e)
+        {
+            System.out.println(e);
+       */
+
     }
 }

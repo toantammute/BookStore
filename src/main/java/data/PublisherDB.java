@@ -36,34 +36,13 @@ public class PublisherDB {
         }
     }
 
-    public static void insertPublisher(String publisherName, StringBuilder error) {
+    public static void insertPublisher(Publisher publisher) {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
-        String queryString = "SELECT p FROM Publisher p WHERE LOWER(p.publisherName) = LOWER(:name) OR UPPER(p.publisherName) = UPPER(:name)";
-        Query query = em.createQuery(queryString, Publisher.class);
-        query.setParameter("name", publisherName );
-        List<Publisher> publishers = query.getResultList();
-        if(publishers.size() == 0)
-        {
-            trans.begin();
-            try {
-                Publisher publisher = new Publisher();
-                publisher.setPublisherID(generateId());
-                publisher.setPublisherName(publisherName);
-                em.persist(publisher);
-                error.append("INSERT SUCCESSFULLY ");
-                trans.commit();
-            } catch (Exception e) {
-                System.out.println(e);
-                trans.rollback();
-            } finally {
-                em.close();
-            }
-        }else
-        {
-            error.append("THIS PUBLISHER NAME EXISTED ");
-            em.close();
-        }
+        trans.begin();
+        em.persist(publisher);
+        trans.commit();
+        em.close();
     }
 
     public static List<Publisher> getPublisherList(){

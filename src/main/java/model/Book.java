@@ -22,7 +22,7 @@ public class Book {
     private Publisher publisher;
     @ManyToOne(optional = true)
     private Category category;
-    @ManyToMany(cascade = {CascadeType.MERGE}, mappedBy = "book", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "book", fetch = FetchType.EAGER)
     private List<Author> author = new ArrayList<>();
 
     //Getter and setter

@@ -5,10 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import data.AuthorDB;
-import data.BookDB;
-import data.CategoryDB;
-import data.PublisherDB;
+import data.*;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -47,7 +44,7 @@ public class testServlet extends HttpServlet {
                 <input placeholder="Publisher" type="text" class="form-control" id="publisher_name" name="publisher_name">
                 <input placeholder="Category" type="text" class="form-control" id="category_name" name="category_name">
                 <input type="number" name="quantity">
-             */
+
             String book_name = request.getParameter("book_name");
             String priceString = request.getParameter("price");
             Integer price = 0;
@@ -84,7 +81,42 @@ public class testServlet extends HttpServlet {
             }
             StringBuilder error = new StringBuilder();
             BookDB.insertBook(book_name, price, description, language, publishYear, imageData, publisher_name, category_name, author_name, quantity,error);
-
+*/
+            String customerName = request.getParameter("customerName");
+            String dateString = request.getParameter("dob");
+            Date dob = null;
+            if (dateString != null && !dateString.isEmpty()) {
+                try {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    dob = dateFormat.parse(dateString);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+            String genderString = request.getParameter("gender");
+            Integer gender = 0;
+            try
+            {
+                gender = Integer.parseInt(genderString);
+            }catch(Exception e)
+            {
+                System.out.println(e);
+            }
+            String password = request.getParameter("password");
+            String address = request.getParameter("address");
+            String email = request.getParameter("email");
+            String phoneNum = request.getParameter("phoneNum");
+            String isAdminString = request.getParameter("isAdmin");
+            Integer isAdmin = 0;
+            try
+            {
+                isAdmin = Integer.parseInt(isAdminString);
+            }catch(Exception e)
+            {
+                System.out.println(e);
+            }
+            String cardNum = request.getParameter("cardNum");
+            StringBuilder error = new StringBuilder();
 
         }
         getServletContext()

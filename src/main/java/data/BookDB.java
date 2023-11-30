@@ -38,7 +38,7 @@ public class BookDB {
         }
     }
 
-
+/*
     public static void insertBook(String bookName, Integer price, String description, String language, Date publisherYear, byte[] imageBook, String publisherName, String categoryName, String authorName, Integer quantity,  StringBuilder error) {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
@@ -92,7 +92,7 @@ public class BookDB {
             em.close();
         }
     }
-
+*/
     public static Book searchExactlyBook(String bookName, StringBuilder error)
     {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
@@ -118,7 +118,14 @@ public class BookDB {
         }
     }
 
-
+    public static void insertBook(Book book) {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        trans.begin();
+        em.persist(book);
+        trans.commit();
+        em.close();
+    }
 
 
 }

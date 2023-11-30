@@ -35,34 +35,13 @@ public class AuthorDB {
         }
     }
 
-    public static void insertAuthor(String authorName, StringBuilder error) {
+    public static void insertAuthor(Author author) {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
-        String queryString = "SELECT a FROM Author a WHERE LOWER(a.authorName) = LOWER(:name) OR UPPER(a.authorName) = UPPER(:name)";
-        Query query = em.createQuery(queryString, Author.class);
-        query.setParameter("name", authorName );
-        List<Author> authors = query.getResultList();
-        if(authors.size() == 0)
-        {
-            trans.begin();
-            try {
-                Author author = new Author();
-                author.setAuthorID(generateId());
-                author.setAuthorName(authorName);
-                em.persist(author);
-                error.append("INSERT SUCCESSFULLY ");
-                trans.commit();
-            } catch (Exception e) {
-                System.out.println(e);
-                trans.rollback();
-            } finally {
-                em.close();
-            }
-        }else
-        {
-            error.append("THIS AUTHOR NAME EXISTED ");
-            em.close();
-        }
+        trans.begin();
+        em.persist(author);
+        trans.commit();
+        em.close();
     }
 
     public static List<Author> getAuthorList(){
@@ -84,18 +63,17 @@ public class AuthorDB {
         }
     }
 
-    public static List<Author> searchAuthor(String authorName, StringBuilder error)
+    public static List<Author> searchAuthor(Author author)
     {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         try
         {
             String queryString = "SELECT a FROM Author a WHERE LOWER(a.authorName) LIKE LOWER(:name) OR UPPER(a.authorName) LIKE UPPER(:name) ORDER BY a.authorID ASC";
             Query query = em.createQuery(queryString, Author.class);
-            query.setParameter("name", "%" + authorName + "%");
+            query.setParameter("name", "%" + author.getAuthorName() + "%");
             List<Author> authors = query.getResultList();
             if(authors.size() == 0 )
             {
-                error.append("AUTHOR DOES NOT EXIST ");
                 return null;
             }
             else return authors;
@@ -109,17 +87,17 @@ public class AuthorDB {
         }
     }
 
-    public static void deleteAuthor(String authorID, StringBuilder error) {
+    public static void deleteAuthor(Author author, StringBuilder error) {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
         trans.begin();
         try {
             String queryString = "SELECT a FROM Author a where a.authorID = :authorID";
             Query query = em.createQuery(queryString, Author.class);
-            query.setParameter("authorID", authorID);
+            query.setParameter("authorID", author.getAuthorID());
             try {
-                Author author = (Author) query.getSingleResult();
-                em.remove(author);
+                Author author1 = (Author) query.getSingleResult();
+                em.remove(author1);
                 trans.commit();
             } catch (NoResultException e) {
                 error.append("AUTHOR ID DOES NOT EXIST ");
@@ -128,40 +106,6 @@ public class AuthorDB {
             trans.rollback();
             throw new RuntimeException(e);
         } finally {
-            em.close();
-        }
-    }
-    public static void updateAuthor(String authorID, String authorName, StringBuilder error) {
-        EntityManager em = DBUtil.getEmFactory().createEntityManager();
-        EntityTransaction trans = em.getTransaction();
-        String queryString = "SELECT a FROM Author a WHERE LOWER(a.authorName) = LOWER(:name) OR UPPER(a.authorName) = UPPER(:name)";
-        Query query = em.createQuery(queryString, Author.class);
-        query.setParameter("name", authorName );
-        List<Author> authors = query.getResultList();
-        if(authors.size() == 0)
-        {
-            trans.begin();
-            try {
-                String queryString1 = "SELECT a FROM Author a where a.authorID = :authorID";
-                Query query1 = em.createQuery(queryString1, Author.class);
-                query1.setParameter("authorID", authorID);
-                try {
-                    Author author = (Author) query1.getSingleResult();
-                    author.setAuthorName(authorName);
-                    em.merge(author);
-                    trans.commit();
-                } catch (NoResultException e) {
-                    error.append("AUTHOR ID DOES NOT EXIST ");
-                }
-            } catch (Exception e) {
-                trans.rollback();
-                throw new RuntimeException(e);
-            } finally {
-                em.close();
-            }
-        }else
-        {
-            error.append("AUTHOR EXISTED ");
             em.close();
         }
     }

@@ -10,7 +10,7 @@ public class Publisher {
     @Id
     private String publisherID;
     private String publisherName;
-    @OneToMany(mappedBy = "publisher", cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE}, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "publisher", fetch = FetchType.EAGER)
     private List<Book> books = new ArrayList<>();
 
     //Getter and setter
