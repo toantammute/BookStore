@@ -2,6 +2,7 @@ package servlet;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import model.Author;
+import model.Book;
 import model.Category;
 import model.Publisher;
 
@@ -22,17 +24,17 @@ public class testServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response)
             throws ServletException, IOException {
-        String url = "/test.jsp";
+        String url = "/shop.jsp";
 
         // get current action
         String action = request.getParameter("action");
         if (action == null) {
-            url = "/test.jsp";  // default action
+            url = "/shop.jsp";  // default action
         }
 
         // perform action and set URL to appropriate page
 
-        else if (action.equals("add_cate")) {
+        else if (action.equals("shop")) {
             /*
                 <input type="text" name="book_name">
                 <input type="number" name="price">
@@ -82,43 +84,36 @@ public class testServlet extends HttpServlet {
             StringBuilder error = new StringBuilder();
             BookDB.insertBook(book_name, price, description, language, publishYear, imageData, publisher_name, category_name, author_name, quantity,error);
 */
-            String customerName = request.getParameter("customerName");
-            String dateString = request.getParameter("dob");
-            Date dob = null;
-            if (dateString != null && !dateString.isEmpty()) {
-                try {
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    dob = dateFormat.parse(dateString);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+            List<Book> books = BookDB.getAllBook();
+            if(books.size() != 0)
+            {
+                request.setAttribute("books",books);
             }
-            String genderString = request.getParameter("gender");
-            Integer gender = 0;
-            try
-            {
-                gender = Integer.parseInt(genderString);
-            }catch(Exception e)
-            {
-                System.out.println(e);
-            }
-            String password = request.getParameter("password");
-            String address = request.getParameter("address");
-            String email = request.getParameter("email");
-            String phoneNum = request.getParameter("phoneNum");
-            String isAdminString = request.getParameter("isAdmin");
-            Integer isAdmin = 0;
-            try
-            {
-                isAdmin = Integer.parseInt(isAdminString);
-            }catch(Exception e)
-            {
-                System.out.println(e);
-            }
-            String cardNum = request.getParameter("cardNum");
-            StringBuilder error = new StringBuilder();
-
+            url = "/shop.jsp";
         }
+        else if(action.equals("add_book"))
+        {
+            String bookName = request.getParameter("bookName");
+            String priceString = request.getParameter("price");
+            Integer price = Integer.parseInt(priceString);
+            Book book = new Book();
+            Part img = request.getPart("imageBookFront");
+            InputStream imageInputStream = img.getInputStream();
+            byte[] imageData = imageInputStream.readAllBytes();
+            book.setImageBookFront(imageData);
+            Part img1 = request.getPart("imageBookBack");
+            InputStream imageInputStream1 = img1.getInputStream();
+            byte[] imageData1 = imageInputStream1.readAllBytes();
+            book.setImageBookBack(imageData1);
+            book.setBookID(BookDB.generateId());
+            book.setBookName(bookName);
+            book.setPrice(price);
+            BookDB.insertBook(book);
+            request.setAttribute("book",book);
+            url = "/shop.jsp";
+        }
+
+
         getServletContext()
                 .getRequestDispatcher(url)
                 .forward(request, response);

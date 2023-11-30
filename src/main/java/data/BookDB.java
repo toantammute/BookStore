@@ -127,5 +127,48 @@ public class BookDB {
         em.close();
     }
 
+    public static List<Book> getAllBook(){
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        try
+        {
+            String queryString = "SELECT b FROM Book b ORDER BY b.bookID ASC";
+            Query query = em.createQuery(queryString, Book.class);
+            List<Book> rows = query.getResultList();
+            return rows;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+            throw new RuntimeException("CANNOT GET BOOK", e);
+        }
+        finally {
+            em.close();
+        }
+    }
+
+    public static List<Book> searchBook(String bookName)
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        try
+        {
+            String queryString = "SELECT b FROM Book b WHERE LOWER(b.bookName) LIKE LOWER(:name) OR UPPER(b.bookName) LIKE UPPER(:name) ORDER BY b.bookID ASC";
+            Query query = em.createQuery(queryString, Book.class);
+            query.setParameter("name", "%" + bookName + "%");
+            List<Book> books = query.getResultList();
+            if(books.size() == 0 )
+            {
+                return null;
+            }
+            else return books;
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException("CANNOT GET FIND", e);
+        }
+        finally {
+            em.close();
+        }
+    }
+
 
 }

@@ -8,7 +8,7 @@ public class Stock {
     private String stockID;
     private Integer quantity;
     private Integer importPrice;
-    @OneToOne(optional = false, cascade = {CascadeType.REMOVE},fetch = FetchType.EAGER)
+    @OneToOne(optional = false, cascade = {CascadeType.MERGE, CascadeType.REMOVE},fetch = FetchType.EAGER)
     private Book book;
 
     //Getter and setter

@@ -49,7 +49,7 @@ public class CustomerDB {
         em.close();
     }
 
-    public static void updateCustomer(String customerID, String customerName, Date dob, Integer gender, String password, String address, String email, String phoneNum, Integer isAdmin, String cardNum, StringBuilder error)
+    public static void updateCustomer(String customerID, String customerName, Date dob, String gender, String password, String address, String email, String phoneNum, Integer isAdmin, String cardNum, StringBuilder error)
     {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
@@ -84,13 +84,13 @@ public class CustomerDB {
         }
     }
 
-    public static List<Author> getCustomerList(){
+    public static List<Customer> getCustomerList(){
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         try
         {
             String queryString = "SELECT c FROM Customer c ORDER BY c.customerID ASC";
             Query query = em.createQuery(queryString, Customer.class);
-            List<Author> rows = query.getResultList();
+            List<Customer> rows = query.getResultList();
             return rows;
         }
         catch (Exception e)
@@ -102,7 +102,31 @@ public class CustomerDB {
             em.close();
         }
     }
-
+    public static Customer findCustomer(String email){
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        try
+        {
+            String queryString = "SELECT c FROM Customer c where c.email = :email";
+            Query query = em.createQuery(queryString, Customer.class);
+            query.setParameter("email", email);
+            try
+            {
+                Customer a = (Customer) query.getSingleResult();
+                return a;
+            }catch(NoResultException e)
+            {
+                return null;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+            throw new RuntimeException("CANNOT GET Customer", e);
+        }
+        finally {
+            em.close();
+        }
+    }
 
 
 }

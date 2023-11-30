@@ -2,10 +2,8 @@ package model;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.text.NumberFormat;
+import java.util.*;
 
 @Entity
 public class Book {
@@ -17,7 +15,25 @@ public class Book {
     private String language;
     @Temporal(TemporalType.DATE)
     private Date publisherYear;
-    private byte[] imageBook;
+    private byte[] imageBookFront;
+    private byte[] imageBookBack;
+
+    public byte[] getImageBookFront() {
+        return imageBookFront;
+    }
+
+    public void setImageBookFront(byte[] imageBookFront) {
+        this.imageBookFront = imageBookFront;
+    }
+
+    public byte[] getImageBookBack() {
+        return imageBookBack;
+    }
+
+    public void setImageBookBack(byte[] imageBookBack) {
+        this.imageBookBack = imageBookBack;
+    }
+
     @ManyToOne(optional = true)
     private Publisher publisher;
     @ManyToOne(optional = true)
@@ -68,12 +84,6 @@ public class Book {
         this.publisherYear = publisherYear;
     }
 
-    public byte[] getImageBook() {
-        return imageBook;
-    }
-    public void setImage(byte[] imageBook) {
-        this.imageBook = imageBook;
-    }
 
     public Publisher getPublisher() {
         return publisher;
@@ -95,4 +105,12 @@ public class Book {
     public void setAuthor(List<Author> author) {
         this.author = author;
     }
+
+    public String getPriceFormat() {
+        Locale locale = new Locale("en", "US");
+        NumberFormat currency = NumberFormat.getCurrencyInstance(locale);
+        return currency.format(this.price);
+    }
+
+
 }

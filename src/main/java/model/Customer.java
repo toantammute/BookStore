@@ -16,7 +16,7 @@ public class Customer {
     private String customerID;
     private String customerName;
     private Date birthday;
-    private Integer gender;
+    private String gender;
     private String password;
     private String address;
     private String email;
@@ -51,11 +51,11 @@ public class Customer {
         this.birthday = birthday;
     }
 
-    public Integer getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Integer gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 

@@ -62,19 +62,13 @@ public class StockDB {
         }
     }
 
-    public static Stock insertStockBook(StringBuilder error) {
+    public static void insertStockBook(Stock stock) {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
         trans.begin();
-        try
-        {
-            Stock a = new Stock();
-            a.setStockID(generateId());
-            return a;
-        }catch (Exception e)
-        {
-            return null;
-        }
+        em.persist(stock);
+        trans.commit();
+        em.close();
     }
 
 

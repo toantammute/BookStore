@@ -43,7 +43,7 @@ public class CategoryDB {
     }
 
     // INSERT CATEGORY
-    public static void insertCategory(Category category, StringBuilder error) {
+    public static void insertCategory(Category category) {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
         trans.begin();

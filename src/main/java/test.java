@@ -204,6 +204,13 @@ public class test {
         {
             System.out.println(e);
        */
+        Customer customer = new Customer();
+        customer.setCustomerID(CustomerDB.generateId());
+        customer.setEmail("customer@gmail.com");
+        customer.setPassword("123");
+        customer.setCustomerName("customer");
+        customer.setAdmin(0);
+        CustomerDB.insertCustomer(customer);
 
     }
 }

@@ -29,43 +29,18 @@
 <body>
     <div class="container"></div>
         <form action="test" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="action" value="add_cate">
+            <input type="hidden" name="action" value="add_book">
             <div class="mt-3">
-                <input type="text" name="customerName" placeholder="cus_name">
-                <input type="date" name="dob" placeholder="dob">
-                <input type="number" name="gender" placeholder="gender">
-                <input type="password" name="password" placeholder="password">
-                <input type="text" name="address" placeholder="address">
-                <input type="email" name="email" placeholder="email">
-                <input placeholder="phoneNum" type="text" class="form-control" id="phonenum" name="phoneNum">
-                <input placeholder="number" type="number" class="form-control" id="isAdmin" name="isAdmin">
-                <input placeholder="Category" type="text" class="form-control" id="cardNum" name="cardNum">
+                <input type="text" name="bookName" placeholder="book_name">
+                <input type="number" name="price">
+                <input type="file" name="imageBookFront">
+                <input type="file" name="imageBookBack">
             </div>
-            <c:if test="${not empty message}">
-                <p style="color: red"><span>*</span>${message}</p>
-            </c:if>
             <div class="mt-3">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
     </div>
 
-<div class="container">
-    <table>
-        <tr>
-            <th>Publisher ID</th>
-            <th>Publisher Name</th>
-        </tr>
-
-        <c:forEach var="p" items="${publishers}">
-            <tr>
-                <c:if test="${not empty p.publisherID and not empty p.publisherName}">
-                    <td>${p.publisherID}</td>
-                    <td>${p.publisherName}</td>
-                </c:if>
-            </tr>
-        </c:forEach>
-    </table>
-</div>
 </body>
 </html>
