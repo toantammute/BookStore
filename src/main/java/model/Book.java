@@ -10,7 +10,7 @@ public class Book {
     @Id
     private String bookID;
     private String bookName;
-    private Integer price;
+    private Double price;
     private String description;
     private String language;
     @Temporal(TemporalType.DATE)
@@ -56,10 +56,10 @@ public class Book {
         this.bookName = bookName;
     }
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

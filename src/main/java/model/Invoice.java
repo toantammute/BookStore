@@ -24,6 +24,8 @@ public class Invoice {
     @OneToMany(cascade = {CascadeType.REMOVE}, fetch = FetchType.EAGER)
     private List<LineItem> lineItem = new ArrayList<>();
 
+
+
     //Getter and setter
     public String getInvoiceID() {
         return invoiceID;

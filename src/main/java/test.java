@@ -204,9 +204,25 @@ public class test {
         {
             System.out.println(e);
        */
-        Cart a = em.find(Cart.class, "USER0004");
-        System.out.println(a.getBook().size());
+
+        Checkout checkout = em.find(Checkout.class, "USER0002"); // checkout
+        LineItem lineItem = em.find(LineItem.class, "LINE0000");
+        trans.begin();
+        for (var item: checkout.getLineItemList()) {
+            if(item.getItem().getBookID().equals(lineItem.getItem().getBookID()))
+            {
+                item.setQuantity(item.getQuantity()+1);
+            }
+        }
+        em.persist(checkout);
+        trans.commit();
+
+        for (var item: checkout.getLineItemList()) {
+            System.out.println(item.getQuantity());
+        }
         em.close();
+
+
 
     }
 }

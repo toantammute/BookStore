@@ -81,7 +81,7 @@
                     <p>Hello, ${customer.customerName} !</p>
                     <li><a href="login?action=logout">LOG OUT</a></li>
                 </c:if>
-                <c:if test="${empty user}">
+                <c:if test="${empty customer}">
                     <li><a href="login.jsp">LOGIN</a></li>
                 </c:if>
                 <li class="active"><a href="test?action=shop">Shop</a></li>

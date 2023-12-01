@@ -58,25 +58,16 @@ public class shopservlet extends HttpServlet {
                     trans.begin();
                     String bookID = request.getParameter("bookID");
                     Cart cart = em.find(Cart.class, customer.getCustomerID());
-                    if(cart == null)
-                    {
-
-                        cart = new Cart();
-                        cart.setCustomer(customer);
-                        CartDB.addNewCart(cart);
-                    }
-                    int flag = CartDB.checkListBook(cart,em.find(Book.class, bookID));
-                    if(flag == 1) // chua co trong list cart
+                    int flag = CartDB.checkListBook(cart, em.find(Book.class,bookID));
+                    if(flag == 1)
                     {
                         cart.getBook().add(em.find(Book.class, bookID));
+                        List<Book> books = cart.getBook();
+                        session.setAttribute("bookcart", books);
                         trans.commit();
-                        url = "/shop.jsp";
                     }
-                    else
-                    {
-                        trans.rollback();
-                        url = "/shop.jsp";
-                    }
+                    url = "/shop.jsp";
+
                 }
             }
         }

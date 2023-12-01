@@ -3,11 +3,19 @@ import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
+import data.CartDB;
+import data.CheckoutDB;
 import data.CustomerDB;
+import data.DBUtil;
+import jakarta.persistence.EntityManager;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+import model.Book;
+import model.Cart;
+import model.Checkout;
 import model.Customer;
 
 @WebServlet("/login")
@@ -17,7 +25,7 @@ public class loginsignupServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response)
             throws ServletException, IOException {
-
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
         String url = "/shop.jsp";
         ServletContext sc = getServletContext();
         String action = request.getParameter("action");
@@ -38,6 +46,15 @@ public class loginsignupServlet extends HttpServlet {
                 {
                     HttpSession session = request.getSession();
                     session.setAttribute("customer",customer);
+                    Cart cart = em.find(Cart.class, customer.getCustomerID());
+                    if(cart == null)
+                    {
+                        cart = new Cart();
+                        cart.setCustomer(customer);
+                        CartDB.addNewCart(cart);
+                    }
+                    List<Book> bookcart = cart.getBook();
+                    session.setAttribute("bookcart",bookcart);
                     url = "/shop.jsp";
                 }
                 else
@@ -83,6 +100,13 @@ public class loginsignupServlet extends HttpServlet {
             customer.setPhoneNum(phoneNum);
             CustomerDB.insertCustomer(customer);
             customer.setAdmin(0);
+            Cart cart = new Cart();
+            cart.setCustomer(customer);
+            CartDB.addNewCart(cart);
+
+            Checkout checkout = new Checkout();
+            checkout.setCustomer(customer);
+            CheckoutDB.addNewChekout(checkout);
             url = "/login.jsp";
         }
         else if (action.equals("logout")) {

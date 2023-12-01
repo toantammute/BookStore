@@ -34,3 +34,26 @@ public class LineItem {
         this.item = item;
     }
 }
+
+
+
+/*
+Cach tao :
+invoice chua thang cart ( chua 1 thang userid, chua listlineitem )
+
+cart 1 - 1 user => cart co id la user
+
+invoice.cart.list<lineitem>
+
+select bill.status from bill where bill.cart.id = id
+
+cach no :
+cart listitem => invoice.list<lineitem> = cart.list<lineitem>
+invoice nó user id vs list
+
+
+select bill.status from bill where bill.user.id = id
+
+
+
+* */

@@ -1,4 +1,7 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="model.Book" %>
+<%@ page import="java.util.List" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<%@taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,10 +10,10 @@
   <meta name="description" content="">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <!-- The above 4 meta tags must come first in the head; any other head content must come after these tags -->
 
   <!-- Title  -->
-  <title>Book Shop - Ecommerce Website  | Cart</title>
+  <title>Book Shop - Ecommerce Website  | Favourite</title>
 
   <!-- Favicon  -->
   <link rel="icon" href="img/core-img/favicon.ico">
@@ -49,7 +52,7 @@
   <div class="mobile-nav">
     <!-- Navbar Brand -->
     <div class="amado-navbar-brand">
-      <a href="index.jsp"><img src="img/core-img/logo.png" alt=""></a>
+      <a href="shop.jsp"><img src="img/core-img/logo.png" alt=""></a>
     </div>
     <!-- Navbar Toggler -->
     <div class="amado-navbar-toggler">
@@ -65,12 +68,12 @@
     </div>
     <!-- Logo -->
     <div class="logo">
-      <a href="index.jsp"><img src="img/core-img/logo.png" alt=""></a>
+      <a href="shop.jsp"><img src="img/core-img/logo.png" alt=""></a>
     </div>
     <!-- Amado Nav -->
     <nav class="amado-nav">
       <ul>
-        <li><a href="index.jsp">Home</a></li>
+        <li><a href="login.jsp">LOGIN</a></li>
         <li><a href="shop.jsp">Shop</a></li>
         <li><a href="product-details.jsp">Product</a></li>
         <li class="active"><a href="cart.jsp">Cart</a></li>
@@ -85,7 +88,7 @@
     <!-- Cart Menu -->
     <div class="cart-fav-search mb-100">
       <a href="cart.jsp" class="cart-nav"><img src="img/core-img/cart.png" alt=""> Cart <span>(0)</span></a>
-      <a href="#" class="fav-nav"><img src="img/core-img/favorites.png" alt=""> Favourite</a>
+      <a href="favourite.jsp" class="fav-nav"><img src="img/core-img/favorites.png" alt=""> Favourite</a>
       <a href="#" class="search-nav"><img src="img/core-img/search.png" alt=""> Search</a>
     </div>
     <!-- Social Button -->
@@ -103,169 +106,113 @@
       <div class="row">
         <div class="col-12 col-lg-8">
           <div class="cart-title mt-50">
-            <h2>Shopping Cart</h2>
+            <h2>Shopping Favourite</h2>
           </div>
 
           <div class="cart-table clearfix">
             <table class="table table-responsive">
               <thead>
               <tr>
-                <th></th>
+                <th>Image</th>
                 <th>Name</th>
                 <th>Price</th>
-                <th>Quantity</th>
+                <th> </th>
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td class="cart_product_img">
-                  <a href="#"><img src="img/bg-img/cart1.jpg" alt="Product"></a>
-                </td>
-                <td class="cart_product_desc">
-                  <h5>White Modern Chair</h5>
-                </td>
-                <td class="price">
-                  <span>$130</span>
-                </td>
-                <td class="qty">
-                  <div class="qty-btn d-flex">
-                    <p>Qty</p>
-                    <div class="quantity">
-                      <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                      <input type="number" class="qty-text" id="qty" step="1" min="1" max="300" name="quantity" value="1">
-                      <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="cart_product_img">
-                  <a href="#"><img src="img/bg-img/cart2.jpg" alt="Product"></a>
-                </td>
-                <td class="cart_product_desc">
-                  <h5>Minimal Plant Pot</h5>
-                </td>
-                <td class="price">
-                  <span>$10</span>
-                </td>
-                <td class="qty">
-                  <div class="qty-btn d-flex">
-                    <p>Qty</p>
-                    <div class="quantity">
-                      <span class="qty-minus" onclick="var effect = document.getElementById('qty2'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                      <input type="number" class="qty-text" id="qty2" step="1" min="1" max="300" name="quantity" value="1">
-                      <span class="qty-plus" onclick="var effect = document.getElementById('qty2'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="cart_product_img">
-                  <a href="#"><img src="img/bg-img/cart3.jpg" alt="Product"></a>
-                </td>
-                <td class="cart_product_desc">
-                  <h5>Minimal Plant Pot</h5>
-                </td>
-                <td class="price">
-                  <span>$10</span>
-                </td>
-                <td class="qty">
-                  <div class="qty-btn d-flex">
-                    <p>Qty</p>
-                    <div class="quantity">
-                      <span class="qty-minus" onclick="var effect = document.getElementById('qty3'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                      <input type="number" class="qty-text" id="qty3" step="1" min="1" max="300" name="quantity" value="1">
-                      <span class="qty-plus" onclick="var effect = document.getElementById('qty3'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                    </div>
-                  </div>
-                </td>
-              </tr>
+              <% List<Book> books = (List<Book>) session.getAttribute("bookcart");%>
+              <c:forEach var="book" items="${bookcart}">
+                <tr>
+                  <td class="cart_product_img">
+                    <a href="#"><img src="img/bg-img/cart1.jpg" alt="Product"></a>
+                  </td>
+                  <td class="cart_product_desc">
+                    <h5>${book.bookName}</h5>
+                  </td>
+                  <td class="price">
+                    <span>${book.priceFormat}</span>
+                  </td>
+                  <td class="qty">
+                    <form action="cart" method="post">
+                      <input type="hidden" name="action" value="cart">
+                      <input type="hidden" name="bookID" value="${book.bookID}">
+                      <input type="submit" value="Add To Cart">
+                    </form>
+                  </td>
+                </tr>
+              </c:forEach>
               </tbody>
             </table>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+  <!-- ##### Main Content Wrapper End ##### -->
+</div>
+  <!-- ##### Footer Area Start ##### -->
+  <footer class="footer_area clearfix">
+    <div class="container">
+      <div class="row align-items-center">
+        <!-- Single Widget Area -->
         <div class="col-12 col-lg-4">
-          <div class="cart-summary">
-            <h5>Cart Total</h5>
-            <ul class="summary-table">
-              <li><span>subtotal:</span> <span>$140.00</span></li>
-              <li><span>delivery:</span> <span>Free</span></li>
-              <li><span>total:</span> <span>$140.00</span></li>
-            </ul>
-            <div class="cart-btn mt-100">
-              <a href="checkout.jsp" class="btn amado-btn w-100">Checkout</a>
+          <div class="single_widget_area">
+            <!-- Logo -->
+            <div class="footer-logo mr-50">
+              <a href="shop.jsp"><img src="img/core-img/logo2.png" alt=""></a>
+            </div>
+            <!-- Copywrite Text -->
+            <p class="copywrite"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->& Re-distributed by <a href="https://themewagon.com/" target="_blank">Themewagon</a>
+            </p>
+          </div>
+        </div>
+        <!-- Single Widget Area -->
+        <div class="col-12 col-lg-8">
+          <div class="single_widget_area">
+            <!-- Footer Menu -->
+            <div class="footer_menu">
+              <nav class="navbar navbar-expand-lg justify-content-end">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#footerNavContent" aria-controls="footerNavContent" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+                <div class="collapse navbar-collapse" id="footerNavContent">
+                  <ul class="navbar-nav ml-auto">
+                    <%--                                        <li class="nav-item active">--%>
+                    <%--                                            <a class="nav-link" href="login.jsp">Home</a>--%>
+                    <%--                                        </li>--%>
+                    <li class="nav-item">
+                      <a class="nav-link" href="shop.jsp">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="product-details.jsp">Product</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="cart.jsp">Cart</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="checkout.jsp">Checkout</a>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
-<!-- ##### Main Content Wrapper End ##### -->
+  </footer>
+  <!-- ##### Footer Area End ##### -->
 
-<!-- ##### Footer Area Start ##### -->
-<footer class="footer_area clearfix">
-  <div class="container">
-    <div class="row align-items-center">
-      <!-- Single Widget Area -->
-      <div class="col-12 col-lg-4">
-        <div class="single_widget_area">
-          <!-- Logo -->
-          <div class="footer-logo mr-50">
-            <a href="index.jsp"><img src="img/core-img/logo2.png" alt=""></a>
-          </div>
-          <!-- Copywrite Text -->
-          <p class="copywrite"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->& Re-distributed by <a href="https://themewagon.com/" target="_blank">Themewagon</a>
-          </p>
-        </div>
-      </div>
-      <!-- Single Widget Area -->
-      <div class="col-12 col-lg-8">
-        <div class="single_widget_area">
-          <!-- Footer Menu -->
-          <div class="footer_menu">
-            <nav class="navbar navbar-expand-lg justify-content-end">
-              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#footerNavContent" aria-controls="footerNavContent" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
-              <div class="collapse navbar-collapse" id="footerNavContent">
-                <ul class="navbar-nav ml-auto">
-                  <li class="nav-item active">
-                    <a class="nav-link" href="index.jsp">Home</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="shop.jsp">Shop</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="product-details.jsp">Product</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="cart.jsp">Cart</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="checkout.jsp">Checkout</a>
-                  </li>
-                </ul>
-              </div>
-            </nav>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
-<!-- ##### Footer Area End ##### -->
-
-<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
-<script src="js/jquery/jquery-2.2.4.min.js"></script>
-<!-- Popper js -->
-<script src="js/popper.min.js"></script>
-<!-- Bootstrap js -->
-<script src="js/bootstrap.min.js"></script>
-<!-- Plugins js -->
-<script src="js/plugins.js"></script>
-<!-- Active js -->
-<script src="js/active.js"></script>
+  <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
+  <script src="js/jquery/jquery-2.2.4.min.js"></script>
+  <!-- Popper js -->
+  <script src="js/popper.min.js"></script>
+  <!-- Bootstrap js -->
+  <script src="js/bootstrap.min.js"></script>
+  <!-- Plugins js -->
+  <script src="js/plugins.js"></script>
+  <!-- Active js -->
+  <script src="js/active.js"></script>
 
 </body>
 

@@ -5,19 +5,13 @@ import jakarta.persistence.*;
 @Entity
 public class Stock {
     @Id
-    private String stockID;
+    @OneToOne(optional = false, cascade = {CascadeType.REMOVE},fetch = FetchType.EAGER)
+    private Book book;
     private Integer quantity;
     private Integer importPrice;
-    @OneToOne(optional = false, cascade = {CascadeType.MERGE, CascadeType.REMOVE},fetch = FetchType.EAGER)
-    private Book book;
+
 
     //Getter and setter
-    public String getStockID() {
-        return stockID;
-    }
-    public void setStockID(String stockID) {
-        this.stockID = stockID;
-    }
 
     public Integer getQuantity() {
         return quantity;

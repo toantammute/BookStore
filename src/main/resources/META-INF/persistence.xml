@@ -14,6 +14,7 @@
     <class>model.Invoice</class>
     <class>model.Customer</class>
     <class>model.Cart</class>
+    <class>model.Checkout</class>
 
     <properties>
       <property name="jakarta.persistence.jdbc.url"

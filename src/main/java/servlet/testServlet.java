@@ -95,7 +95,7 @@ public class testServlet extends HttpServlet {
         {
             String bookName = request.getParameter("bookName");
             String priceString = request.getParameter("price");
-            Integer price = Integer.parseInt(priceString);
+            Double price = Double.parseDouble(priceString);
             Book book = new Book();
             Part img = request.getPart("imageBookFront");
             InputStream imageInputStream = img.getInputStream();
