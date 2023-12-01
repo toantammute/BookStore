@@ -1,25 +1,17 @@
 package servlet;
 import java.io.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
-import data.BookDB;
-import data.CartDB;
-import data.CustomerDB;
-import data.DBUtil;
+import data.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import model.Book;
-import model.Cart;
-import model.Customer;
+import model.*;
 
 @WebServlet("/shop")
-public class shopservlet extends HttpServlet {
+public class ShopServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request,
@@ -68,6 +60,28 @@ public class shopservlet extends HttpServlet {
                     }
                     url = "/shop.jsp";
 
+                }
+                else if(aim.equals("addtocart"))
+                {
+                    trans.begin();
+
+                    String bookID = request.getParameter("bookID");
+                    Book book = em.find(Book.class, bookID);
+
+                    // tao lineitem moi
+                    LineItem lineItem = new LineItem();
+                    lineItem.setLineItemID(LineItemDB.generateId());
+                    lineItem.setItem(book); // 1
+                    Integer quantity = 1;
+                    lineItem.setQuantity(quantity);
+
+                    customer = (Customer) session.getAttribute("customer");
+                    Checkout checkout = em.find(Checkout.class, customer.getCustomerID());
+
+                    checkout = CheckoutDB.addItem(checkout,lineItem);
+                    List<LineItem> lineItemList = checkout.getLineItemList();
+                    session.setAttribute("listlineitem", lineItemList);
+                    url = "/checkout.jsp";
                 }
             }
         }

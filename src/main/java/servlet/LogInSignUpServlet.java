@@ -19,7 +19,7 @@ import model.Checkout;
 import model.Customer;
 
 @WebServlet("/login")
-public class loginsignupServlet extends HttpServlet {
+public class LogInSignUpServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request,

@@ -3,6 +3,7 @@ import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import model.*;
 import org.eclipse.persistence.internal.sessions.DirectCollectionChangeRecord;
+import org.eclipse.tags.shaded.org.apache.bcel.generic.CHECKCAST;
 
 import javax.sound.sampled.Line;
 import java.text.ParseException;
@@ -10,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
@@ -203,26 +205,14 @@ public class test {
         }catch(Exception e)
         {
             System.out.println(e);
-       */
+
 
         Checkout checkout = em.find(Checkout.class, "USER0002"); // checkout
-        LineItem lineItem = em.find(LineItem.class, "LINE0000");
-        trans.begin();
-        for (var item: checkout.getLineItemList()) {
-            if(item.getItem().getBookID().equals(lineItem.getItem().getBookID()))
-            {
-                item.setQuantity(item.getQuantity()+1);
-            }
-        }
-        em.persist(checkout);
-        trans.commit();
-
+        System.out.println(CheckoutDB.totalCheckout(em.find(Customer.class,"USER0002")));
         for (var item: checkout.getLineItemList()) {
             System.out.println(item.getQuantity());
-        }
+        }*/
         em.close();
-
-
 
     }
 }

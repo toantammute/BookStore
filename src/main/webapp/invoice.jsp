@@ -1,18 +1,7 @@
-<%@ page import="model.LineItem" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="data.CheckoutDB" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ page import="model.Customer" %>
-<%@ page import="model.Checkout" %><%--
-  Created by IntelliJ IDEA.
-  User: hoanganh033
-  Date: 01/12/2023
-  Time: 21:36
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="data.CheckoutDB" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="jakarta.tags.core" %>
-<html>
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="">
@@ -21,7 +10,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title  -->
-    <title>Amado - Furniture Ecommerce Template | Cart</title>
+    <title>Amado - Furniture Ecommerce Template | Checkout</title>
 
     <!-- Favicon  -->
     <link rel="icon" href="img/core-img/favicon.ico">
@@ -91,11 +80,7 @@
                 <li><a href="test?action=shop">Shop</a></li>
             </ul>
         </nav>
-        <!-- Button Group -->
-        <%--            <div class="amado-btn-group mt-30 mb-100">--%>
-        <%--                <a href="#" class="btn amado-btn mb-15">%Discount%</a>--%>
-        <%--                <a href="#" class="btn amado-btn active">New this week</a>--%>
-        <%--            </div>--%>
+
         <!-- Cart Menu -->
         <%
             Integer size = 0;
@@ -122,60 +107,38 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12 col-lg-8">
-                    <div class="cart-title mt-50">
-                        <h2>Shopping Cart</h2>
-                    </div>
+                    <div class="checkout_details_area mt-50 clearfix">
 
-                    <div class="cart-table clearfix">
-                        <table class="table table-responsive">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>Name</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <% List<LineItem> lineItemList = new ArrayList<>();
-                                lineItemList = CheckoutDB.getAllCheckout((Customer) session.getAttribute("customer"));
-                                session.setAttribute("listlineitem",lineItemList );
-                            %>
-                            <c:forEach var="lineitem" items="${listlineitem}">
-                            <tr>
-                                <td class="cart_product_img">
-                                    <a href="#"><img src="img/bg-img/cart1.jpg" alt="Product"></a>
-                                </td>
-                                <td class="cart_product_desc">
-                                    <h5>${lineitem.getItem().getBookName()}</h5>
-                                </td>
-                                <td class="price">
-                                    <span>${lineitem.getItem().getPriceFormat()}</span>
-                                </td>
-                                <td>
-                                    <br>
-                                    <form action="cart" method="post">
-                                        <input type="text" name="quantity" value="${lineitem.quantity}" width="1">
-                                        <input type="hidden" name="action" value="update">
-                                        <input type="hidden" name="bookID" value="${lineitem.getItem().getBookID()}">
-                                        <input type="submit" value="Update">
-                                    </form>
-                                    <form action="cart" method="post">
-                                        <input type="hidden" name="action" value="removefromcheckout">
-                                        <input type="hidden" name="bookID" value="${lineitem.getItem().getBookID()}">
-                                        <input type="submit" value="Remove">
-                                    </form>
-                                    <br>
+                        <div class="cart-title">
+                            <h2>Checkout</h2>
+                        </div>
 
-                                </td>
-                            </tr>
-                            </c:forEach>
-
-                            </tbody>
-                        </table>
+                        <form id="myForm" action="checkout" method="post" >
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <p>Name</p>
+                                    <input type="text" class="form-control" id="customerName" name="customerName" value="${customer.customerName}" placeholder="Type your name..." required>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <p>Email</p>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Type your email..." value="${customer.email}" required>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <p>Address</p>
+                                    <input type="text" class="form-control mb-3" id="address" name="address" placeholder="Type your address" value="${customer.address}" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <p>Phone Number</p>
+                                    <input type="number" class="form-control" id="phone_number" name="phoneNum" min="0" placeholder="Type your phone number..." value="${customer.phoneNum}" required>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <p>Comment</p>
+                                    <textarea name="comment" class="form-control w-100" id="comment" cols="30" rows="10" placeholder="Leave a comment about your order"></textarea>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <!--- fasdfsdfasd-->
                 <div class="col-12 col-lg-4">
                     <div class="cart-summary">
                         <h5>Cart Total</h5>
@@ -184,18 +147,28 @@
                                 String total = CheckoutDB.getTotalCurrencyFormat(customer);
                                 String totaldiscount = CheckoutDB.getTotalDiscountCurrencyFormat(customer);
                                 Integer discount = CheckoutDB.getDiscount(customer);
-
                             %>
                             <li><span>subtotal:</span> <span><%=total%></span></li>
                             <li><span>discount:</span> <span><%=discount%>%</span></li>
                             <li><span>total:</span> <span><%=totaldiscount%></span></li>
                         </ul>
-                        <% if(CheckoutDB.totalCheckout(customer) > 0)
-                        {%>
-                        <div class="cart-btn mt-100">
-                            <a href="invoice.jsp" class="btn amado-btn w-100">Checkout</a>
+                        <div class="payment-method">
+                            <!-- Cash on delivery -->
+                            <div class="custom-control custom-checkbox mr-sm-2">
+                                <input type="radio" name ="payment" class="custom-control-input" id="cod" value="cash" checked>
+                                <label class="custom-control-label" for="cod">Cash on Delivery</label>
+                            </div>
+                            <!-- Paypal -->
+                            <div class="custom-control custom-checkbox mr-sm-2">
+                                <input type="radio" name="payment" class="custom-control-input" value="card" id="paypal">
+                                <label class="custom-control-label" for="paypal">Paypal <img class="ml-15" src="img/core-img/paypal.png" alt=""></label>
+                            </div>
                         </div>
-                        <%}%>
+
+                        <div class="cart-btn mt-100">
+                            <a class="btn amado-btn w-100" onclick="submitForm()" >Checkout</a>
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -242,9 +215,8 @@
                     </div>
                     <!-- Copywrite Text -->
                     <p class="copywrite"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->& Re-distributed by <a href="https://themewagon.com/" target="_blank">Themewagon</a>
-                    </p>
+                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a> & Re-distributed by <a href="https://themewagon.com/" target="_blank">Themewagon</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
                 </div>
             </div>
             <!-- Single Widget Area -->
@@ -292,7 +264,20 @@
 <script src="js/plugins.js"></script>
 <!-- Active js -->
 <script src="js/active.js"></script>
+<script language="JavaScript" >
+    function submitForm() {
+        // Lấy giá trị của radio button được chọn
+        var paymentMethod = document.querySelector('input[name="payment"]:checked').value;
 
+        // Gán giá trị của radio button vào một trường ẩn trong form
+        var hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'payment';
+        hiddenInput.value = paymentMethod;
+        document.getElementById('myForm').appendChild(hiddenInput);
+        document.getElementById("myForm").submit();
+    }
+</script>
 </body>
 
 </html>

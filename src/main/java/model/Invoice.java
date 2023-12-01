@@ -17,10 +17,10 @@ public class Invoice {
     private Date orderDate;
     //@Temporal(TemporalType.DATE)
     private Date deliDate;
-    private Integer totalAmount;
-    private Integer totalPay;
-    @OneToOne(optional = false)
-    private Discount discount;
+    private String totalAmount;
+    private String totalPay;
+
+    private int discount;
     @OneToMany(cascade = {CascadeType.REMOVE}, fetch = FetchType.EAGER)
     private List<LineItem> lineItem = new ArrayList<>();
 
@@ -69,28 +69,19 @@ public class Invoice {
         this.deliDate = deliDate;
     }
 
-    public Integer getTotalAmount() {
+    public String getTotalAmount() {
         return totalAmount;
     }
-    public void setTotalAmount(Integer totalAmount) {
+    public void setTotalAmount(String totalAmount) {
         this.totalAmount = totalAmount;
     }
 
-    public Integer getTotalPay() {
+    public String getTotalPay() {
         return totalPay;
     }
-    public void setTotalPay(Integer totalPay) {
+    public void setTotalPay(String totalPay) {
         this.totalPay = totalPay;
     }
-
-    public Discount getDiscount() {
-        return discount;
-    }
-    public void setDiscount(Discount discount) {
-        this.discount = discount;
-    }
-
-
 
     public List<LineItem> getLineItem() {
         return lineItem;
@@ -108,5 +99,13 @@ public class Invoice {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
     }
 }

@@ -4,6 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 @Entity
 public class LineItem {
     @Id
@@ -33,27 +36,25 @@ public class LineItem {
     public void setItem(Book item) {
         this.item = item;
     }
+
+    public double totalItemPrice()
+    {
+        return quantity*item.getPrice();
+    }
+
+    public String getUnitPrice() {
+        Locale locale = new Locale("en", "US");
+        NumberFormat currency = NumberFormat.getCurrencyInstance(locale);
+        return currency.format(item.getPrice());
+    }
+
+    public String getTotalPrice() {
+        Locale locale = new Locale("en", "US");
+        NumberFormat currency = NumberFormat.getCurrencyInstance(locale);
+        return currency.format(totalItemPrice());
+    }
 }
 
 
 
-/*
-Cach tao :
-invoice chua thang cart ( chua 1 thang userid, chua listlineitem )
 
-cart 1 - 1 user => cart co id la user
-
-invoice.cart.list<lineitem>
-
-select bill.status from bill where bill.cart.id = id
-
-cach no :
-cart listitem => invoice.list<lineitem> = cart.list<lineitem>
-invoice nó user id vs list
-
-
-select bill.status from bill where bill.user.id = id
-
-
-
-* */

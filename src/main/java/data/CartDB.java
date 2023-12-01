@@ -1,10 +1,7 @@
 package data;
 
 import jakarta.persistence.*;
-import model.Book;
-import model.Cart;
-import model.Customer;
-import model.Publisher;
+import model.*;
 
 import java.util.List;
 
@@ -57,6 +54,27 @@ public class CartDB {
             }
         }
         return 1;
+    }
+
+    public static void removeToCart(Cart cart, Book book)
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        trans.begin();
+        Cart newCart = em.find(Cart.class, cart.getCustomer().getCustomerID());
+        newCart.getBook().remove(book);
+        em.merge(newCart);
+        trans.commit();
+        em.close();
+    }
+
+    public static List<Book> getAllCart(Customer customer)
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        trans.begin();
+        Cart newCart = em.find(Cart.class, customer.getCustomerID());
+        return newCart.getBook();
     }
 
 

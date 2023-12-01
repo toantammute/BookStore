@@ -2,6 +2,9 @@
 <%@ page import="model.Book" %>
 <%@ page import="java.util.List" %>
 <%@ page import="data.BookDB" %>
+<%@ page import="model.LineItem" %>
+<%@ page import="data.CheckoutDB" %>
+<%@ page import="model.Customer" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="jakarta.tags.core" %>
 
@@ -88,9 +91,25 @@
             </ul>
         </nav>
         <!-- Cart Menu -->
+        <%
+            Integer size = 0;
+            try{size = CheckoutDB.getSize((Customer) session.getAttribute("customer"));}
+            catch (Exception e) {
+                size = 0;
+            }
+        %>
         <div class="cart-fav-search mb-100">
-            <a href="cart.jsp" class="cart-nav"><img src="img/core-img/cart.png" alt=""> Cart <span>(0)</span></a>
-            <a href="cart.jsp" class="fav-nav"><img src="img/core-img/favorites.png" alt=""> Favourite</a>
+            <% String url = "checkout.jsp";
+            String url1 = "cart.jsp";
+               Customer customer = (Customer) session.getAttribute("customer");
+               if(customer == null)
+               {
+                   url = "login.jsp";
+                   url1 = "login.jsp";
+               }
+            %>
+            <a href="<%=url%>" class="cart-nav"><img src="img/core-img/cart.png" alt=""> Cart <span>(<%=size%>)</span></a>
+            <a href="<%=url1%>" class="fav-nav"><img src="img/core-img/favorites.png" alt=""> Favourite</a>
             <a href="#" class="search-nav"><img src="img/core-img/search.png" alt=""> Search</a>
         </div>
         <!-- Social Button -->
@@ -196,7 +215,7 @@
                 %>
                 <c:forEach var="book" items="${books}">
                     <!-- Single Product Area -->
-                    <div class="col-12 col-sm-6 col-md-12 col-xl-6">
+                    <div class="col-12 col-sm-4 col-md-12 col-xl-4">
                         <div class="single-product-wrapper">
                             <!-- Product Image -->
                             <div class="product-img">
@@ -226,7 +245,7 @@
                                     <br>
                                     <div class="cart">
 
-                                        <a href="shop?action=checkUser&amp;aim=addtocart" data-toggle="tooltip" data-placement="left" title="Add to Cart"><i class="fa-solid fa-cart-shopping"></i></a>
+                                        <a href="shop?action=checkUser&amp;aim=addtocart&amp;bookID=${book.bookID}" data-toggle="tooltip" data-placement="left" title="Add to Cart"><i class="fa-solid fa-cart-shopping"></i></a>
                                         <a href="shop?action=checkUser&amp;aim=addtofavorite&amp;bookID=${book.bookID}" data-toggle="tooltip" data-placement="left" title="Add to Favorite"><i class="fa-regular fa-heart" size="100"></i></a>
                                     </div>
                                 </div>

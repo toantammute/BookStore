@@ -1,5 +1,8 @@
 <%@ page import="model.Book" %>
 <%@ page import="java.util.List" %>
+<%@ page import="data.CheckoutDB" %>
+<%@ page import="model.Customer" %>
+<%@ page import="data.CartDB" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
@@ -73,11 +76,14 @@
     <!-- Amado Nav -->
     <nav class="amado-nav">
       <ul>
-        <li><a href="login.jsp">LOGIN</a></li>
-        <li><a href="shop.jsp">Shop</a></li>
-        <li><a href="product-details.jsp">Product</a></li>
-        <li class="active"><a href="cart.jsp">Cart</a></li>
-        <li><a href="checkout.jsp">Checkout</a></li>
+        <c:if test="${not empty customer}">
+          <p>Hello, ${customer.customerName} !</p>
+          <li><a href="login?action=logout">LOG OUT</a></li>
+        </c:if>
+        <c:if test="${empty customer}">
+          <li><a href="login.jsp">LOGIN</a></li>
+        </c:if>
+        <li class="active"><a href="test?action=shop">Shop</a></li>
       </ul>
     </nav>
     <!-- Button Group -->
@@ -86,10 +92,16 @@
     <%--                <a href="#" class="btn amado-btn active">New this week</a>--%>
     <%--            </div>--%>
     <!-- Cart Menu -->
+    <%
+      Integer size = 0;
+      try{size = CheckoutDB.getSize((Customer) session.getAttribute("customer"));}
+      catch (Exception e) {
+        size = 0;
+      }
+    %>
     <div class="cart-fav-search mb-100">
-      <a href="cart.jsp" class="cart-nav"><img src="img/core-img/cart.png" alt=""> Cart <span>(0)</span></a>
-      <a href="favourite.jsp" class="fav-nav"><img src="img/core-img/favorites.png" alt=""> Favourite</a>
-      <a href="#" class="search-nav"><img src="img/core-img/search.png" alt=""> Search</a>
+      <a href="checkout.jsp" class="cart-nav"><img src="img/core-img/cart.png" alt=""> Cart <span>(<%=size%>)</span></a>
+      <a href="cart.jsp" class="fav-nav"><img src="img/core-img/favorites.png" alt=""> Favourite</a>
     </div>
     <!-- Social Button -->
     <div class="social-info d-flex justify-content-between">
@@ -120,7 +132,9 @@
               </tr>
               </thead>
               <tbody>
-              <% List<Book> books = (List<Book>) session.getAttribute("bookcart");%>
+              <% List<Book> bookcart = CartDB.getAllCart((Customer) session.getAttribute("customer"));
+                session.setAttribute("bookcart",bookcart);
+              %>
               <c:forEach var="book" items="${bookcart}">
                 <tr>
                   <td class="cart_product_img">
@@ -137,6 +151,12 @@
                       <input type="hidden" name="action" value="cart">
                       <input type="hidden" name="bookID" value="${book.bookID}">
                       <input type="submit" value="Add To Cart">
+                    </form>
+                    <br>
+                    <form action="cart" method="post">
+                      <input type="hidden" name="action" value="removefromfavorite">
+                      <input type="hidden" name="bookID" value="${book.bookID}">
+                      <input type="submit" value="Remove">
                     </form>
                   </td>
                 </tr>
