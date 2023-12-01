@@ -30,7 +30,26 @@
   <!--===============================================================================================-->
 </head>
 <body>
+<%
+  Cookie[] cookies = request.getCookies();
+  String email = null;
+  String password = null;
 
+  if (cookies != null) {
+    for (Cookie cookie : cookies) {
+      if (cookie.getName().equals("email")) {
+        email = cookie.getValue();
+      } else if (cookie.getName().equals("password")) {
+        password = cookie.getValue();
+      }
+    }
+  }
+  if(email == null) email = "";
+  if(password == null) password = "";
+
+// Tiếp tục xử lý tùy theo logic của ứng dụng
+
+%>
 <div class="limiter">
   <div class="container-login100" style="background-image: url('img/bg-01.jpg');">
     <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
@@ -41,17 +60,21 @@
 					</span>
 
         <div class="wrap-input100 validate-input m-b-23" data-validate = "Email is reauired">
-          <span class="label-input100">Username</span>
-          <input class="input100" type="email" name="email" placeholder="Type your email">
+          <span class="label-input100">Email</span>
+          <input class="input100" type="email" name="email" placeholder="Type your email" value="<%=email%>">
           <span class="focus-input100" data-symbol="&#xf206;"></span>
         </div>
 
         <div class="wrap-input100 validate-input" data-validate="Password is required">
           <span class="label-input100">Password</span>
-          <input class="input100" type="password" name="pass" placeholder="Type your password">
+          <input class="input100" type="password" name="pass" placeholder="Type your password" value="<%=password%>">
           <span class="focus-input100" data-symbol="&#xf190;"></span>
         </div>
 
+        <br>
+        <input type="checkbox" name="cookie" placeholder="Type your password" id="cookie" value="checked" checked>
+        <label for="cookie">Remember me</label>
+        <br>
         <c:if test="${not empty wrongpassword}">
           <div class="text-right p-t-8 p-b-31">
             <p style="color: red"><span>*</span>${wrongpassword}</p>

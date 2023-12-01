@@ -229,7 +229,7 @@
                                 <div class="product-meta-data">
                                     <div class="line"></div>
                                     <p class="product-price">${book.priceFormat}</p>
-                                    <a href="product-details.jsp?bookid=${book.bookID}">
+                                    <a href="product_details?bookID=${book.bookID}">
                                         <h6>${book.bookName}</h6>
                                     </a>
                                 </div>
@@ -288,7 +288,7 @@
                     </div>
                     <!-- Copywrite Text -->
                     <p class="copywrite"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a> & Re-distributed by <a href="https://themewagon.com/" target="_blank">Themewagon</a>
+                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved </p>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                 </div>
             </div>
@@ -301,17 +301,8 @@
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#footerNavContent" aria-controls="footerNavContent" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
                             <div class="collapse navbar-collapse" id="footerNavContent">
                                 <ul class="navbar-nav ml-auto">
-                                    <li class="nav-item active">
-                                        <a class="nav-link" href="index.jsp">Home</a>
-                                    </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="shop.jsp">Shop</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="cart.jsp">Cart</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="checkout.jsp">Checkout</a>
+                                        <a class="nav-link" href="shop.jsp">Back to top page</a>
                                     </li>
                                 </ul>
                             </div>

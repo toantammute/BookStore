@@ -71,8 +71,13 @@ public class ShopServlet extends HttpServlet {
                     // tao lineitem moi
                     LineItem lineItem = new LineItem();
                     lineItem.setLineItemID(LineItemDB.generateId());
-                    lineItem.setItem(book); // 1
+                    lineItem.setItem(book);
                     Integer quantity = 1;
+                    String quantityString = request.getParameter("quantity");
+                    if(quantityString != null)
+                    {
+                        quantity = Integer.parseInt(quantityString);
+                    }
                     lineItem.setQuantity(quantity);
 
                     customer = (Customer) session.getAttribute("customer");

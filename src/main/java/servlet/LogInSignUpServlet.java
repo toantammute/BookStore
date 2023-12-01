@@ -53,6 +53,21 @@ public class LogInSignUpServlet extends HttpServlet {
                         cart.setCustomer(customer);
                         CartDB.addNewCart(cart);
                     }
+                    String rememberMe = request.getParameter("cookie");
+                    if((rememberMe != null)&&rememberMe.equals("checked"))
+                    {
+                        Cookie[] cookies = request.getCookies();
+                        for (Cookie cookie : cookies) {
+                            cookie.setMaxAge(0);
+                        }
+                        Cookie emailCookie = new Cookie("email", email);
+                        Cookie passwordCookie = new Cookie("password", password);
+                        int maxAge = 30 * 24 * 60 * 60; // Số giây
+                        emailCookie.setMaxAge(maxAge);
+                        passwordCookie.setMaxAge(maxAge);
+                        response.addCookie(emailCookie);
+                        response.addCookie(passwordCookie);
+                    }
                     List<Book> bookcart = cart.getBook();
                     session.setAttribute("bookcart",bookcart);
                     url = "/shop.jsp";
@@ -72,42 +87,52 @@ public class LogInSignUpServlet extends HttpServlet {
             }
 
         }
-        else if (action.equals("signup")) {
-            Customer customer = new Customer();
-            customer.setCustomerID(CustomerDB.generateId());
-            String name = request.getParameter("name");
-            customer.setCustomerName(name);
-            String dateString = request.getParameter("date");
-            Date dob = null;
-            if (dateString != null && !dateString.isEmpty()) {
-                try {
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    dob = dateFormat.parse(dateString);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-            customer.setBirthday(dob);
-            String gender = request.getParameter("gender");
-            customer.setGender(gender);
-            String password = request.getParameter("password");
-            customer.setPassword(password);
-            String address = request.getParameter("address");
-            customer.setAddress(address);
+        else if (action.equals("signup"))
+        {
             String email = request.getParameter("email");
-            customer.setEmail(email);
-            String phoneNum = request.getParameter("phoneNumber");
-            customer.setPhoneNum(phoneNum);
-            CustomerDB.insertCustomer(customer);
-            customer.setAdmin(0);
-            Cart cart = new Cart();
-            cart.setCustomer(customer);
-            CartDB.addNewCart(cart);
+            Customer customer = CustomerDB.findCustomer(email);
+            if(customer != null ) {
+                request.setAttribute("message", "EMAIL EXISTED");
+                url = "/signup.jsp";
 
-            Checkout checkout = new Checkout();
-            checkout.setCustomer(customer);
-            CheckoutDB.addNewChekout(checkout);
-            url = "/login.jsp";
+            }
+            else
+            {
+                customer = new Customer();
+                customer.setEmail(email);
+                customer.setCustomerID(CustomerDB.generateId());
+                String name = request.getParameter("name");
+                customer.setCustomerName(name);
+                String dateString = request.getParameter("date");
+                Date dob = null;
+                if (dateString != null && !dateString.isEmpty()) {
+                    try {
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        dob = dateFormat.parse(dateString);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+                customer.setBirthday(dob);
+                String gender = request.getParameter("gender");
+                customer.setGender(gender);
+                String password = request.getParameter("password");
+                customer.setPassword(password);
+                String address = request.getParameter("address");
+                customer.setAddress(address);
+                String phoneNum = request.getParameter("phoneNumber");
+                customer.setPhoneNum(phoneNum);
+                CustomerDB.insertCustomer(customer);
+                customer.setAdmin(0);
+                Cart cart = new Cart();
+                cart.setCustomer(customer);
+                CartDB.addNewCart(cart);
+
+                Checkout checkout = new Checkout();
+                checkout.setCustomer(customer);
+                CheckoutDB.addNewChekout(checkout);
+                url = "/login.jsp";
+            }
         }
         else if (action.equals("logout")) {
             HttpSession session = request.getSession();

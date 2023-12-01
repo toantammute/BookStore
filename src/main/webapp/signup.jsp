@@ -39,7 +39,7 @@
         <span class="login100-form-title p-b-49">
 						SIGN UP
 					</span>
-
+        <p style="color: red">${message}</p>
         <div class="wrap-input100 validate-input m-b-23" data-validate = "Name is reauired">
           <span class="label-input100">Name</span>
           <input class="input100" type="name" name="name" placeholder="Type your name">

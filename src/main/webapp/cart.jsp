@@ -183,8 +183,7 @@
             </div>
             <!-- Copywrite Text -->
             <p class="copywrite"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-              Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->& Re-distributed by <a href="https://themewagon.com/" target="_blank">Themewagon</a>
+              Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved
             </p>
           </div>
         </div>
@@ -199,18 +198,17 @@
                   <ul class="navbar-nav ml-auto">
                     <%--                                        <li class="nav-item active">--%>
                     <%--                                            <a class="nav-link" href="login.jsp">Home</a>--%>
-                    <%--                                        </li>--%>
+                    <%--
+                                                      </li>--%>
+
                     <li class="nav-item">
                       <a class="nav-link" href="shop.jsp">Shop</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="product-details.jsp">Product</a>
+                      <a class="nav-link" href="cart.jsp">Favorite</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="cart.jsp">Cart</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="checkout.jsp">Checkout</a>
+                      <a class="nav-link" href="checkout.jsp">Cart</a>
                     </li>
                   </ul>
                 </div>
