@@ -2,6 +2,7 @@ package data;
 import jakarta.persistence.*;
 import jakarta.transaction.Transaction;
 import model.Author;
+import model.Book;
 import model.Category;
 import model.Publisher;
 import org.eclipse.persistence.jpa.jpql.parser.NullExpression;
@@ -185,5 +186,10 @@ public class CategoryDB {
         finally {
             em.close();
         }
+    }
+
+    public static List<Book> getAllCategoryBook(Category category)
+    {
+        return category.getBooks();
     }
 }

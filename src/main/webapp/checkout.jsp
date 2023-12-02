@@ -21,7 +21,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title  -->
-    <title>Amado - Furniture Ecommerce Template | Cart</title>
+    <title>BOOKSTORE ONLINE | Cart</title>
 
     <!-- Favicon  -->
     <link rel="icon" href="img/core-img/favicon.ico">
@@ -29,7 +29,15 @@
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="css/core-style.css">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .form-container {
+            display: block;
+        }
 
+        .form-container form {
+            display: inline;
+        }
+    </style>
 </head>
 
 <body>
@@ -83,6 +91,7 @@
             <ul>
                 <c:if test="${not empty customer}">
                     <p>Hello, ${customer.customerName} !</p>
+                    <li><a href="account.jsp">ACCOUNT</a></li>
                     <li><a href="login?action=logout">LOG OUT</a></li>
                 </c:if>
                 <c:if test="${empty customer}">
@@ -144,7 +153,7 @@
                             <c:forEach var="lineitem" items="${listlineitem}">
                             <tr>
                                 <td class="cart_product_img">
-                                    <a href="#"><img src="img/bg-img/cart1.jpg" alt="Product"></a>
+                                    <a href="product_details?bookID=${lineitem.getItem().getBookID()}"><img src="img/product-img/img.png" alt="Product"></a>
                                 </td>
                                 <td class="cart_product_desc">
                                     <h5>${lineitem.getItem().getBookName()}</h5>
@@ -154,17 +163,19 @@
                                 </td>
                                 <td>
                                     <br>
-                                    <form action="cart" method="post">
-                                        <input type="text" name="quantity" value="${lineitem.quantity}" width="1">
-                                        <input type="hidden" name="action" value="update">
-                                        <input type="hidden" name="bookID" value="${lineitem.getItem().getBookID()}">
-                                        <input type="submit" value="Update">
-                                    </form>
-                                    <form action="cart" method="post">
-                                        <input type="hidden" name="action" value="removefromcheckout">
-                                        <input type="hidden" name="bookID" value="${lineitem.getItem().getBookID()}">
-                                        <input type="submit" value="Remove">
-                                    </form>
+                                    <div class="form-container">
+                                        <form action="cart" method="post">
+                                            <input type="text" name="quantity" value="${lineitem.quantity}" size="13"><br>
+                                            <input type="hidden" name="action" value="update">
+                                            <input type="hidden" name="bookID" value="${lineitem.getItem().getBookID()}">
+                                            <input type="submit" value="Update" style="margin-top: 15px; margin-right: 2px">
+                                        </form>
+                                        <form action="cart" method="post">
+                                            <input type="hidden" name="action" value="removefromcheckout">
+                                            <input type="hidden" name="bookID" value="${lineitem.getItem().getBookID()}">
+                                            <input type="submit" value="Remove" style="margin-top: 15px; ">
+                                        </form>
+                                    </div>
                                     <br>
 
                                 </td>

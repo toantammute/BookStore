@@ -10,27 +10,35 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import model.*;
 
-@WebServlet("/product_details")
-public class BookServlet extends HttpServlet {
+@WebServlet("/change-password")
+public class ChangePassword extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response)
             throws ServletException, IOException {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
-        String url = "/shop.jsp";
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        String url = "/changepasswordsave.jsp";
         ServletContext sc = getServletContext();
-        String bookID = request.getParameter("bookID");
-        Book a = em.find(Book.class,bookID);
+
         HttpSession session = request.getSession();
-        List<Author> authors = a.getAuthor();
-        Publisher publisher = a.getPublisher();
-        Category category = a.getCategory();
-        session.setAttribute("authors",authors);
-        session.setAttribute("publisher",publisher);
-        session.setAttribute("category",category);
-        session.setAttribute("book_detail",a);
-        url ="/product_detail.jsp";
+        Customer customer = (Customer) session.getAttribute("customer");
+
+        String oldpass = request.getParameter("oldpassword");
+        String newpassword = request.getParameter("newpassword");
+        if(oldpass.equals(customer.getPassword()))
+        {
+            customer.setPassword(newpassword);
+            CustomerDB.updateCustomer(customer);
+            session.setAttribute("flag",new String("1"));
+        }else
+        {
+            session.setAttribute("flag",new String("0"));
+        }
+        transaction.commit();
+        em.close();
         sc.getRequestDispatcher(url)
                 .forward(request, response);
     }

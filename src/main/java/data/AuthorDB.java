@@ -2,6 +2,7 @@ package data;
 
 import jakarta.persistence.*;
 import model.Author;
+import model.Book;
 
 import java.util.List;
 
@@ -132,5 +133,29 @@ public class AuthorDB {
         finally {
             em.close();
         }
+    }
+
+    public static List<Author> getAllAuthor(){
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        try
+        {
+            String queryString = "SELECT b FROM Author b ORDER BY b.authorID ASC";
+            Query query = em.createQuery(queryString, Author.class);
+            List<Author> rows = query.getResultList();
+            return rows;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+            throw new RuntimeException("CANNOT GET BOOK", e);
+        }
+        finally {
+            em.close();
+        }
+    }
+
+    public static List<Book> getAuthorBook(Author author)
+    {
+        return author.getBook();
     }
 }

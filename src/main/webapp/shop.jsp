@@ -1,10 +1,8 @@
 <%@ page import="java.util.Base64" %>
-<%@ page import="model.Book" %>
 <%@ page import="java.util.List" %>
-<%@ page import="data.BookDB" %>
-<%@ page import="model.LineItem" %>
-<%@ page import="data.CheckoutDB" %>
-<%@ page import="model.Customer" %>
+<%@ page import="jakarta.persistence.EntityManager" %>
+<%@ page import="model.*" %>
+<%@ page import="data.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="jakarta.tags.core" %>
 
@@ -19,7 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/6931f33cbe.js" crossorigin="anonymous"></script>
     <!-- Title  -->
-    <title>Book Shop - Ecommerce Website  | Shop</title>
+    <title>BOOKSTORE ONLINE | Home</title>
 
     <!-- Favicon  -->
     <link rel="icon" href="img/core-img/favicon.ico">
@@ -128,70 +126,50 @@
         <!-- ##### Single Widget ##### -->
         <div class="widget brands mb-50">
             <!-- Widget Title -->
-            <h6 class="widget-title mb-30">Categories</h6>
-
+            <h6 class="widget-title mb-30">Author</h6>
+            <% List<Author> authors = (List<Author>) request.getAttribute("authors");
+                if(authors == null)
+                {
+                    authors = AuthorDB.getAllAuthor();
+                    request.setAttribute("authors", authors);
+                }else
+                {
+                    request.setAttribute("authors", authors);
+                }
+            %>
             <!--  Catagories  -->
             <div class="widget-desc">
                 <!-- Single Form Check -->
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="amado" >
-                    <label class="form-check-label" for="amado">Amado</label>
-                </div>
-                <!-- Single Form Check -->
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="mado" >
-                    <label class="form-check-label" for="ikea">Ikea</label>
-                </div>
-                <!-- Single Form Check -->
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="amad">
-                    <label class="form-check-label" for="furniture">Furniture Inc</label>
-                </div>
-                <!-- Single Form Check -->
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="aado">
-                    <label class="form-check-label" for="factory">The factory</label>
-                </div>
-                <!-- Single Form Check -->
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value=""id="amo" >
-                    <label class="form-check-label" for="artdeco">Artdeco</label>
-                </div>
+                <c:forEach var="author" items="${authors}">
+                    <div class="form-check">
+                        <a href="shop?action=seachbyauthor&amp;authorid=${author.authorID}">${author.authorName}</a>
+                    </div>
+                </c:forEach>
             </div>
         </div>
 
         <!-- ##### Single Widget ##### -->
         <div class="widget brands mb-50">
             <!-- Widget Title -->
-            <h6 class="widget-title mb-30">Brands</h6>
-
+            <h6 class="widget-title mb-30">Author</h6>
+            <% List<Category> categories = (List<Category>) request.getAttribute("categories");
+                if(categories == null)
+                {
+                    categories = CategoryDB.getCategoryList();
+                    request.setAttribute("categories", categories);
+                }else
+                {
+                    request.setAttribute("categories", categories);
+                }
+            %>
+            <!--  Catagories  -->
             <div class="widget-desc">
                 <!-- Single Form Check -->
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="ado">
-                    <label class="form-check-label" for="ado">Amado</label>
-
-                </div>
-                <!-- Single Form Check -->
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="ikea">
-                    <label class="form-check-label" for="ikea">Ikea</label>
-                </div>
-                <!-- Single Form Check -->
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="furniture">
-                    <label class="form-check-label" for="furniture">Furniture Inc</label>
-                </div>
-                <!-- Single Form Check -->
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="factory">
-                    <label class="form-check-label" for="factory">The factory</label>
-                </div>
-                <!-- Single Form Check -->
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="artdeco">
-                    <label class="form-check-label" for="artdeco">Artdeco</label>
-                </div>
+                <c:forEach var="category" items="${categories}">
+                    <div class="form-check">
+                        <a href="shop?action=seachbycategory&amp;categoryid=${category.categoryID}">${category.categoryName}</a>
+                    </div>
+                </c:forEach>
             </div>
         </div>
 
@@ -221,23 +199,23 @@
                         <div class="single-product-wrapper">
                             <!-- Product Image -->
                             <div class="product-img">
-                                <img src="img/product-img/product1.jpg" alt="">
+                                <img src="img/product-img/img.png" alt="">
                                 <!-- Hover Thumb -->
-                                <img class="hover-img" src="img/product-img/product2.jpg" alt="">
+                                <img class="hover-img" src="img/product-img/img_1.png" alt="" height="10" weight="10">
                             </div>
                             <!-- Product Description -->
                             <div class="product-description d-flex align-items-center justify-content-between">
                                 <!-- Product Meta Data -->
                                 <div class="product-meta-data">
                                     <div class="line"></div>
-                                    <p class="product-price">${book.priceFormat}</p>
+                                    <p style="margin-left: 10px" class="product-price">${book.priceFormat}</p>
                                     <a href="product_details?bookID=${book.bookID}">
-                                        <h6>${book.bookName}</h6>
+                                        <h4 style="margin-left: 10px">${book.bookName}</h4>
                                     </a>
                                 </div>
                                 <!-- Ratings & Cart -->
                                 <div class="ratings-cart text-right">
-                                    <div class="ratings">
+                                    <div class="ratings" style="margin-right: 10px">
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                         <i class="fa fa-star" aria-hidden="true"></i>
@@ -246,9 +224,21 @@
                                     </div>
                                     <br>
                                     <div class="cart">
-
-                                        <a href="shop?action=checkUser&amp;aim=addtocart&amp;bookID=${book.bookID}" data-toggle="tooltip" data-placement="left" title="Add to Cart"><i class="fa-solid fa-cart-shopping"></i></a>
-                                        <a href="shop?action=checkUser&amp;aim=addtofavorite&amp;bookID=${book.bookID}" data-toggle="tooltip" data-placement="left" title="Add to Favorite"><i class="fa-regular fa-heart" size="100"></i></a>
+                                        <% if(customer != null) {
+                                            EntityManager em = DBUtil.getEmFactory().createEntityManager();
+                                            Cart cart = em.find(Cart.class, customer.getCustomerID());
+                                            List<String> listid = CartDB.checkBookFavorite(cart);
+                                            request.setAttribute("listid", listid);
+                                        }%>
+                                        <c:set var="bookIDToCheck" value="${book.bookID}" />
+                                        <c:if test="${listid.contains(bookIDToCheck)}">
+                                            <a href="shop?action=checkUser&amp;aim=addtocart&amp;bookID=${book.bookID}" style="margin-right: 10px" data-toggle="tooltip" data-placement="left" title="Add to Cart"><i class="fa-solid fa-cart-shopping fa-2x"></i></a>
+                                            <a href="shop?action=checkUser&amp;aim=addtofavorite&amp;bookID=${book.bookID}" style="margin-right: 12px" data-toggle="tooltip" data-placement="left" title="Add to Favorite"><i class="fa-solid fa-heart fa-2x" size="100"></i></a>
+                                        </c:if>
+                                        <c:if test="${!listid.contains(bookIDToCheck)}">
+                                            <a href="shop?action=checkUser&amp;aim=addtocart&amp;bookID=${book.bookID}" style="margin-right: 10px" data-toggle="tooltip" data-placement="left" title="Add to Cart"><i class="fa-solid fa-cart-shopping fa-2x"></i></a>
+                                            <a href="shop?action=checkUser&amp;aim=addtofavorite&amp;bookID=${book.bookID}" style="margin-right: 12px" data-toggle="tooltip" data-placement="left" title="Add to Favorite"><i class="fa-regular fa-heart fa-2x" size="100"></i></a>
+                                        </c:if>
                                     </div>
                                 </div>
                             </div>
@@ -327,7 +317,14 @@
 <script src="js/plugins.js"></script>
 <!-- Active js -->
 <script src="js/active.js"></script>
-
+<script>
+    function redirectToLink(authorID) {
+        var link = document.getElementById(authorID);
+        if (link) {
+            link.click(); // Thực hiện sự kiện click trên thẻ <a>
+        }
+    }
+</script>
 
 </body>
 

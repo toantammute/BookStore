@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>SIGN UP</title>
+  <title>BOOKSTORE ONLINE | Sign up</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!--===============================================================================================-->
@@ -55,13 +55,13 @@
         <div class="wrap-input100 validate-input m-b-23">
           <span class="label-input100">Gender</span>
           <div class="radio-container">
-            <input type="radio" id="male" name="gender" value="male">
+            <input type="radio" id="male" name="gender" value="Male">
             <label for="male">Male</label>
 
-            <input type="radio" id="female" name="gender" value="female">
+            <input type="radio" id="female" name="gender" value="Female">
             <label for="female">Female</label>
 
-            <input type="radio" id="other" name="gender" value="other">
+            <input type="radio" id="other" name="gender" value="Other">
             <label for="other">Other</label>
           </div>
         </div>
@@ -103,7 +103,11 @@
           </div>
         </div>
 
-
+        <div class="txt1 text-center p-t-54 p-b-20">
+          <a href="login.jsp" class="txt2">
+            back to login
+          </a>
+        </div>
       </form>
     </div>
   </div>

@@ -79,7 +79,14 @@ public class CartServlet extends HttpServlet {
             Integer quantity;
             try
             {
+                EntityTransaction trans = em.getTransaction();
+                String bookID = request.getParameter("bookID");
                 quantity = Integer.parseInt(quantityString);
+                Stock stock = em.find(Stock.class, bookID);
+                if(quantity > stock.getQuantity())
+                {
+                    quantity = stock.getQuantity();
+                }
             }catch(Exception e) {quantity = 0;}
             if(quantity == 0)
             {

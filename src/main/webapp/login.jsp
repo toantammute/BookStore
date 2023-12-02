@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Login V4</title>
+  <title>BOOKSTORE ONLINE | Login</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!--===============================================================================================-->
@@ -93,8 +93,12 @@
         </div>
 
         <div class="txt1 text-center p-t-54 p-b-20">
-            <a href="signup.jsp" class="txt2">
-              Or Sign Up
+          <a href="resetpassword.jsp" class="txt1">
+            Forgot Password
+          </a>
+          or
+          <a href="signup.jsp" class="txt1">
+              Sign Up
             </a>
         </div>
       </form>

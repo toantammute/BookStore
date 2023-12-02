@@ -212,6 +212,12 @@ public class test {
         for (var item: checkout.getLineItemList()) {
             System.out.println(item.getQuantity());
         }*/
+        trans.begin();
+        Book book = em.find(Book.class, "BOOK0003");
+        Author author = em.find(Author.class,"AUTH0000");
+        book.getAuthor().add(author);
+        author.getBook().add(book);
+        trans.commit();
         em.close();
 
     }

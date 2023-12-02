@@ -74,12 +74,19 @@ public class CheckoutServlet extends HttpServlet {
         Checkout checkout = em.find(Checkout.class, customer.getCustomerID());
 
         List<LineItem> lineItemList = checkout.getLineItemList();
+        Stock stock = new Stock();
+        for(LineItem lineItem : lineItemList)
+        {
+            stock = em.find(Stock.class,lineItem.getItem().getBookID());
+            StockDB.deleteBookQuantity(stock, lineItem.getQuantity());
+        }
         session.setAttribute("listlineitem",lineItemList);
         CheckoutDB.removeCheckout(customer);
         invoice.setLineItem(lineItemList);
         em.persist(invoice);
         trans.commit();
         session.setAttribute("invoice",invoice);
+        session.setAttribute("buy","true");
         em.close();
         sc.getRequestDispatcher(url)
                 .forward(request, response);

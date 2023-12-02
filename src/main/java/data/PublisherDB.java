@@ -2,6 +2,7 @@ package data;
 
 import jakarta.persistence.*;
 import model.Author;
+import model.Book;
 import model.Publisher;
 
 import java.util.List;

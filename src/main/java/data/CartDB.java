@@ -3,6 +3,7 @@ package data;
 import jakarta.persistence.*;
 import model.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CartDB {
@@ -76,7 +77,16 @@ public class CartDB {
         Cart newCart = em.find(Cart.class, customer.getCustomerID());
         return newCart.getBook();
     }
-
+    public static List<String> checkBookFavorite(Cart cart)
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        List<String> list = new ArrayList<>();
+        for (var book1: cart.getBook()) {
+            list.add(book1.getBookID());
+        }
+        return list;
+    }
 
 
 }

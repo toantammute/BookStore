@@ -5,6 +5,7 @@ import model.Author;
 import model.Cart;
 import model.Customer;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -128,5 +129,27 @@ public class CustomerDB {
         }
     }
 
+    public static void updateCustomer(Customer customer){
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        Customer customer1 = em.find(Customer.class,customer.getCustomerID());
+        customer1.setCardNum(customer.getCardNum());
+        customer1.setPhoneNum(customer.getPhoneNum());
+        customer1.setAddress(customer.getAddress());
+        customer1.setPassword(customer.getPassword());
+        em.merge(customer1);
+        transaction.commit();
+        em.close();
+    }
+
+    public static List<String> getEmailCustomerList(){
+        List<Customer> customers = getCustomerList();
+        List<String> listEmail = new ArrayList<>();
+        for (var customer: customers) {
+            listEmail.add(customer.getEmail());
+        }
+        return listEmail;
+    }
 
 }

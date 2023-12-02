@@ -1,5 +1,10 @@
 <%@ page import="model.Customer" %>
-<%@ page import="data.CheckoutDB" %><%--
+<%@ page import="data.CheckoutDB" %>
+<%@ page import="model.Book" %>
+<%@ page import="jakarta.persistence.EntityTransaction" %>
+<%@ page import="jakarta.persistence.EntityManager" %>
+<%@ page import="data.DBUtil" %>
+<%@ page import="model.Stock" %><%--
   Created by IntelliJ IDEA.
   User: hoanganh033
   Date: 02/12/2023
@@ -19,7 +24,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title  -->
-    <title>Amado - Furniture Ecommerce Template | Product Details</title>
+    <title>BOOKSTORE ONLINE | Product Detail</title>
 
     <!-- Favicon  -->
     <link rel="icon" href="img/core-img/favicon.ico">
@@ -58,7 +63,7 @@
     <div class="mobile-nav">
         <!-- Navbar Brand -->
         <div class="amado-navbar-brand">
-            <a href="index.jsp"><img src="img/core-img/logo.png" alt=""></a>
+            <a href="shop.jsp"><img src="img/core-img/logo.png" alt=""></a>
         </div>
         <!-- Navbar Toggler -->
         <div class="amado-navbar-toggler">
@@ -74,19 +79,20 @@
         </div>
         <!-- Logo -->
         <div class="logo">
-            <a href="index.jsp"><img src="img/core-img/logo.png" alt=""></a>
+            <a href="shop.jsp"><img src="img/core-img/logo.png" alt=""></a>
         </div>
         <!-- Amado Nav -->
         <nav class="amado-nav">
             <ul>
                 <c:if test="${not empty customer}">
                     <p>Hello, ${customer.customerName} !</p>
+                    <li><a href="account.jsp">ACCOUNT</a></li>
                     <li><a href="login?action=logout">LOG OUT</a></li>
                 </c:if>
                 <c:if test="${empty customer}">
                     <li><a href="login.jsp">LOGIN</a></li>
                 </c:if>
-                <li class="active"><a href="test?action=shop">Shop</a></li>
+                <li><a href="test?action=shop">Shop</a></li>
             </ul>
         </nav>
         <!-- Button Group -->
@@ -141,26 +147,24 @@
                     <div class="single_product_thumb">
                         <div id="product_details_slider" class="carousel slide" data-ride="carousel">
                             <ol class="carousel-indicators">
-                                <li class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url(img/product-img/pro-big-1.jpg);">
+                                <li class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url(img/product-img/img.png);">
                                 </li>
-                                <li data-target="#product_details_slider" data-slide-to="1" style="background-image: url(img/product-img/pro-big-2.jpg);">
+                                <li data-target="#product_details_slider" data-slide-to="1" style="background-image: url(img/product-img/img_1.png);">
                                 </li>
-                                <li data-target="#product_details_slider" data-slide-to="2" style="background-image: url(img/product-img/pro-big-3.jpg);">
-                                </li>
-                                <li data-target="#product_details_slider" data-slide-to="3" style="background-image: url(img/product-img/pro-big-4.jpg);">
-                                </li>
+
                             </ol>
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <a class="gallery_img" href="img/product-img/pro-big-1.jpg">
-                                        <img class="d-block w-100" src="img/product-img/pro-big-1.jpg" alt="First slide">
+                                    <a class="gallery_img" href="img/product-img/img.png">
+                                        <img class="d-block w-100" src="img/product-img/img.png" alt="First slide">
                                     </a>
                                 </div>
                                 <div class="carousel-item">
-                                    <a class="gallery_img" href="img/product-img/pro-big-2.jpg">
-                                        <img class="d-block w-100" src="img/product-img/pro-big-2.jpg" alt="Second slide">
+                                    <a class="gallery_img" href="img/product-img/img_1.png">
+                                        <img class="d-block w-100" src="img/product-img/img_1.png" alt="Second slide">
                                     </a>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -170,9 +174,9 @@
                         <!-- Product Meta Data -->
                         <div class="product-meta-data">
                             <div class="line"></div>
-                            <p class="product-price">${book_detail.priceFormat}</p>
-                            <a href="product-details.html">
-                                <h6>${book_detail.bookName}</h6>
+                            <p class="product-price" style="font-size: 30px">${book_detail.priceFormat}</p>
+                            <a href="product_details?bookID=${book_detail.bookID}">
+                                <h2>${book_detail.bookName}</h2>
                             </a>
                             <!-- Ratings & Review -->
                             <div class="ratings-review mb-15 d-flex align-items-center justify-content-between">
@@ -183,17 +187,42 @@
                                     <i class="fa fa-star" aria-hidden="true"></i>
                                     <i class="fa fa-star" aria-hidden="true"></i>
                                 </div>
-                                <div class="review">
-                                    <a href="#">Write A Review</a>
-                                </div>
                             </div>
                             <!-- Avaiable -->
-                            <p class="avaibility"><i class="fa fa-circle"></i> In Stock</p>
+                            <% Book book = (Book) session.getAttribute("book_detail");
+                                EntityManager em = DBUtil.getEmFactory().createEntityManager();
+                                Stock stock = em.find(Stock.class, book.getBookID());
+                                if(stock.getQuantity() > 0)
+                                {%>
+                                <p style="color: #20d34a"><i class="fa fa-circle"></i> In Stock</p>
+                                <%}else{%>
+                                <p style="color: red"><i class="fa fa-circle"></i> Sold Out</p>
+                                <%}%>
+
                         </div>
 
                         <div class="short_overview my-5">
-                            <p>${book_detail.description}</p>
+                            <p style="font-size: 25px; color: #0b0b0b"><strong>Description</strong></p>
+                            <p><i>${book_detail.description}</i></p>
                         </div>
+
+                        <div class="short_overview my-5">
+                            <p><strong>Language : </strong>${book_detail.language}</p>
+                        </div>
+                        <div class="short_overview my-5">
+                            <p><strong>Author Name : </strong>
+                            <c:forEach var="author" items="${authors}">
+                                <a style="font-size: 17px; color: grey" href="shop?action=seachbyauthor&amp;authorid=${author.authorID}">${author.authorName}, </a>
+                            </c:forEach>
+                            </p>
+                        </div>
+                        <div class="short_overview my-5">
+                            <p><strong>Category : </strong><a style="font-size: 17px; color: grey" href="shop?action=seachbycategory&amp;categoryid=${category.categoryID}">${category.categoryName}</a></p>
+                        </div>
+                        <div class="short_overview my-5">
+                            <p><strong>Publisher : </strong>${publisher.publisherName}</p>
+                        </div>
+
 
                         <!-- Add to Cart Form -->
                         <form class="cart clearfix" method="post" action="shop">
@@ -219,28 +248,7 @@
 <!-- ##### Main Content Wrapper End ##### -->
 
 <!-- ##### Newsletter Area Start ##### -->
-<section class="newsletter-area section-padding-100-0">
-    <div class="container">
-        <div class="row align-items-center">
-            <!-- Newsletter Text -->
-            <div class="col-12 col-lg-6 col-xl-7">
-                <div class="newsletter-text mb-100">
-                    <h2>Subscribe for a <span>25% Discount</span></h2>
-                    <p>Nulla ac convallis lorem, eget euismod nisl. Donec in libero sit amet mi vulputate consectetur. Donec auctor interdum purus, ac finibus massa bibendum nec.</p>
-                </div>
-            </div>
-            <!-- Newsletter Form -->
-            <div class="col-12 col-lg-6 col-xl-5">
-                <div class="newsletter-form mb-100">
-                    <form action="#" method="post">
-                        <input type="email" name="email" class="nl-email" placeholder="Your E-mail">
-                        <input type="submit" value="Subscribe">
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+
 <!-- ##### Newsletter Area End ##### -->
 
 <!-- ##### Footer Area Start ##### -->
@@ -269,20 +277,8 @@
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#footerNavContent" aria-controls="footerNavContent" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
                             <div class="collapse navbar-collapse" id="footerNavContent">
                                 <ul class="navbar-nav ml-auto">
-                                    <li class="nav-item active">
-                                        <a class="nav-link" href="index.jsp">Home</a>
-                                    </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="shop.html">Shop</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="product-details.html">Product</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="cart.html">Cart</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="checkout.html">Checkout</a>
+                                        <a class="nav-link" href="shop.jsp">Shop</a>
                                     </li>
                                 </ul>
                             </div>

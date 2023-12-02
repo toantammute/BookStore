@@ -16,7 +16,7 @@
   <!-- The above 4 meta tags must come first in the head; any other head content must come after these tags -->
 
   <!-- Title  -->
-  <title>Book Shop - Ecommerce Website  | Favourite</title>
+  <title>BOOKSTORE ONLINE | Favourite</title>
 
   <!-- Favicon  -->
   <link rel="icon" href="img/core-img/favicon.ico">
@@ -78,12 +78,13 @@
       <ul>
         <c:if test="${not empty customer}">
           <p>Hello, ${customer.customerName} !</p>
+          <li><a href="account.jsp">ACCOUNT</a></li>
           <li><a href="login?action=logout">LOG OUT</a></li>
         </c:if>
         <c:if test="${empty customer}">
           <li><a href="login.jsp">LOGIN</a></li>
         </c:if>
-        <li class="active"><a href="test?action=shop">Shop</a></li>
+        <li><a href="test?action=shop">Shop</a></li>
       </ul>
     </nav>
     <!-- Button Group -->
@@ -138,7 +139,8 @@
               <c:forEach var="book" items="${bookcart}">
                 <tr>
                   <td class="cart_product_img">
-                    <a href="#"><img src="img/bg-img/cart1.jpg" alt="Product"></a>
+                    <!--< a href="#"><img src="img/bg-img/cart1.jpg" alt="Product"></a> -->
+                    <a href="product_details?bookID=${book.bookID}"><img src="img/product-img/img.png" alt="Product"></a>
                   </td>
                   <td class="cart_product_desc">
                     <h5>${book.bookName}</h5>

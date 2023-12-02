@@ -42,28 +42,6 @@ public class StockDB {
     }
 
 
-    public static void updateBookQuantity(String bookName, Integer quantity, StringBuilder error)
-    {
-        EntityManager em = DBUtil.getEmFactory().createEntityManager();
-        EntityTransaction trans = em.getTransaction();
-        trans.begin();
-        try
-        {
-            Book book = BookDB.searchExactlyBook(bookName,error);
-            String queryString = "SELECT s FROM Stock s WHERE s.book.bookID = :bookID";
-            Query query = em.createQuery(queryString, Stock.class);
-            query.setParameter("bookID", book.getBookID());
-            Stock stock = (Stock) query.getSingleResult();
-            stock.setQuantity(quantity);
-            trans.commit();
-        }catch(Exception e)
-        {
-            System.out.println(e);
-            trans.rollback();
-        }finally {
-            em.close();
-        }
-    }
 
     public static void deleteBookQuantity(String bookName, Integer quantity, StringBuilder error)
     {
@@ -86,6 +64,18 @@ public class StockDB {
         }finally {
             em.close();
         }
+    }
+
+    public static void deleteBookQuantity(Stock stock, Integer quantity)
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        trans.begin();
+        Stock stock1 = em.find(Stock.class, stock.getBook().getBookID());
+        stock1.setQuantity(stock1.getQuantity()-quantity);
+        em.merge(stock1);
+        trans.commit();
+        em.close();
     }
 
 

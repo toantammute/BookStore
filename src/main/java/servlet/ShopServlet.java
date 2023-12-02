@@ -34,6 +34,22 @@ public class ShopServlet extends HttpServlet {
             request.setAttribute("books",books);
             url = "/shop.jsp";
         }
+        else if(action.equals("seachbyauthor"))
+        {
+            String authorID = request.getParameter("authorid");
+            Author author = em.find(Author.class, authorID);
+            List<Book> books = AuthorDB.getAuthorBook(author);
+            request.setAttribute("books",books);
+            url = "/shop.jsp";
+        }
+        else if(action.equals("seachbycategory"))
+        {
+            String categoryid = request.getParameter("categoryid");
+            Category category = em.find(Category.class, categoryid);
+            List<Book> books = CategoryDB.getAllCategoryBook(category);
+            request.setAttribute("books",books);
+            url = "/shop.jsp";
+        }
         else if(action.equals("checkUser"))
         {
             HttpSession session = request.getSession();
@@ -79,13 +95,17 @@ public class ShopServlet extends HttpServlet {
                         quantity = Integer.parseInt(quantityString);
                     }
                     lineItem.setQuantity(quantity);
+                    Stock stock = em.find(Stock.class, book.getBookID());
+                    if(lineItem.getQuantity() <= stock.getQuantity())
+                    {
+                        customer = (Customer) session.getAttribute("customer");
+                        Checkout checkout = em.find(Checkout.class, customer.getCustomerID());
 
-                    customer = (Customer) session.getAttribute("customer");
-                    Checkout checkout = em.find(Checkout.class, customer.getCustomerID());
-
-                    checkout = CheckoutDB.addItem(checkout,lineItem);
-                    List<LineItem> lineItemList = checkout.getLineItemList();
-                    session.setAttribute("listlineitem", lineItemList);
+                        checkout = CheckoutDB.addItem(checkout,lineItem);
+                        List<LineItem> lineItemList = checkout.getLineItemList();
+                        session.setAttribute("listlineitem", lineItemList);
+                        url = "/checkout.jsp";
+                    }
                     url = "/checkout.jsp";
                 }
             }

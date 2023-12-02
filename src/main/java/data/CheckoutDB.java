@@ -38,17 +38,22 @@ public class CheckoutDB {
 
             trans.begin();
             Checkout checkout = em.find(Checkout.class, checkout1.getCustomer().getCustomerID()); // checkout
+            Stock stock =  em.find(Stock.class, newitem.getItem().getBookID());
             int flag = 0;
             for (var item: checkout.getLineItemList()) {
                 if(item.getItem().getBookID().equals(newitem.getItem().getBookID()))
                 {
-                    item.setQuantity(item.getQuantity()+1);
-                    flag = 1;
+                    if((item.getQuantity()+1) <= stock.getQuantity())
+                    {
+                        item.setQuantity(item.getQuantity()+1);
+                        flag = 1;
+                    }
                 }
 
             }
             if(flag == 0) // chua co trong list
             {
+                if(stock.getQuantity() >= newitem.getQuantity())
                 checkout.getLineItemList().add(newitem);
             }
             em.merge(checkout);

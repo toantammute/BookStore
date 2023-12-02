@@ -1,6 +1,9 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ page import="model.Customer" %>
 <%@ page import="data.CheckoutDB" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="java.time.LocalDateTime" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <head>
     <meta charset="UTF-8">
@@ -10,11 +13,11 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title  -->
-    <title>BOOKSTORE ONLINE | Checkout</title>
+    <title>BOOKSTORE ONLINE | Account</title>
 
     <!-- Favicon  -->
     <link rel="icon" href="img/core-img/favicon.ico">
-
+    <script src="https://kit.fontawesome.com/6931f33cbe.js" crossorigin="anonymous"></script>
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="css/core-style.css">
     <link rel="stylesheet" href="style.css">
@@ -72,7 +75,7 @@
             <ul>
                 <c:if test="${not empty customer}">
                     <p>Hello, ${customer.customerName} !</p>
-                    <li><a href="account.jsp">ACCOUNT</a></li>
+                    <li class="active"><a href="account.jsp">ACCOUNT</a></li>
                     <li><a href="login?action=logout">LOG OUT</a></li>
                 </c:if>
                 <c:if test="${empty customer}">
@@ -114,15 +117,33 @@
                             <h2>Checkout</h2>
                         </div>
 
-                        <form id="myForm" action="checkout" method="post" >
+                        <form id="myForm" action="account" method="post" >
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <p>Name</p>
-                                    <input type="text" class="form-control" id="customerName" name="customerName" value="${customer.customerName}" placeholder="Type your name..." required>
+                                    <input type="text" class="form-control" id="customerName" name="customerName" value="${customer.customerName}" placeholder="Type your name..." required readonly>
                                 </div>
-                                <div class="col-12 mb-3">
+                                <div class="col-md-6 mb-3">
+                                    <p>Gender</p>
+                                    <input type="email" class="form-control" id="gender" name="gender" placeholder="Your gender" value="${customer.gender}" required readonly>
+                                </div>
+                                <div class="col-md-6 mb-3">
                                     <p>Email</p>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Type your email..." value="${customer.email}" required>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Type your email..." value="${customer.email}" required readonly>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <p>DOB</p>
+                                    <%
+                                        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy");
+                                        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                                        String formattedBirthday = "";
+                                        Customer customer = (Customer) session.getAttribute("customer");
+                                        if (customer.getBirthday() != null) {
+                                            LocalDateTime birthdayDateTime = LocalDateTime.parse(customer.getBirthday().toString(), inputFormatter);
+                                            formattedBirthday = outputFormatter.format(birthdayDateTime);
+                                        }
+                                    %>
+                                    <input type="text" class="form-control" id="dob" name="dob" value="<%=formattedBirthday%>"  required readonly>
                                 </div>
                                 <div class="col-12 mb-3">
                                     <p>Address</p>
@@ -130,48 +151,28 @@
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <p>Phone Number</p>
-                                    <input type="number" class="form-control" id="phone_number" name="phoneNum" min="0" placeholder="Type your phone number..." value="${customer.phoneNum}" required>
+                                    <input type="text" class="form-control" id="phone_number" name="phoneNumber" placeholder="Type your phone number..." value="${customer.phoneNum}" required>
                                 </div>
-                                <div class="col-12 mb-3">
-                                    <p>Comment</p>
-                                    <textarea name="comment" class="form-control w-100" id="comment" cols="30" rows="10" placeholder="Leave a comment about your order"></textarea>
+                                <div class="col-md-6 mb-3">
+                                    <p>Phone Number</p>
+                                    <input type="text" class="form-control" id="card_number" name="cardNumber"  placeholder="Type your card number..." value="${customer.cardNum}" required>
                                 </div>
                             </div>
+                            <p style="color: #0f7529;">Your change have been successfully saved <i class="fa-regular fa-circle-check fa-lg" style="color: #0f7529; margin-left: 7px"></i></p>
+                            <div
+                                    class="row">
+                                <div class="cart-btn mt-70" style="margin-right: 20px; margin-left: 20px">
+                                    <a class="btn amado-btn w-100" onclick="submitSave()" >Save</a>
+                                </div>
+                                <div class="cart-btn mt-70">
+                                    <a class="btn amado-btn w-100" onclick="submitChangePassword()" >Change password</a>
+                                </div>
+                            </div>
+
                         </form>
                     </div>
                 </div>
-                <div class="col-12 col-lg-4">
-                    <div class="cart-summary">
-                        <h5>Cart Total</h5>
-                        <ul class="summary-table">
-                            <% Customer customer = (Customer) session.getAttribute("customer");
-                                String total = CheckoutDB.getTotalCurrencyFormat(customer);
-                                String totaldiscount = CheckoutDB.getTotalDiscountCurrencyFormat(customer);
-                                Integer discount = CheckoutDB.getDiscount(customer);
-                            %>
-                            <li><span>subtotal:</span> <span><%=total%></span></li>
-                            <li><span>discount:</span> <span><%=discount%>%</span></li>
-                            <li><span>total:</span> <span><%=totaldiscount%></span></li>
-                        </ul>
-                        <div class="payment-method">
-                            <!-- Cash on delivery -->
-                            <div class="custom-control custom-checkbox mr-sm-2">
-                                <input type="radio" name ="payment" class="custom-control-input" id="cod" value="cash" checked>
-                                <label class="custom-control-label" for="cod">Cash on Delivery</label>
-                            </div>
-                            <!-- Paypal -->
-                            <div class="custom-control custom-checkbox mr-sm-2">
-                                <input type="radio" name="payment" class="custom-control-input" value="card" id="paypal">
-                                <label class="custom-control-label" for="paypal">Paypal <img class="ml-15" src="img/core-img/paypal.png" alt=""></label>
-                            </div>
-                        </div>
 
-                        <div class="cart-btn mt-100">
-                            <a class="btn amado-btn w-100" onclick="submitForm()" >Checkout</a>
-
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -239,17 +240,25 @@
 <!-- Active js -->
 <script src="js/active.js"></script>
 <script language="JavaScript" >
-    function submitForm() {
-        // Lấy giá trị của radio button được chọn
-        var paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+    function submitChangePassword() {
+        var form = document.getElementById("myForm");
 
-        // Gán giá trị của radio button vào một trường ẩn trong form
-        var hiddenInput = document.createElement('input');
-        hiddenInput.type = 'hidden';
-        hiddenInput.name = 'payment';
-        hiddenInput.value = paymentMethod;
-        document.getElementById('myForm').appendChild(hiddenInput);
-        document.getElementById("myForm").submit();
+        // Tạo phần tử input mới
+        var hiddenInput = document.createElement("input");
+        hiddenInput.type = "hidden";
+        hiddenInput.name = "changepassword";
+        hiddenInput.value = "true";
+
+        // Thêm phần tử input vào form
+        form.appendChild(hiddenInput);
+
+        // Gửi yêu cầu submit form
+        form.submit();
+    }
+    function submitSave() {
+        var form = document.getElementById("myForm");
+        // Gửi yêu cầu submit form
+        form.submit();
     }
 </script>
 </body>
