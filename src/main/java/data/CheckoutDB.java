@@ -209,10 +209,11 @@ public class CheckoutDB {
 
             trans.begin();
             Checkout checkout = em.find(Checkout.class, customer.getCustomerID()); // checkout
-            for(int i = 0 ; i < checkout.getLineItemList().size() ; ++i)
+            for(int i = 0 ; i < checkout.getLineItemList().size() ; i++)
             {
                 LineItem lineItem = checkout.getLineItemList().get(i);
                 checkout.getLineItemList().remove(lineItem);
+                i--;
             }
             em.merge(checkout);
             trans.commit();

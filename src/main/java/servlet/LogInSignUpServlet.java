@@ -68,6 +68,11 @@ public class LogInSignUpServlet extends HttpServlet {
                         response.addCookie(emailCookie);
                         response.addCookie(passwordCookie);
                     }
+                    /*
+                    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+                    response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+                    response.setHeader("Expires", "0"); // Proxies.
+                    */
                     List<Book> bookcart = cart.getBook();
                     session.setAttribute("bookcart",bookcart);
                     url = "/shop.jsp";

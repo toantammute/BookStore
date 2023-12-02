@@ -82,6 +82,7 @@
             <ul>
                 <c:if test="${not empty customer}">
                     <p>Hello, ${customer.customerName} !</p>
+                    <li><a href="account.jsp">ACCOUNT</a></li>
                     <li><a href="login?action=logout">LOG OUT</a></li>
                 </c:if>
                 <c:if test="${empty customer}">
@@ -167,8 +168,9 @@
             <div class="widget-desc">
                 <!-- Single Form Check -->
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="amdo">
-                    <label class="form-check-label" for="amado">Amado</label>
+                    <input class="form-check-input" type="checkbox" value="" id="ado">
+                    <label class="form-check-label" for="ado">Amado</label>
+
                 </div>
                 <!-- Single Form Check -->
                 <div class="form-check">
@@ -325,6 +327,7 @@
 <script src="js/plugins.js"></script>
 <!-- Active js -->
 <script src="js/active.js"></script>
+
 
 </body>
 
