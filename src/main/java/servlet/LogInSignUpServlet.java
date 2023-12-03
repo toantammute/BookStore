@@ -134,8 +134,8 @@ public class LogInSignUpServlet extends HttpServlet {
                 customer.setAddress(address);
                 String phoneNum = request.getParameter("phoneNumber");
                 customer.setPhoneNum(phoneNum);
-                CustomerDB.insertCustomer(customer);
                 customer.setAdmin(0);
+                CustomerDB.insertCustomer(customer);
                 Cart cart = new Cart();
                 cart.setCustomer(customer);
                 CartDB.addNewCart(cart);
