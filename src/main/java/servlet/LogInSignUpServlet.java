@@ -73,9 +73,16 @@ public class LogInSignUpServlet extends HttpServlet {
                     response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
                     response.setHeader("Expires", "0"); // Proxies.
                     */
-                    List<Book> bookcart = cart.getBook();
-                    session.setAttribute("bookcart",bookcart);
-                    url = "/shop.jsp";
+                    if(customer.getAdmin() == 1)
+                    {
+                        url = "/categorytable.jsp";
+                    }
+                    else
+                    {
+                        List<Book> bookcart = cart.getBook();
+                        session.setAttribute("bookcart",bookcart);
+                        url = "/shop.jsp";
+                    }
                 }
                 else
                 {
@@ -140,7 +147,9 @@ public class LogInSignUpServlet extends HttpServlet {
             }
         }
         else if (action.equals("logout")) {
+
             HttpSession session = request.getSession();
+            session.removeAttribute("customer");
             // Xóa giỏ hàng hiện tại từ session
             session.invalidate();
             url = "/shop.jsp";

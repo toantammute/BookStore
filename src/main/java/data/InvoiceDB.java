@@ -6,6 +6,7 @@ import model.Invoice;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class InvoiceDB {
     public static String generateId() {
@@ -48,5 +49,22 @@ public class InvoiceDB {
         em.close();
     }
 
-
+    public static List<Invoice> getInvoiceList(){
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        try
+        {
+            String queryString = "SELECT c FROM Invoice c ORDER BY c.invoiceID ASC";
+            Query query = em.createQuery(queryString, Invoice.class);
+            List<Invoice> rows = query.getResultList();
+            return rows;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+            throw new RuntimeException("CANNOT GET INVOICES", e);
+        }
+        finally {
+            em.close();
+        }
+    }
 }

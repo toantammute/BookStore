@@ -211,7 +211,7 @@ public class test {
         for (var item: checkout.getLineItemList()) {
             System.out.println(item.getQuantity());
         }*/
-        Entity
+
 
     }
 }
