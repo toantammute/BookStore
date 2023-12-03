@@ -118,19 +118,19 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <p>Name</p>
-                                    <input type="text" class="form-control" id="customerName" name="customerName" value="${customer.customerName}" placeholder="Type your name..." required>
+                                    <input type="text" class="form-control" id="customerName" name="customerName" value="${customer.customerName}" placeholder="Type your name..." required readonly>
                                 </div>
-                                <div class="col-12 mb-3">
+                                <div class="col-6 mb-3">
                                     <p>Email</p>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Type your email..." value="${customer.email}" required>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Type your email..." value="${customer.email}" required readonly>
                                 </div>
-                                <div class="col-12 mb-3">
+                                <div class="col-6 mb-3">
                                     <p>Address</p>
                                     <input type="text" class="form-control mb-3" id="address" name="address" placeholder="Type your address" value="${customer.address}" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <p>Phone Number</p>
-                                    <input type="number" class="form-control" id="phone_number" name="phoneNum" min="0" placeholder="Type your phone number..." value="${customer.phoneNum}" required>
+                                    <input type="text" class="form-control" id="phone_number" name="phoneNum" min="0" placeholder="Type your phone number..." value="${customer.phoneNum}" required>
                                 </div>
                                 <div class="col-12 mb-3">
                                     <p>Comment</p>
