@@ -63,6 +63,21 @@ public class CartServlet extends HttpServlet {
 
             url = "/cart.jsp";
         }
+        else if(action.equals("removefromfavorite1"))
+        {
+            EntityTransaction trans = em.getTransaction();
+            trans.begin();
+            String bookID = request.getParameter("bookID");
+            Book book = em.find(Book.class, bookID);
+            HttpSession session = request.getSession();
+            Customer customer = (Customer) session.getAttribute("customer");
+            Cart cart = em.find(Cart.class, customer.getCustomerID());
+            cart.getBook().remove(book);
+            em.merge(cart);
+            trans.commit();
+
+            url = "/shop.jsp";
+        }
         else if(action.equals("removefromcheckout"))
         {
             HttpSession session = request.getSession();

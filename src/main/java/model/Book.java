@@ -1,6 +1,7 @@
 package model;
 
 import data.BookDB;
+import data.DBUtil;
 import jakarta.persistence.*;
 
 import java.text.NumberFormat;
