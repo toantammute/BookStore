@@ -193,12 +193,12 @@
                                 EntityManager em = DBUtil.getEmFactory().createEntityManager();
                                 Stock stock = em.find(Stock.class, book.getBookID());
                                 if(stock.getQuantity() > 0)
-                                {%>
+                                { session.setAttribute("bookquantity",stock.getQuantity());%>
                                 <p style="color: #20d34a"><i class="fa fa-circle"></i> In Stock</p>
                                 <%}else{%>
                                 <p style="color: red"><i class="fa fa-circle"></i> Sold Out</p>
                                 <%}%>
-
+                            <p>The remaining quantity : <strong>${bookquantity}</strong></p>
                         </div>
 
                         <div class="short_overview my-5">
