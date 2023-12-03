@@ -20,9 +20,26 @@ import static java.time.chrono.JapaneseEra.values;
 public class test {
     public static void main(String[] args) throws ParseException
     {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+//        Invoice inv = new Invoice();
+//        inv.setInvoiceID("INV0001");
+//        inv.setTotalAmount("500");
+//        inv.setTotalPay("400");
+//        em.persist(inv);
+//
+//        Invoice inv1 = new Invoice();
+//        inv1.setInvoiceID("INV0002");
+//        inv1.setTotalAmount("900");
+//        inv1.setTotalPay("700");
+//        em.persist(inv1);
+
+        System.out.println(InvoiceDB.getTotalImportPrice());
+        System.out.println(InvoiceDB.getAllTotalAmount());
+        System.out.println(InvoiceDB.getAllTotalPay());
+        System.out.println(InvoiceDB.getProfit());
 
         /*
-        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+
         EntityTransaction trans = em.getTransaction();
         trans.begin();
 

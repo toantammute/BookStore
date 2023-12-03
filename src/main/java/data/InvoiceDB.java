@@ -1,6 +1,7 @@
 package data;
 
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import model.Customer;
 import model.Invoice;
 
@@ -67,4 +68,55 @@ public class InvoiceDB {
             em.close();
         }
     }
+    public static double getAllTotalAmount(){
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        try
+        {
+            double total = 0;
+            List<Invoice> inv = getInvoiceList();
+            for (var item: inv)
+            {
+                total += item.getTotalAmountDouble();
+            }
+            return total;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+            throw new RuntimeException("CANNOT GET INVOICES", e);
+        }
+        finally {
+            em.close();
+        }
+    }
+    public static double getAllTotalPay(){
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        try
+        {
+            double total = 0;
+            List<Invoice> inv = getInvoiceList();
+            for (var item: inv)
+            {
+                total += item.getTotalPayDouble();
+            }
+            return total;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+            throw new RuntimeException("CANNOT GET INVOICES", e);
+        }
+        finally {
+            em.close();
+        }
+    }
+    public static double getTotalImportPrice(){
+        double revenue;
+        return revenue = getAllTotalAmount()*0.5;
+    }
+    public static double getProfit(){
+        double profit =0;
+        return profit = getAllTotalPay()-getTotalImportPrice();
+    }
+
 }

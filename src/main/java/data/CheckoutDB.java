@@ -163,6 +163,7 @@ public class CheckoutDB {
         return sum;
     }
 
+
     public static String getTotalCurrencyFormat(Customer customer) {
         Locale locale = new Locale("en", "US");
         NumberFormat currency = NumberFormat.getCurrencyInstance(locale);
