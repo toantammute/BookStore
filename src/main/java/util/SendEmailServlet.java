@@ -79,8 +79,8 @@ public class SendEmailServlet extends HttpServlet {
                 content += lineItemRow;
             }
             content += "</table><br>";
-            content += "<span>Total Amount :</span>" + invoice.getTotalAmount() + "<br>";
-            content += "<span>Discount :</span>" + invoice.getDiscount() + "%<br>";
+            content += "<span>Total Amount :</span> " + invoice.getTotalAmount() + "<br>";
+            content += "<span>Discount :</span> " + invoice.getDiscount() + "%<br>";
             content += "<span>Total Pay :</span><strong> " + invoice.getTotalPay()+"</strong>";
             content += "</body></html>";
             String emailContent = content;
