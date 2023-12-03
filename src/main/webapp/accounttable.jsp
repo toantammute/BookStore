@@ -9,6 +9,7 @@
 <%@ page import="data.BookDB" %>
 <%@ page import="model.Author" %>
 <%@ page import="data.AuthorDB" %>
+<%@ page import="data.CustomerDB" %>
 <head>
 
     <meta charset="utf-8">
@@ -201,20 +202,17 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <h1 class="h3 mb-2 text-gray-800">AUTHOR</h1>
-                <% List<Author> authors = (List<Author>) request.getAttribute("authors");
-                    if(authors == null)
+                <h1 class="h3 mb-2 text-gray-800">ACCOUNT</h1>
+                <% List<Customer> customers = (List<Customer>) request.getAttribute("customers");
+                    if(customers == null)
                     {
-                        authors = AuthorDB.getAllAuthor();
-                        request.setAttribute("authors", authors);
+                        customers = CustomerDB.getCustomerList();
+                        request.setAttribute("customers", customers);
                     }else
                     {
-                        request.setAttribute("authors", authors);
+                        request.setAttribute("customers", customers);
                     }
                 %>
-
-
-
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-body">
@@ -222,15 +220,29 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>Author ID</th>
-                                    <th>Author Name</th>
+                                    <th>Customer ID</th>
+                                    <th>Customer Name</th>
+                                    <th>Phone</th>
+                                    <th>Email</th>
+                                    <th>BirthDay</th>
+                                    <th>Address</th>
+                                    <th>Gender</th>
+                                    <th>Admin</th>
+                                    <th>Card Number</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach var="author" items="${authors}">
+                                <c:forEach var="customer" items="${customers}">
                                     <tr>
-                                        <td>${author.authorID}</td>
-                                        <td>${author.authorName}</td>
+                                        <td>${customer.customerID}</td>
+                                        <td>${customer.customerName}</td>
+                                        <td>${customer.phoneNum}</td>
+                                        <td>${customer.email}</td>
+                                        <td>${customer.birthday}</td>
+                                        <td>${customer.address}</td>
+                                        <td>${customer.gender}</td>
+                                        <td>${customer.admin}</td>
+                                        <td>${customer.cardNum}</td>
                                         <td><form action="#" method="post">
                                             <button class="button-38" role="button">Edit --></button>
                                         </form></td>
