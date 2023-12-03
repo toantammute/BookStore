@@ -71,7 +71,7 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="adminpage.jsp">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span></a>
         </li>
@@ -99,6 +99,7 @@
                     <a class="collapse-item" href="authortable.jsp">Author</a>
                     <a class="collapse-item" href="categorytable.jsp">Category</a>
                     <a class="collapse-item" href="booktable.jsp">Book</a>
+                    <a class="collapse-item" href="publishertable.jsp">Publisher</a>
                     <a class="collapse-item" href="invoicetable.jsp">Invoice</a>
                     <a class="collapse-item" href="accounttable.jsp">User</a>
                 </div>
@@ -224,11 +225,8 @@
                                     <th>Customer Name</th>
                                     <th>Phone</th>
                                     <th>Email</th>
-                                    <th>BirthDay</th>
                                     <th>Address</th>
-                                    <th>Gender</th>
                                     <th>Admin</th>
-                                    <th>Card Number</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -238,13 +236,10 @@
                                         <td>${customer.customerName}</td>
                                         <td>${customer.phoneNum}</td>
                                         <td>${customer.email}</td>
-                                        <td>${customer.birthday}</td>
                                         <td>${customer.address}</td>
-                                        <td>${customer.gender}</td>
                                         <td>${customer.admin}</td>
-                                        <td>${customer.cardNum}</td>
                                         <td><form action="#" method="post">
-                                            <button class="button-38" role="button">Edit --></button>
+                                            <button class="button-38" role="button">Edit -></button>
                                         </form></td>
                                     </tr>
                                 </c:forEach>
@@ -283,7 +278,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
+                    <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
             <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>

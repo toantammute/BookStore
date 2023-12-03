@@ -75,7 +75,7 @@ public class LogInSignUpServlet extends HttpServlet {
                     */
                     if(customer.getAdmin() == 1)
                     {
-                        url = "/categorytable.jsp";
+                        url = "/adminpage.jsp";
                     }
                     else
                     {
