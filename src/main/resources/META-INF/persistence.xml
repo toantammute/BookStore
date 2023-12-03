@@ -18,11 +18,11 @@
 
     <properties>
       <property name="jakarta.persistence.jdbc.url"
-                value="jdbc:postgresql://localhost:5432/BookShop"/>
+                value="jdbc:postgresql://localhost:5432/bookshop"/>
       <property name="jakarta.persistence.jdbc.user"
                 value="postgres"/>
       <property name="jakarta.persistence.jdbc.password"
-                value="04012003"/>
+                value="Hoanganh123"/>
       <property name="jakarta.persistence.jdbc.driver"
                 value="org.postgresql.Driver"/>
       <property name="jakarta.persistence.schema-generation.database.action"
