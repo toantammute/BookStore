@@ -151,7 +151,7 @@
         <!-- ##### Single Widget ##### -->
         <div class="widget brands mb-50">
             <!-- Widget Title -->
-            <h6 class="widget-title mb-30">Author</h6>
+            <h6 class="widget-title mb-30">Category</h6>
             <% List<Category> categories = (List<Category>) request.getAttribute("categories");
                 if(categories == null)
                 {
