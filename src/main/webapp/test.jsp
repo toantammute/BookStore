@@ -241,25 +241,25 @@
 </html>
 
 <!--
-<% List<Book> books = (List<Book>) session.getAttribute("bookcart");%>
-<c:forEach var="book" items="${bookcart}">
-    <tr>
-        <td class="cart_product_checkbox">
-            <input type="checkbox">
-        </td>
-        <td class="cart_product_img">
-            <a href="#"><img src="img/bg-img/cart2.jpg" alt="Product"></a>
-        </td>
-        <td class="cart_product_desc">
-            <h5>${book.bookName}</h5>
-        </td>
-        <td class="price">
-            <span>${book.priceFormat}</span>
-        </td>
-        <td>
-            <a href="cart?bookID=${book.bookID}">Add To Card</a>
-        </td>
-    </tr>
-</c:forEach>
+<%--<% List<Book> books = (List<Book>) session.getAttribute("bookcart");%>--%>
+<%--&lt;%&ndash;<c:forEach var="book" items="${bookcart}">&ndash;%&gt;--%>
+<%--    <tr>--%>
+<%--        <td class="cart_product_checkbox">--%>
+<%--            <input type="checkbox">--%>
+<%--        </td>--%>
+<%--        <td class="cart_product_img">--%>
+<%--            <a href="#"><img src="img/bg-img/cart2.jpg" alt="Product"></a>--%>
+<%--        </td>--%>
+<%--        <td class="cart_product_desc">--%>
+<%--            <h5>${book.bookName}</h5>--%>
+<%--        </td>--%>
+<%--        <td class="price">--%>
+<%--            <span>${book.priceFormat}</span>--%>
+<%--        </td>--%>
+<%--        <td>--%>
+<%--            <a href="cart?bookID=${book.bookID}">Add To Card</a>--%>
+<%--        </td>--%>
+<%--    </tr>--%>
+<%--&lt;%&ndash;</c:forEach>&ndash;%&gt;--%>
 
 -->
