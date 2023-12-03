@@ -77,7 +77,7 @@
 
     <!-- Heading -->
     <div class="sidebar-heading">
-      INFORMATION
+      STORE INFORMATION
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
@@ -95,6 +95,26 @@
           <a class="collapse-item" href="categorytable.jsp">Category</a>
           <a class="collapse-item" href="booktable.jsp">Book</a>
           <a class="collapse-item" href="invoicetable.jsp">Invoice</a>
+          <a class="collapse-item" href="accounttable.jsp">User</a>
+        </div>
+      </div>
+    </li>
+
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#addnew"
+         aria-expanded="true" aria-controls="collapsePages">
+        <i class="fa-solid fa-plus" style="color: #ded9d9;"></i>
+        <span>Add New</span></a>
+      </a>
+      <!-- auth,cate,book,inv,user
+ -->
+      <div id="addnew" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="authortable.jsp">Author</a>
+          <a class="collapse-item" href="categorytable.jsp">Category</a>
+          <a class="collapse-item" href="booktable.jsp">Publisher</a>
+          <a class="collapse-item" href="invoicetable.jsp">Book</a>
           <a class="collapse-item" href="accounttable.jsp">User</a>
         </div>
       </div>
@@ -133,6 +153,7 @@
         </form>
 
         <!-- Topbar Search -->
+
 
         <!-- Topbar Navbar -->
         <ul class="navbar-nav ml-auto">
