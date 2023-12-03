@@ -151,11 +151,7 @@
         <!-- ##### Single Widget ##### -->
         <div class="widget brands mb-50">
             <!-- Widget Title -->
-<<<<<<< HEAD
-
-=======
             <h6 class="widget-title mb-30">Category</h6>
->>>>>>> 994336ab69315e606966104f151ea2029feb396d
             <% List<Category> categories = (List<Category>) request.getAttribute("categories");
                 if(categories == null)
                 {
