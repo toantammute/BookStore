@@ -1,5 +1,7 @@
 package model;
 
+import data.BookDB;
+import data.DBUtil;
 import jakarta.persistence.*;
 
 import java.text.NumberFormat;
@@ -110,6 +112,12 @@ public class Book {
         Locale locale = new Locale("en", "US");
         NumberFormat currency = NumberFormat.getCurrencyInstance(locale);
         return currency.format(this.price);
+    }
+    public int getQuantity() {
+        return BookDB.getQuantityInStock(getBookID());
+    }
+    public double getImportPrice(){
+        return price*0.5;
     }
 
 

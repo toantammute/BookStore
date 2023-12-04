@@ -1,5 +1,6 @@
 package model;
 
+import data.CheckoutDB;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -107,5 +108,30 @@ public class Invoice {
 
     public void setDiscount(int discount) {
         this.discount = discount;
+    }
+    public double getTotalAmountDouble ()
+    {
+        String str = getTotalAmount();
+        str = str.replace("$", ""); // Remove the "$" symbol if present
+        str = str.replace(",", "");
+        double totalAmount;
+        totalAmount = Double.parseDouble(str);
+        return totalAmount;
+    }
+    public double getTotalPayDouble ()
+    {
+        String str = getTotalPay();
+        str = str.replace("$", ""); // Remove the "$" symbol if present
+        str = str.replace(",", "");
+        double totalPay =0;
+        try {
+            totalPay = Double.parseDouble(str);
+        }
+        catch (Exception e)
+        {
+
+        }finally {
+            return totalPay;
+        }
     }
 }

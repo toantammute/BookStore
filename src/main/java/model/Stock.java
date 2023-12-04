@@ -8,7 +8,7 @@ public class Stock {
     @OneToOne(optional = false, cascade = {CascadeType.REMOVE},fetch = FetchType.EAGER)
     private Book book;
     private Integer quantity;
-    private Integer importPrice;
+    private Double importPrice;
 
 
     //Getter and setter
@@ -20,10 +20,10 @@ public class Stock {
         this.quantity = quantity;
     }
 
-    public Integer getImportPrice() {
+    public Double getImportPrice() {
         return importPrice;
     }
-    public void setImportPrice(Integer importPrice) {
+    public void setImportPrice(Double importPrice) {
         this.importPrice = importPrice;
     }
 

@@ -232,12 +232,22 @@
                                         }%>
                                         <c:set var="bookIDToCheck" value="${book.bookID}" />
                                         <c:if test="${listid.contains(bookIDToCheck)}">
-                                            <a href="shop?action=checkUser&amp;aim=addtocart&amp;bookID=${book.bookID}" style="margin-right: 10px" data-toggle="tooltip" data-placement="left" title="Add to Cart"><i class="fa-solid fa-cart-shopping fa-2x"></i></a>
-                                            <a href="shop?action=checkUser&amp;aim=addtofavorite&amp;bookID=${book.bookID}" style="margin-right: 12px" data-toggle="tooltip" data-placement="left" title="Add to Favorite"><i class="fa-solid fa-heart fa-2x" size="100"></i></a>
+                                            <c:if test="${book.quantity > 0}">
+                                                <a href="shop?action=checkUser&amp;aim=addtocart&amp;bookID=${book.bookID}" style="margin-right: 10px" data-toggle="tooltip" data-placement="left" title="Add to Cart"><i class="fa-solid fa-cart-shopping fa-2x"></i></a>
+                                                <a href="cart?action=removefromfavorite1&amp;bookID=${book.bookID}" style="margin-right: 12px" data-toggle="tooltip" data-placement="left" title="Add to Favorite"><i class="fa-solid fa-heart fa-2x" size="100"></i></a>
+                                            </c:if>
+                                            <c:if test="${!(book.quantity > 0)}">
+                                                <a href="cart?action=removefromfavorite1&amp;bookID=${book.bookID}" style="margin-right: 12px" data-toggle="tooltip" data-placement="left" title="Add to Favorite"><i class="fa-solid fa-heart fa-2x" size="100"></i></a>
+                                            </c:if>
                                         </c:if>
                                         <c:if test="${!listid.contains(bookIDToCheck)}">
-                                            <a href="shop?action=checkUser&amp;aim=addtocart&amp;bookID=${book.bookID}" style="margin-right: 10px" data-toggle="tooltip" data-placement="left" title="Add to Cart"><i class="fa-solid fa-cart-shopping fa-2x"></i></a>
-                                            <a href="shop?action=checkUser&amp;aim=addtofavorite&amp;bookID=${book.bookID}" style="margin-right: 12px" data-toggle="tooltip" data-placement="left" title="Add to Favorite"><i class="fa-regular fa-heart fa-2x" size="100"></i></a>
+                                            <c:if test="${book.quantity > 0}">
+                                                <a href="shop?action=checkUser&amp;aim=addtocart&amp;bookID=${book.bookID}" style="margin-right: 10px" data-toggle="tooltip" data-placement="left" title="Add to Cart"><i class="fa-solid fa-cart-shopping fa-2x"></i></a>
+                                                <a href="shop?action=checkUser&amp;aim=addtofavorite&amp;bookID=${book.bookID}" style="margin-right: 12px" data-toggle="tooltip" data-placement="left" title="Add to Favorite"><i class="fa-regular fa-heart fa-2x" size="100"></i></a>
+                                            </c:if>
+                                            <c:if test="${!(book.quantity > 0)}">
+                                                <a href="shop?action=checkUser&amp;aim=addtofavorite&amp;bookID=${book.bookID}" style="margin-right: 12px" data-toggle="tooltip" data-placement="left" title="Add to Favorite"><i class="fa-regular fa-heart fa-2x" size="100"></i></a>
+                                            </c:if>
                                         </c:if>
                                     </div>
                                 </div>

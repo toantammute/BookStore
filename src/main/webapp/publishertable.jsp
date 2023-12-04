@@ -1,10 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-<%@ page import="model.Customer" %>
-<%@ page import="model.Invoice" %>
 <%@ page import="java.util.List" %>
-<%@ page import="data.InvoiceDB" %>
+<%@ page import="data.CategoryDB" %>
+<%@ page import="data.BookDB" %>
+<%@ page import="data.AuthorDB" %>
+<%@ page import="model.*" %>
+<%@ page import="data.PublisherDB" %>
 <head>
 
     <meta charset="utf-8">
@@ -189,32 +191,6 @@
                     <!-- Nav Item - Messages -->
 
                     <div class="topbar-divider d-none d-sm-block"></div>
-
-                    <!-- Nav Item - User Information
-          <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">${customer.customerName}</span>
-              <img class="img-profile rounded-circle"
-                   src="admin/img/undraw_profile.svg">
-            </a> -->
-                    <!-- Dropdown - User Information
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                         aria-labelledby="userDropdown">
-                      <a class="dropdown-item" href="account.jsp">
-                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Profile
-                      </a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Logout
-                      </a>
-                    </div>
-                  </li>
-        -->
-
-
                 </ul>
 
             </nav>
@@ -224,17 +200,19 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <h1 class="h3 mb-2 text-gray-800">INVOICE</h1>
-                <% List<Invoice> invoices = (List<Invoice>) request.getAttribute("invoices");
-                    if(invoices == null)
+                <h1 class="h3 mb-2 text-gray-800">PUBLISHER</h1>
+                <% List<Publisher> publishers = (List<Publisher>) request.getAttribute("publishers");
+                    if(publishers == null)
                     {
-                            invoices = InvoiceDB.getInvoiceList();
-                        request.setAttribute("invoices", invoices);
+                        publishers = PublisherDB.getPublisherList();
+                        request.setAttribute("publishers", publishers);
                     }else
                     {
-                        request.setAttribute("invoices", invoices);
+                        request.setAttribute("publishers", publishers);
                     }
                 %>
+
+
 
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
@@ -243,24 +221,15 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>Customer Name</th>
-                                    <th>Invoice ID</th>
-                                    <th>Oder Date</th>
-                                    <th>Total Amount</th>
-                                    <th>Discount</th>
-                                    <th>Total Pay</th>
-                                    <th> </th>
+                                    <th>Publisher ID</th>
+                                    <th>Publisher Name</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach var="invoice" items="${invoices}">
+                                <c:forEach var="publisher" items="${publishers}">
                                     <tr>
-                                        <td>${invoice.customer.customerName}</td>
-                                        <td>${invoice.invoiceID}</td>
-                                        <td>${invoice.orderDate}</td>
-                                        <td>${invoice.totalAmount}</td>
-                                        <td>${invoice.discount}</td>
-                                        <td>${invoice.totalPay}</td>
+                                        <td>${publisher.publisherID}</td>
+                                        <td>${publisher.publisherName}</td>
                                         <td><form action="#" method="post">
                                             <button class="button-38" role="button">Edit --></button>
                                         </form></td>
@@ -333,4 +302,3 @@
 </body>
 
 </html>
-

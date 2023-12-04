@@ -169,6 +169,12 @@ public class BookDB {
             em.close();
         }
     }
-
-
+    public static int getQuantityInStock(String bookID)
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        int quantity;
+        Stock stock = em.find(Stock.class, bookID);
+        quantity = stock.getQuantity();
+        return quantity;
+    }
 }

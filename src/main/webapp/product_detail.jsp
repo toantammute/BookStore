@@ -130,7 +130,6 @@
     <!-- Product Details Area Start -->
     <div class="single-product-area section-padding-100 clearfix">
         <div class="container-fluid">
-
             <div class="row">
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
@@ -195,10 +194,23 @@
                                 if(stock.getQuantity() > 0)
                                 { session.setAttribute("bookquantity",stock.getQuantity());%>
                                 <p style="color: #20d34a"><i class="fa fa-circle"></i> In Stock</p>
+                                <p>The remaining quantity : <strong>${bookquantity}</strong></p>
+                                <form class="cart clearfix" method="post" action="shop">
+                                    <input type="hidden" name="action" value="checkUser">
+                                    <input type="hidden" name="aim" value="addtocart">
+                                    <input type="hidden" name="bookID" value="${book_detail.bookID}">
+                                    <div class="cart-btn d-flex mb-50">
+                                        <p>Quantity</p>
+                                        <div class="quantity">
+                                            <input type="number" class="qty-text" id="qty" step="1" min="1" max="${bookquantity}" name="quantity" value="1">
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn amado-btn">Add to cart</button>
+                                </form>
                                 <%}else{%>
                                 <p style="color: red"><i class="fa fa-circle"></i> Sold Out</p>
                                 <%}%>
-                            <p>The remaining quantity : <strong>${bookquantity}</strong></p>
+
                         </div>
 
                         <div class="short_overview my-5">
@@ -225,19 +237,6 @@
 
 
                         <!-- Add to Cart Form -->
-                        <form class="cart clearfix" method="post" action="shop">
-                            <input type="hidden" name="action" value="checkUser">
-                            <input type="hidden" name="aim" value="addtocart">
-                            <input type="hidden" name="bookID" value="${book_detail.bookID}">
-                            <div class="cart-btn d-flex mb-50">
-                                <p>Quantity</p>
-                                <div class="quantity">
-                                    <input type="number" class="qty-text" id="qty" step="1" min="1" max="300" name="quantity" value="1">
-                                </div>
-                            </div>
-                            <button type="submit" class="btn amado-btn">Add to cart</button>
-                        </form>
-
                     </div>
                 </div>
             </div>

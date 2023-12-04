@@ -5,6 +5,8 @@
 <%@ page import="model.Category" %>
 <%@ page import="java.util.List" %>
 <%@ page import="data.CategoryDB" %>
+<%@ page import="model.Book" %>
+<%@ page import="data.BookDB" %>
 <head>
 
   <meta charset="utf-8">
@@ -55,7 +57,7 @@
 
 
     <li class="nav-item">
-        <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
+      <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
         <span>Log Out</span></a>
     </li>
@@ -112,11 +114,11 @@
  -->
       <div id="addnew" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-          <a class="collapse-item" href="addnewauthor.jsp">Author</a>
-          <a class="collapse-item" href="addnewcategory.jsp">Category</a>
-          <a class="collapse-item" href="addnewpublisher.jsp">Publisher</a>
-          <a class="collapse-item" href="addnewbook.jsp">Book</a>
-          <a class="collapse-item" href="addnewuser.jsp">User</a>
+          <a class="collapse-item" href="authortable.jsp">Author</a>
+          <a class="collapse-item" href="categorytable.jsp">Category</a>
+          <a class="collapse-item" href="booktable.jsp">Publisher</a>
+          <a class="collapse-item" href="invoicetable.jsp">Book</a>
+          <a class="collapse-item" href="accounttable.jsp">User</a>
         </div>
       </div>
     </li>
@@ -189,32 +191,6 @@
           <!-- Nav Item - Messages -->
 
           <div class="topbar-divider d-none d-sm-block"></div>
-
-          <!-- Nav Item - User Information
-          <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">${customer.customerName}</span>
-              <img class="img-profile rounded-circle"
-                   src="admin/img/undraw_profile.svg">
-            </a> -->
-            <!-- Dropdown - User Information
-            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                 aria-labelledby="userDropdown">
-              <a class="dropdown-item" href="account.jsp">
-                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                Profile
-              </a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                Logout
-              </a>
-            </div>
-          </li>
--->
-
-
         </ul>
 
       </nav>
@@ -224,17 +200,19 @@
       <div class="container-fluid">
 
         <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">CATEGORY</h1>
-        <% List<Category> categories = (List<Category>) request.getAttribute("categories");
-          if(categories == null)
+        <h1 class="h3 mb-2 text-gray-800">BOOK</h1>
+        <% List<Book> books = (List<Book>) request.getAttribute("books");
+          if(books == null)
           {
-            categories = CategoryDB.getCategoryList();
-            request.setAttribute("categories", categories);
+            books = BookDB.getAllBook();
+            request.setAttribute("books", books);
           }else
           {
-            request.setAttribute("categories", categories);
+            request.setAttribute("books", books);
           }
         %>
+
+
 
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
@@ -243,16 +221,33 @@
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                 <tr>
-                  <th>Category ID</th>
-                  <th>Category Name</th>
-                  <th> </th>
+                  <th>Book ID</th>
+                  <th>Book Name</th>
+                  <th>Quantity</th>
+                  <th>Import Price</th>
+                  <th>Price</th>
+                  <th>Author</th>
+                  <th>Category</th>
+                  <th>Publisher</th>
+                  <th>Publish Year</th>
+                  <th>Description</th>
+                  <th>Language</th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="category" items="${categories}">
+                <c:forEach var="book" items="${books}">
                   <tr>
-                    <td>${category.categoryID}</td>
-                    <td>${category.categoryName}</td>
+                    <td>${book.bookID}</td>
+                    <td>${book.bookName}</td>
+                    <td>${book.quantity}</td>
+                    <td>${book.importPrice}</td>
+                    <td>${book.price}</td>
+                    <td>${book.author.authorName}</td>
+                    <td>${book.category.categoryName}</td>
+                    <td>${book.publisher.publisherName}</td>
+                    <td>${book.publisherYear}</td>
+                    <td>${book.description}</td>
+                    <td>${book.language}</td>
                     <td><form action="#" method="post">
                       <button class="button-38" role="button">Edit --></button>
                     </form></td>

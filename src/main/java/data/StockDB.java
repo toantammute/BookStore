@@ -1,9 +1,7 @@
 package data;
 
 import jakarta.persistence.*;
-import model.Book;
-import model.Category;
-import model.Stock;
+import model.*;
 
 import java.util.List;
 
@@ -77,7 +75,23 @@ public class StockDB {
         trans.commit();
         em.close();
     }
-
-
-
+    public static List<Stock> getListStock()
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        try
+        {
+            String queryString = "SELECT s FROM Stock s";
+            Query query = em.createQuery(queryString, Author.class);
+            List<Stock> stocks = query.getResultList();
+            return stocks;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+            throw new RuntimeException("CANNOT GET AUTHORS", e);
+        }
+        finally {
+            em.close();
+        }
+    }
 }
