@@ -21,8 +21,9 @@ public class test {
     public static void main(String[] args) throws ParseException
     {
 
-        /*
+
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        /*
         EntityTransaction trans = em.getTransaction();
         trans.begin();
 
@@ -211,7 +212,11 @@ public class test {
         for (var item: checkout.getLineItemList()) {
             System.out.println(item.getQuantity());
         }*/
-
+        String id = "BOOK0000";
+        Book book = em.find(Book.class,"BOOK0000");
+        Stock a = em.find(Stock.class, id);
+        a.getQuantity();
+        System.out.println(a.getQuantity());
 
     }
 }
