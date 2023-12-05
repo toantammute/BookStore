@@ -229,11 +229,8 @@ public class test {
             System.out.println(item.getQuantity());
         }*/
 
-        EntityTransaction transaction = em.getTransaction();
+       em.close();
 
-        transaction.begin();
 
-        Date a = new Date();
-        transaction.commit();
     }
 }
