@@ -112,11 +112,11 @@
        -->
             <div id="addnew" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="authortable.jsp">Author</a>
-                    <a class="collapse-item" href="categorytable.jsp">Category</a>
-                    <a class="collapse-item" href="booktable.jsp">Publisher</a>
-                    <a class="collapse-item" href="invoicetable.jsp">Book</a>
-                    <a class="collapse-item" href="accounttable.jsp">User</a>
+                    <a class="collapse-item" href="addnewauthor.jsp">Author</a>
+                    <a class="collapse-item" href="addnewcategory.jsp">Category</a>
+                    <a class="collapse-item" href="addnewpublisher.jsp">Publisher</a>
+                    <a class="collapse-item" href="addnewbook.jsp">Book</a>
+                    <a class="collapse-item" href="addnewuser.jsp">User</a>
                 </div>
             </div>
         </li>
