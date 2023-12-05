@@ -68,6 +68,18 @@ public class LogInSignUpServlet extends HttpServlet {
                         response.addCookie(emailCookie);
                         response.addCookie(passwordCookie);
                     }
+                    else
+                    {
+                        Cookie[] cookies = request.getCookies();
+                        for(var cookie : cookies)
+                        {
+                            if(cookie.getName().equals("email")||cookie.getName().equals("password"))
+                            {
+                                cookie.setMaxAge(0);
+                                response.addCookie(cookie);
+                            }
+                        }
+                    }
                     /*
                     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
                     response.setHeader("Pragma", "no-cache"); // HTTP 1.0.

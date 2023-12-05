@@ -79,7 +79,7 @@
         <nav class="amado-nav">
             <ul>
                 <c:if test="${not empty customer}">
-                    <p>Hello, ${customer.customerName} !</p>
+                    <p>Hi, ${customer.customerName} !</p>
                     <li><a href="account.jsp">ACCOUNT</a></li>
                     <li><a href="login?action=logout">LOG OUT</a></li>
                 </c:if>
