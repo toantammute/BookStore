@@ -10,7 +10,6 @@
     <class>model.Author</class>
       <class>model.LineItem</class>
       <class>model.Stock</class>
-    <class>model.Discount</class>
     <class>model.Invoice</class>
     <class>model.Customer</class>
     <class>model.Cart</class>
