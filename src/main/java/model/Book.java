@@ -17,24 +17,8 @@ public class Book {
     private String language;
     @Temporal(TemporalType.DATE)
     private Date publisherYear;
-    private byte[] imageBookFront;
-    private byte[] imageBookBack;
 
-    public byte[] getImageBookFront() {
-        return imageBookFront;
-    }
 
-    public void setImageBookFront(byte[] imageBookFront) {
-        this.imageBookFront = imageBookFront;
-    }
-
-    public byte[] getImageBookBack() {
-        return imageBookBack;
-    }
-
-    public void setImageBookBack(byte[] imageBookBack) {
-        this.imageBookBack = imageBookBack;
-    }
 
     @ManyToOne(optional = true)
     private Publisher publisher;
