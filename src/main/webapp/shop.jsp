@@ -210,7 +210,7 @@
                                     <div class="line"></div>
                                     <p style="margin-left: 10px" class="product-price">${book.priceFormat}</p>
                                     <a href="product_details?bookID=${book.bookID}">
-                                        <h4 style="margin-left: 10px">${book.bookName}</h4>
+                                        <h5 style="margin-left: 10px">${book.bookName}</h5>
                                     </a>
                                 </div>
                                 <!-- Ratings & Cart -->
@@ -223,7 +223,7 @@
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                     </div>
                                     <br>
-                                    <div class="cart">
+                                    <div class="cart" style="margin-bottom: 9px">
                                         <% if(customer != null) {
                                             EntityManager em = DBUtil.getEmFactory().createEntityManager();
                                             Cart cart = em.find(Cart.class, customer.getCustomerID());

@@ -213,29 +213,35 @@
 
                         </div>
 
-                        <div class="short_overview my-5">
+                        <div style="margin-top: 5px">
                             <p style="font-size: 25px; color: #0b0b0b"><strong>Description</strong></p>
                             <p><i>${book_detail.description}</i></p>
                         </div>
-
-                        <div class="short_overview my-5">
-                            <p><strong>Language : </strong>${book_detail.language}</p>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                    <p><strong style="color: black;">Language : </strong>${book_detail.language}</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <p><strong style="color: black;">Category : </strong><a style="font-size: 17px; color: grey" href="shop?action=seachbycategory&amp;categoryid=${category.categoryID}">${category.categoryName}</a></p>
+                            </div>
                         </div>
-                        <div class="short_overview my-5">
-                            <p><strong>Author Name : </strong>
-                            <c:forEach var="author" items="${authors}">
-                                <a style="font-size: 17px; color: grey" href="shop?action=seachbyauthor&amp;authorid=${author.authorID}">${author.authorName}, </a>
-                            </c:forEach>
-                            </p>
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                    <p><strong style="color: black;">Author Name : </strong>
+                                        <c:forEach var="author" items="${authors}">
+                                            <a style="font-size: 17px; color: grey" href="shop?action=seachbyauthor&amp;authorid=${author.authorID}">${author.authorName}, </a>
+                                        </c:forEach>
+                                    </p>
+                            </div>
                         </div>
-                        <div class="short_overview my-5">
-                            <p><strong>Category : </strong><a style="font-size: 17px; color: grey" href="shop?action=seachbycategory&amp;categoryid=${category.categoryID}">${category.categoryName}</a></p>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                    <p><strong style="color: black;">Publisher : </strong>${publisher.publisherName}</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <p><strong style="color: black;">Publish Year : </strong>${book_detail.publisherYear.year+1900}</p>
+                            </div>
                         </div>
-                        <div class="short_overview my-5">
-                            <p><strong>Publisher : </strong>${publisher.publisherName}</p>
-                        </div>
-
-
                         <!-- Add to Cart Form -->
                     </div>
                 </div>

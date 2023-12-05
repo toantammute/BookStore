@@ -242,10 +242,14 @@
                     <td>${book.quantity}</td>
                     <td>${book.importPrice}</td>
                     <td>${book.price}</td>
-                    <td>${book.author.authorName}</td>
+                    <td>
+                      <c:forEach var="author" items="${book.author}">
+                        ${author.authorName},
+                      </c:forEach>
+                    </td>
                     <td>${book.category.categoryName}</td>
                     <td>${book.publisher.publisherName}</td>
-                    <td>${book.publisherYear}</td>
+                    <td>${book.publisherYear.year+1900}</td>
                     <td>${book.description}</td>
                     <td>${book.language}</td>
                     <td><form action="#" method="post">
