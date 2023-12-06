@@ -54,5 +54,17 @@ public class LineItemDB {
         em.close();
     }
 
+    public static void updateLineItem(LineItem item)
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        trans.begin();
+        LineItem lineItem = em.find(LineItem.class, item.getItem().getBookID());
+        lineItem = item;
+        em.merge(lineItem);
+        trans.commit();
+        em.close();
+    }
+
 
 }

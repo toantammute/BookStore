@@ -83,28 +83,51 @@ public class ShopServlet extends HttpServlet {
 
                     String bookID = request.getParameter("bookID");
                     Book book = em.find(Book.class, bookID);
-
-                    // tao lineitem moi
-                    LineItem lineItem = new LineItem();
-                    lineItem.setLineItemID(LineItemDB.generateId());
-                    lineItem.setItem(book);
+                    Stock stock = em.find(Stock.class, book.getBookID());
+                    customer = (Customer) session.getAttribute("customer");
+                    Checkout checkout = em.find(Checkout.class, customer.getCustomerID());
                     Integer quantity = 1;
                     String quantityString = request.getParameter("quantity");
-                    if(quantityString != null)
-                    {
+                    if (quantityString != null) {
                         quantity = Integer.parseInt(quantityString);
                     }
-                    lineItem.setQuantity(quantity);
-                    Stock stock = em.find(Stock.class, book.getBookID());
-                    if(lineItem.getQuantity() <= stock.getQuantity())
+                    LineItem temp = CheckoutDB.checkListBook(checkout,customer,book);
+                    if(temp != null)
                     {
-                        customer = (Customer) session.getAttribute("customer");
-                        Checkout checkout = em.find(Checkout.class, customer.getCustomerID());
-
-                        checkout = CheckoutDB.addItem(checkout,lineItem);
-                        List<LineItem> lineItemList = checkout.getLineItemList();
-                        session.setAttribute("listlineitem", lineItemList);
+                        if(temp.getQuantity()+quantity <= stock.getQuantity())
+                        {
+                            temp.setQuantity(temp.getQuantity()+quantity);
+                            LineItemDB.updateLineItem(temp);
+                        }
+                        else
+                        {
+                            temp.setQuantity(stock.getQuantity());
+                            LineItemDB.updateLineItem(temp);
+                        }
                         url = "/checkout.jsp";
+
+                    }
+                    else {
+                        // tao lineitem moi
+                        LineItem lineItem = new LineItem();
+                        lineItem.setLineItemID(LineItemDB.generateId());
+                        lineItem.setItem(book);
+                        quantity = 1;
+                        quantityString = request.getParameter("quantity");
+                        if (quantityString != null) {
+                            quantity = Integer.parseInt(quantityString);
+                        }
+                        lineItem.setQuantity(quantity);
+                        stock = em.find(Stock.class, book.getBookID());
+                        if (lineItem.getQuantity() <= stock.getQuantity()) {
+                            customer = (Customer) session.getAttribute("customer");
+                            checkout = em.find(Checkout.class, customer.getCustomerID());
+
+                            checkout = CheckoutDB.addItem(checkout, lineItem);
+                            List<LineItem> lineItemList = checkout.getLineItemList();
+                            session.setAttribute("listlineitem", lineItemList);
+                            url = "/checkout.jsp";
+                        }
                     }
                     url = "/checkout.jsp";
                 }

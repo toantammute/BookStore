@@ -234,4 +234,17 @@ public class CheckoutDB {
             em.close();
         }
     }
+
+    public static LineItem checkListBook(Checkout checkout, Customer customer, Book book)
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        for (var item: checkout.getLineItemList()) {
+            if (item.getItem().getBookID() == book.getBookID())
+            {
+                return item;
+            }
+        }
+        return null;
+    }
 }
