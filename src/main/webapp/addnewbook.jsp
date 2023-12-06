@@ -154,12 +154,13 @@
         </div>
         <div class="col-md-6 mb3">
           <p><strong>Language</strong></p>
-          <select name="bookLanguage" class="form-control">
-            <option value="English">English</option>
-            <option value="Vietnamese">Vietnamese</option>
-            <option value="Spanish">Spanish</option>
-            <option value="German">German</option>
-          </select>
+          <input type="text" class="form-control" name="bookLanguage" placeholder="Type language">
+<%--          <select name="bookLanguage" class="form-control">--%>
+<%--            <option value="English">English</option>--%>
+<%--            <option value="Vietnamese">Vietnamese</option>--%>
+<%--            <option value="Spanish">Spanish</option>--%>
+<%--            <option value="German">German</option>--%>
+<%--          </select>--%>
         </div>
         <div class="col-md-6 mb-3">
           <p><strong>Import Price</strong></p>

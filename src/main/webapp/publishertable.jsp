@@ -230,9 +230,6 @@
                                     <tr>
                                         <td>${publisher.publisherID}</td>
                                         <td>${publisher.publisherName}</td>
-                                        <td><form action="#" method="post">
-                                            <button class="button-38" role="button">Edit --></button>
-                                        </form></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
