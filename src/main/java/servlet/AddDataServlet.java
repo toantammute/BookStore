@@ -127,7 +127,7 @@ public class AddDataServlet extends HttpServlet {
             String language = request.getParameter("bookLanguage");
             book.setLanguage(language);
             String importPriceString = request.getParameter("bookImportPrice");
-            Double importPrice = 0D;
+            Double importPrice = null;
             try
             {
                 importPrice = Double.parseDouble(importPriceString);
@@ -138,7 +138,7 @@ public class AddDataServlet extends HttpServlet {
             {
                 quantity = Integer.parseInt(quantityString);
             }catch (Exception e){}
-            book.setPrice(importPrice*150);
+            book.setPrice(importPrice*1.5);
             Stock stock = new Stock();
             stock.setBook(book);
             stock.setQuantity(quantity);
