@@ -3,12 +3,12 @@
 <html lang="en">
 <%@ page import="model.Customer" %>
 <%@ page import="model.Category" %>
-<%@ page import="java.util.List" %>
 <%@ page import="data.CategoryDB" %>
 <%@ page import="model.Publisher" %>
 <%@ page import="data.PublisherDB" %>
 <%@ page import="model.Author" %>
 <%@ page import="data.AuthorDB" %>
+<%@ page import="java.util.*" %>
 <head>
 
   <meta charset="utf-8">
@@ -154,11 +154,23 @@
         </div>
         <div class="col-md-6 mb3">
           <p><strong>Language</strong></p>
+          <% Locale[] locales = Locale.getAvailableLocales();
+            Set<String> uniqueLanguages = new HashSet<>();
+            for (Locale locale : locales) {
+              String language = locale.getDisplayLanguage();
+              if (!uniqueLanguages.contains(language)) {
+                uniqueLanguages.add(language);
+              }
+            }
+            String[] uniqueLanguageArray = uniqueLanguages.toArray(new String[0]);
+            Arrays.sort(uniqueLanguageArray);
+            session.setAttribute("languages", uniqueLanguageArray);
+          %>
           <select name="bookLanguage" class="form-control">
-            <option value="English">English</option>
-            <option value="Vietnamese">Vietnamese</option>
-            <option value="Spanish">Spanish</option>
-            <option value="German">German</option>
+            <c:forEach var="language" items="${languages}">
+              <option value="${language}">${language}</option>
+            </c:forEach>
+
           </select>
         </div>
         <div class="col-md-6 mb-3">
