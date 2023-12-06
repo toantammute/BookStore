@@ -140,55 +140,41 @@
 
     <!-- Content Wrapper -->
     <div class="container">
-        <p style="font-size: 40px; color: #0b0b0b">ADD NEW USER</p>
-        <form action="add" method="post">
-            <input type="hidden" name="action" value="addnewuser">
+        <p style="font-size: 40px; color: #0b0b0b">EDIT USER</p>
+        <form action="edit" method="post">
+            <input type="hidden" name="action" value="edituser">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <p><strong>User Name</strong></p>
-                    <input type="text" class="form-control" name="customerName" placeholder="Type user's name..." required>
+                    <input type="text" class="form-control" name="customerName" value="${editcustomer.customerName}" placeholder="Type user's name..." required>
                 </div>
                 <div class="col-md-6 mb-3">
                     <p><strong>DOB</strong></p>
-                    <input type="date" class="form-control"  name="dob" required>
+                    <input type="text" class="form-control"  name="dob" readonly value="${editcustomer.birthday.day}/${editcustomer.birthday.month}/${editcustomer.birthday.year+1900}" required>
                 </div>
                 <div class="col-md-6 mb-3">
                     <p><strong>Email</strong></p>
-                    <input type="email" class="form-control"  name="email" required placeholder="Type user's email...">
-                    <p style="color: red">${message}</p>
-                    <%request.removeAttribute("message");%>
+                    <input type="email" class="form-control" value="${editcustomer.email}" readonly  name="email" required placeholder="Type user's email...">
                 </div>
                 <div class="col-md-6 mb-3xa">
                     <p><strong>Password</strong></p>
-                    <input type="text" class="form-control"  name="password" placeholder="Type user's password..." required>
+                    <input type="text" class="form-control" value="${editcustomer.password}"  name="password" placeholder="Type user's password..." required>
                 </div>
                 <div class="col-md-6 mb-3">
                     <p><strong>Gender</strong></p>
-                    <div>
-                        <input type="radio" id="male" name="gender" value="Male"checked>
-                        <label for="male" style="margin-right: 50px">Male</label>
-
-                        <input type="radio" id="female" name="gender" value="Female">
-                        <label for="female" style="margin-right: 50px">Female</label>
-
-                        <input type="radio" id="other" name="gender" value="Other">
-                        <label for="other">Other</label>
-                    </div>
+                    <input type="text" name="gender" value="${editcustomer.gender}" readonly>
                 </div>
                 <div class="col-md-6 mb-3">
                     <p><strong>Address</strong></p>
-                    <input type="text" class="form-control"  name="address" placeholder="Type user's address..." required>
+                    <input type="text" class="form-control"  name="address" value="${editcustomer.address}" placeholder="Type user's address...">
                 </div>
                 <div class="col-md-6 mb-3">
                     <p><strong>Phone Number</strong></p>
-                    <input type="text" class="form-control"  name="phoneNum" placeholder="Type user's phone number..." required>
+                    <input type="text" class="form-control"  name="phoneNum" value="${editcustomer.phoneNum}" placeholder="Type user's phone number..." >
                 </div>
-                <div class="col-md-6 mb3">
-                    <p><strong>is Admin</strong></p>
-                    <select name="isAdmin" class="form-control">
-                        <option value="true">True</option>
-                        <option value="false">False</option>
-                    </select>
+                <div class="col-md-6 mb-3">
+                    <p><strong>Card Number</strong></p>
+                    <input type="text" class="form-control"  name="cardNum" value="${editcustomer.cardNum}" placeholder="Type user's phone number...">
                 </div>
             </div>
             <input type="submit" value="Submit">

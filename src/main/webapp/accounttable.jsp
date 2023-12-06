@@ -238,8 +238,9 @@
                                         <td>${customer.email}</td>
                                         <td>${customer.address}</td>
                                         <td>${customer.admin}</td>
-                                        <td><form action="edit" method="post">
-                                            <input type="hidden" value="${customer.customerID}">
+                                        <td><form action="edit" method="get">
+                                            <input type="hidden" name="customerID" value="${customer.customerID}">
+                                            <input type="hidden" name="action" value="clickEdit">
                                             <button class="button-38" role="button">Edit -></button>
                                         </form></td>
                                     </tr>

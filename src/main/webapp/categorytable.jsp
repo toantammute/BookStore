@@ -245,7 +245,6 @@
                 <tr>
                   <th>Category ID</th>
                   <th>Category Name</th>
-                  <th> </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -253,9 +252,6 @@
                   <tr>
                     <td>${category.categoryID}</td>
                     <td>${category.categoryName}</td>
-                    <td><form action="#" method="post">
-                      <button class="button-38" role="button">Edit --></button>
-                    </form></td>
                   </tr>
                 </c:forEach>
                 </tbody>

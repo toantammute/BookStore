@@ -94,4 +94,22 @@ public class StockDB {
             em.close();
         }
     }
+
+    public static void updateStock(Stock stock){
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        Stock stock1 = em.find(Stock.class,stock.getBook().getBookID());
+        /*
+        customer1.setCardNum(customer.getCardNum());
+        customer1.setPhoneNum(customer.getPhoneNum());
+        customer1.setAddress(customer.getAddress());
+        customer1.setPassword(customer.getPassword());
+
+         */
+        stock1 = stock;
+        em.merge(stock1);
+        transaction.commit();
+        em.close();
+    }
 }

@@ -134,10 +134,14 @@ public class CustomerDB {
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
         Customer customer1 = em.find(Customer.class,customer.getCustomerID());
+        /*
         customer1.setCardNum(customer.getCardNum());
         customer1.setPhoneNum(customer.getPhoneNum());
         customer1.setAddress(customer.getAddress());
         customer1.setPassword(customer.getPassword());
+
+         */
+        customer1 = customer;
         em.merge(customer1);
         transaction.commit();
         em.close();

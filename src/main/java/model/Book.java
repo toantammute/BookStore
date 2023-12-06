@@ -101,7 +101,7 @@ public class Book {
         return BookDB.getQuantityInStock(getBookID());
     }
     public double getImportPrice(){
-        return price*0.5;
+        return (price/1.5);
     }
 
 

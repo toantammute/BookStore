@@ -177,4 +177,15 @@ public class BookDB {
         quantity = stock.getQuantity();
         return quantity;
     }
+
+    public static void updateBook(Book book){
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        Book book1 = em.find(Book.class,book.getBookID());
+        book1 = book;
+        em.merge(book1);
+        transaction.commit();
+        em.close();
+    }
 }

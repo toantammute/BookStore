@@ -252,7 +252,9 @@
                     <td>${book.publisherYear.year+1900}</td>
                     <td>${book.description}</td>
                     <td>${book.language}</td>
-                    <td><form action="#" method="post">
+                    <td><form action="editbook" method="post">
+                      <input type="hidden" name="action" value="clickEdit">
+                      <input type="hidden" name="bookID" value="${book.bookID}">
                       <button class="button-38" role="button">Edit --></button>
                     </form></td>
                   </tr>

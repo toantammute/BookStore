@@ -1,10 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-<%@ page import="model.Customer" %>
-<%@ page import="model.Invoice" %>
 <%@ page import="java.util.List" %>
-<%@ page import="data.InvoiceDB" %>
+<%@ page import="data.CategoryDB" %>
+<%@ page import="data.PublisherDB" %>
+<%@ page import="data.AuthorDB" %>
+<%@ page import="model.*" %>
 <head>
 
     <meta charset="utf-8">
@@ -13,7 +14,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>BOOKSTORE ONLINE | Manage</title>
+    <title>BOOKSTORE ONLINE | Add New User</title>
 
     <!-- Custom fonts for this template -->
     <link href="admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -28,6 +29,7 @@
     <link href="admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/6931f33cbe.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/form.css">
 </head>
 
 <body id="page-top">
@@ -138,147 +140,72 @@
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
-
-        <!-- Main Content -->
-        <div id="content">
-
-            <!-- Topbar -->
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                <!-- Sidebar Toggle (Topbar) -->
-                <form class="form-inline">
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-                </form>
-
-                <!-- Topbar Search -->
-
-
-                <!-- Topbar Navbar -->
-                <ul class="navbar-nav ml-auto">
-
-                    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                    <li class="nav-item dropdown no-arrow d-sm-none">
-                        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-search fa-fw"></i>
-                        </a>
-                        <!-- Dropdown - Messages -->
-                        <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                             aria-labelledby="searchDropdown">
-                            <form class="form-inline mr-auto w-100 navbar-search">
-                                <div class="input-group">
-                                    <input type="text" class="form-control bg-light border-0 small"
-                                           placeholder="Search for..." aria-label="Search"
-                                           aria-describedby="basic-addon2">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button">
-                                            <i class="fas fa-search fa-sm"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </li>
-
-                    <!-- Nav Item - Alerts -->
-
-
-                    <!-- Nav Item - Messages -->
-
-                    <div class="topbar-divider d-none d-sm-block"></div>
-
-                    <!-- Nav Item - User Information
-          <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">${customer.customerName}</span>
-              <img class="img-profile rounded-circle"
-                   src="admin/img/undraw_profile.svg">
-            </a> -->
-                    <!-- Dropdown - User Information
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                         aria-labelledby="userDropdown">
-                      <a class="dropdown-item" href="account.jsp">
-                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Profile
-                      </a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Logout
-                      </a>
-                    </div>
-                  </li>
-        -->
-
-
-                </ul>
-
-            </nav>
-            <!-- End of Topbar -->
-
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
-
-                <!-- Page Heading -->
-                <h1 class="h3 mb-2 text-gray-800">INVOICE</h1>
-                <% List<Invoice> invoices = (List<Invoice>) request.getAttribute("invoices");
-                    if(invoices == null)
-                    {
-                            invoices = InvoiceDB.getInvoiceList();
-                        request.setAttribute("invoices", invoices);
-                    }else
-                    {
-                        request.setAttribute("invoices", invoices);
-                    }
-                %>
-
-                <!-- DataTales Example -->
-                <div class="card shadow mb-4">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th>Customer Name</th>
-                                    <th>Invoice ID</th>
-                                    <th>Oder Date</th>
-                                    <th>Total Amount</th>
-                                    <th>Discount</th>
-                                    <th>Total Pay</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <c:forEach var="invoice" items="${invoices}">
-                                    <tr>
-                                        <td>${invoice.customer.customerName}</td>
-                                        <td>${invoice.invoiceID}</td>
-                                        <td>${invoice.orderDate}</td>
-                                        <td>${invoice.totalAmount}</td>
-                                        <td>${invoice.discount}</td>
-                                        <td>${invoice.totalPay}</td>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+    <div class="container">
+        <p style="font-size: 40px; color: #0b0b0b">EDIT BOOK</p>
+        <form action="editbook" method="post">
+            <input type="hidden" name="action" value="editbook">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <p><strong>Book ID</strong></p>
+                    <input type="text" class="form-control" value="${editbook.bookID}" name="bookName" placeholder="Type book's name..." required readonly>
                 </div>
-
+                <div class="col-md-6 mb-3">
+                    <p><strong>Book Name</strong></p>
+                    <input type="text" class="form-control" value="${editbook.bookName}" name="bookName" placeholder="Type book's name..." required readonly>
+                </div>
+                <div class="col-md-6 mb3">
+                    <p><strong>Language</strong></p>
+                    <input type="text" value="${editbook.language}" readonly>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <p><strong>Import Price</strong></p>
+                    <input type="number" min="0,1" step="0.1" class="form-control"  name="bookImportPrice" value="${editstock.importPrice}" required placeholder="Type import price...">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <p><strong>Quantity</strong></p>
+                    <input type="number" min="1" step="1" class="form-control"  name="bookQuantity" value="${editstock.quantity}" required placeholder="Type book quantity...">
+                </div>
+                <div class="col-md-6 mb-3xa">
+                    <p><strong>Description</strong></p>
+                    <textarea class="form-control" value="${editbook.description}" name="bookDescription" placeholder="Type description..." maxlength="255"></textarea>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <p><strong>Publish Year</strong></p>
+                    <input type="text" value="${editbook.publisherYear.year+1900}" readonly class="form-control"  name="bookPublishYear" placeholder="Type user's address..." required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <p><strong>Publisher</strong></p>
+                    <input type="text" value="${editbook.publisher.publisherName}" readonly>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <p><strong>Category</strong></p>
+                    <input type="text" value="${editbook.category.categoryName}" readonly>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <%
+                        Book book = (Book) session.getAttribute("editbook");
+                        List<Author> authors = book.getAuthor();
+                        StringBuilder authorString = new StringBuilder();
+                        for (var author: authors) {
+                            authorString.append(author.getAuthorName()+", ");
+                        }
+                        if(authorString != null) session.setAttribute("authors",authorString);
+                        else
+                        {
+                            authorString.append("");
+                            session.setAttribute("authors",authorString);
+                        }
+                    %>
+                    <p><strong>Author</strong></p>
+                    <input type="text" name="authors" value="${authors}" readonly>
+                </div>
             </div>
-            <!-- /.container-fluid -->
-
-        </div>
-        <!-- End of Main Content -->
-
-        <!-- Footer -->
-
-        <!-- End of Footer -->
-
+            <input type="submit" value="Submit">
+        </form>
     </div>
+
+
+
     <!-- End of Content Wrapper -->
 
 </div>
@@ -325,8 +252,13 @@
 
 <!-- Page level custom scripts -->
 <script src="admin/js/demo/datatables-demo.js"></script>
-
+<script type="text/javascript">
+    //auto expand textarea
+    function adjust_textarea(h) {
+        h.style.height = "20px";
+        h.style.height = (h.scrollHeight)+"px";
+    }
+</script>
 </body>
 
 </html>
-
