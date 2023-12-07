@@ -154,7 +154,7 @@
                   <input type="text" class="form-control" id="phone_number" name="phoneNumber" placeholder="Type your phone number..." value="${customer.phoneNum}" required>
                 </div>
                 <div class="col-md-6 mb-3">
-                  <p>Phone Number</p>
+                  <p>Card Number</p>
                   <input type="text" class="form-control" id="card_number" name="cardNumber"  placeholder="Type your card number..." value="${customer.cardNum}" required>
                 </div>
               </div>
