@@ -45,7 +45,6 @@ HOW TO RUN THIS PROJECT IN LOCAL HOST
 
 
   + In Persisance from src/main/resources/META-INF/persistence.xml edit your jdbc url, jdbc.user and jdbc.password of your postgres
-    ![image](https://github.com/toantammute/BookStore/assets/145630820/69e78301-6de3-4afc-81d7-5f2bf5b06e34)
     ![image](https://github.com/toantammute/BookStore/assets/145630820/cc328260-1b67-4728-82bf-97d34b658a23)
 
   + After connect database successfully, edit the jakarta.persistence.schema-generation.database.action value to update.
