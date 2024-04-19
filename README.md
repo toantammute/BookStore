@@ -44,8 +44,14 @@ Link to download: Apache Tomcat® - Apache Tomcat 10 Software Downloads
  ![image](https://github.com/toantammute/BookStore/assets/145630820/2cf25826-f5bd-44d4-876d-0a18dc32b627)
 -	On the left column add new server, choose Tomcat Server - local.
  ![image](https://github.com/toantammute/BookStore/assets/145630820/61a933ed-ae0d-4106-bef7-e28eda884246)
--	In the application server choose Configure. Then choose the file Tomcat that you have downloaded. Click OK.
+-	In the application server choose Configure. Then choose the file Tomcat that you have downloaded.
  ![image](https://github.com/toantammute/BookStore/assets/145630820/b3fc19be-e3a8-4525-b39f-718a8983c1b1)
+-	In the deployment tab, choose Insert – Artifact
+  ![image](https://github.com/toantammute/BookStore/assets/145630820/9cff67ba-9c13-48d7-8c6e-fd0a6ba30a9c)
+-	Choose both files.
+  ![image](https://github.com/toantammute/BookStore/assets/145630820/4f19dde7-c660-4244-a686-7cbe99a0ea5c)
+- Click OK
+  ![image](https://github.com/toantammute/BookStore/assets/145630820/5cfc08b3-83e4-4550-a54a-74733d80601a)
 -	Run the project. This is the home page.
   ![image](https://github.com/toantammute/BookStore/assets/145630820/e1b1ec14-71b4-4d74-85d4-2346bc4fa99d)
 -	To login to admin: email: admin@gmail.com, password: 1. If you want to log in by a member, register then log in.
